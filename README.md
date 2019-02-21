@@ -8,4 +8,4 @@ Will feature accounts in which users can store info about recipes that they have
 
 Will include comments on recipes, and ability to like and rate both the recipes and their comments.
 
-Will be able to filter out recipes with filters.
+Will be able to filter out recipes with filters. 
