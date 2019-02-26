@@ -41,7 +41,7 @@ if (isset($_SESSION['username'])) {
 </style>
 <div class=navbox>
     <div class= nav>
-        <a href="home.php" target=""> Home </a>
+        <a href="index.php" target=""> Home </a>
        
     </div>
     <br>
