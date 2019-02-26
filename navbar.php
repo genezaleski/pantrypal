@@ -11,29 +11,27 @@ if (isset($_SESSION['username'])) {
 
 <style>
 .navbox{
-    width: 65em;
+    width: 104.3em;
     display: flex;
-    border-radius: 25px;
     margin: 0 auto;
-    padding: 10px;
-    background-color: #40e0d0;
+    margin-left: -10px;
+    margin-top: -10px;
+    padding: 20px;
+    background-color: orange;
 }
 .nav {
     margin: 0 auto;
     display: inline;
-    overflow: hidden;
-    font-family: Arial;
+    margin-left: 0px;
 }
 .nav a {
     margin:0 auto;
-    border-radius: 25px;
-    float: left;
-    font-size: 16px;
-    color: #000;
-    background-color: #40e0d0;
-    text-align: center;
+    float: right;
+    font-size: 32px;
+    color: white;
     padding: 10px 16px;
     text-decoration: none;
+    font-family: "Arial";
 }
 .nav a:hover, .drop:hover .dropbtn {
     background-color: #31b6a8;
@@ -41,8 +39,8 @@ if (isset($_SESSION['username'])) {
 </style>
 <div class=navbox>
     <div class= nav>
-        <a href="index.php" target=""> Home </a>
-       
+        <a href="index.php" target=""> Pantry Pal </a>      
     </div>
     <br>
 </div>
+
