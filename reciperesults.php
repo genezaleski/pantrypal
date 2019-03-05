@@ -18,6 +18,15 @@ body{
 <?php
 include 'navbar.php';
 
+// if not coming from new search
+if(!isset($_POST['searchBar'])){
+    header("Location:index.php");
+}
+$search_sql="SELECT * FROM stock WHERE name LIKE '%".$_POST['searchBar']."%' OR description LIKE '%".$_POST['searchBar']."%'";
+$search_query=mysql_query($search_sql);
+if(mysql_num_rows($search_query) != 0){
+    $search_rs=mysql_fetch_assoc($search_query);
+}
 ?>
 
 <form name="recipeSearch" method="post" action="reciperesults.php">
@@ -26,3 +35,4 @@ include 'navbar.php';
 </form>
 
 <h1 class="searchtitle"> Results </h1><br>
+
