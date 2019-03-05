@@ -24,6 +24,7 @@ include 'navbar.php';
 
 ?>
 <h1 class="searchtitle"> Pantry Pal </h1><br>
-<input class="searchbar" type="text" name="searchBar" placeholder="put ingredients or recipe name here">
-<button type="submit" name="search">Search</button>
-
+<form name="recipeSearch" method="post" action="reciperesults.php">
+    <input class="searchbar" type="text" name="searchBar" placeholder="put ingredients or recipe name here">
+    <input type="submit" name="Submit" value="Search">
+</form>
