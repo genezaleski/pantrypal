@@ -1,3 +1,10 @@
+<style>
+body{
+	background-image: url(images/carrots-food-fresh-616404.jpg);
+	background-size: 100%;
+}
+</style>
+
 <title>Pantry Pal</title>
 <?php
 include 'navbar.php';
