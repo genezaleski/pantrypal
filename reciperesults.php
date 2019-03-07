@@ -22,11 +22,14 @@ include 'navbar.php';
 if(!isset($_POST['searchBar'])){
     header("Location:index.php");
 }
-$search_sql="SELECT * FROM stock WHERE name LIKE '%".$_POST['searchBar']."%' OR description LIKE '%".$_POST['searchBar']."%'";
-$search_query=mysql_query($search_sql);
-if(mysql_num_rows($search_query) != 0){
-    $search_rs=mysql_fetch_assoc($search_query);
-}
+
+$response = Unirest\Request::get("https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/search?query=" . url_encode($_GET['searchBar']),
+  array(
+    "X-RapidAPI-Key" => "a44d550177msh8aeb1867319b60bp1fbbc5jsn1d9edc60417a"
+  )
+);
+
+$recipe_array = json_decode($response, true);
 ?>
 
 <form name="recipeSearch" method="post" action="reciperesults.php">
