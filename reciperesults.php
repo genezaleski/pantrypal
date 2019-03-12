@@ -42,9 +42,10 @@ if(!empty($search)){
 
         for($i = 0; $i < sizeof($output_arr); $i++){
             $image = $output_arr[$i]['image'];
-                
+            $id = $output_arr[$i]['id'];
+
             echo '<img src="'.$image.'">';
-            echo "<a href=#>'". $output_arr[$i]['title'] ."'</a>";
+            echo "<a href=recipieInfo.php?id=$id>'". $output_arr[$i]['title'] ."'</a>";
 
             echo "<br>";
         }
@@ -59,11 +60,13 @@ if(!empty($search)){
         for($i = 0; $i < $output_arr['number']; $i++){
             if($is_ingredients == false){
                 $image = "https://spoonacular.com/recipeImages/" . $output_arr['results'][$i]['image'];
-                
-                echo '<img src="'.$image.'">';
-                echo "<a href=#>'". $output_arr['results'][$i]['title'] ."'</a>";
+                $id = $output_arr['results'][$i]['id'];
 
-                echo "<br>";
+                echo '<img src="'.$image.'"><br>';
+                //echo "<form action='recipieInfo.php>val=title' method=post>";
+                echo "<a href=recipieInfo.php?id=$id>'". $output_arr['results'][$i]['title']."'</a>";
+
+                echo "<br><br>";
             }
         }
     }
