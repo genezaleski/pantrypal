@@ -55,3 +55,12 @@ CREATE TABLE `dislikedRecipe` (
   CONSTRAINT `dislikedRecipe_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`),
   CONSTRAINT `dislikedRecipe_ibfk_2` FOREIGN KEY (`rec_id`) REFERENCES `recipe` (`rec_id`)
 )
+
+CREATE TABLE `likedRecipe` (
+  `like_id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `rec_id` int(11) NOT NULL,
+  PRIMARY KEY (`like_id`),
+  KEY `user_id` (`user_id`),
+  CONSTRAINT `likedRecipe_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1
