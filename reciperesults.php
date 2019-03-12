@@ -1,6 +1,6 @@
 <style>
 body{
-    background-image: url(images/art-background-citrus-1415734);
+    background-color: grey;
     background-size: 100%;
 }
 
@@ -11,6 +11,19 @@ body{
 
 .searchtitle{
     margin-left: 550px;
+}
+
+.imageResults{
+    position: relative;
+    text-align: center;
+    color: white;
+}
+
+.recipeName{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 </style>
 
@@ -44,8 +57,10 @@ if(!empty($search)){
             $image = $output_arr[$i]['image'];
             $id = $output_arr[$i]['id'];
 
-            echo '<img src="'.$image.'">';
-            echo "<a href=recipieInfo.php?id=$id>'". $output_arr[$i]['title'] ."'</a>";
+            echo '<div class="imageResults">
+                <a href="recipeInfo.php?id=<?php echo $recipe;?>" ><img src="'. $image .'" alt="recipeImage" style="width:35%;"></a>
+                <div class="recipeName">"' . $output_arr[$i]['title'] . '"</div>
+                </div>';
 
             echo "<br>";
         }
@@ -62,9 +77,10 @@ if(!empty($search)){
                 $image = "https://spoonacular.com/recipeImages/" . $output_arr['results'][$i]['image'];
                 $id = $output_arr['results'][$i]['id'];
 
-                echo '<img src="'.$image.'"><br>';
-                //echo "<form action='recipieInfo.php>val=title' method=post>";
-                echo "<a href=recipieInfo.php?id=$id>'". $output_arr['results'][$i]['title']."'</a>";
+                echo '<div class="imageResults">
+                    <a href="recipeInfo.php?id="'.$id.'"><img src="'. $image .'" alt="recipeImage" style="width:35%;"></a>
+                    <div class="recipeName">"' . $output_arr['results'][$i]['title'] . '"</div>
+                </div>';
 
                 echo "<br><br>";
             }
@@ -72,5 +88,4 @@ if(!empty($search)){
     }
 }
 ?> <!--End PHP-->
-
 
