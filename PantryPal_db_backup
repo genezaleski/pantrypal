@@ -1,0 +1,57 @@
+CREATE TABLE `user` (
+  `user_id` int(11) NOT NULL AUTO_INCREMENT,
+  `userName` varchar(255) NOT NULL,
+  PRIMARY KEY (`user_id`)
+)
+
+CREATE TABLE `recipe` (
+  `rec_id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) NOT NULL,
+  `author` varchar(255) NOT NULL,
+  `rec_link` varchar(2083) NOT NULL,
+  `likes` int(11) NOT NULL,
+  `dislikes` int(11) NOT NULL,
+  `pathToAvatar` varchar(260) NOT NULL,
+  PRIMARY KEY (`rec_id`)
+)
+
+CREATE TABLE `pantry` (
+  `pantry_id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  PRIMARY KEY (`pantry_id`)
+)
+
+CREATE TABLE `allergies` (
+  `aller_id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `ingred_id` int(11) NOT NULL,
+  PRIMARY KEY (`aller_id`),
+  KEY `user_id` (`user_id`),
+  KEY `ingred_id` (`ingred_id`),
+  CONSTRAINT `allergies_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`),
+  CONSTRAINT `allergies_ibfk_2` FOREIGN KEY (`ingred_id`) REFERENCES `ingredients` (`ingred_id`)
+)
+
+CREATE TABLE `commentedRec` (
+  `comment_id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `rec_id` int(11) NOT NULL,
+  `commentText` varchar(255) NOT NULL,
+  `commentTime` datetime NOT NULL,
+  PRIMARY KEY (`comment_id`),
+  KEY `user_id` (`user_id`),
+  KEY `rec_id` (`rec_id`),
+  CONSTRAINT `commentedRec_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`),
+  CONSTRAINT `commentedRec_ibfk_2` FOREIGN KEY (`rec_id`) REFERENCES `recipe` (`rec_id`)
+)
+
+CREATE TABLE `dislikedRecipe` (
+  `dislike_id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `rec_id` int(11) NOT NULL,
+  PRIMARY KEY (`dislike_id`),
+  KEY `user_id` (`user_id`),
+  KEY `rec_id` (`rec_id`),
+  CONSTRAINT `dislikedRecipe_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`),
+  CONSTRAINT `dislikedRecipe_ibfk_2` FOREIGN KEY (`rec_id`) REFERENCES `recipe` (`rec_id`)
+)
