@@ -29,5 +29,3 @@ $recipeInfo = json_decode(shell_exec($cmd),true);
     ?>  
 </body>
 </html>
-
-
