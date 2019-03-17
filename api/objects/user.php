@@ -1,5 +1,5 @@
 <?php
-class user{
+class user {
  
     // database connection and table name
     private $conn;
@@ -21,7 +21,7 @@ class user{
         $query = "SELECT
                     user_id, userName
                 FROM
-                    " . $this->table_name . ";
+                    " . $this->table_name . "";
 
         // prepare query statement
         $stmt = $this->conn->prepare($query);
@@ -31,5 +31,30 @@ class user{
 
         return $stmt;
     }
+    
+    // create product
+    function create(){
+
+        // query to insert record
+        $query = "INSERT INTO
+                    " . $this->table_name . "
+                SET
+                    userName=:userName";
+
+        // prepare query
+        $stmt = $this->conn->prepare($query);
+
+        // sanitize
+        $this->userName=htmlspecialchars(strip_tags($this->userName));
+
+        // bind values
+        $stmt->bindParam(":userName", $this->userName);
+
+        // execute query
+        if($stmt->execute()){
+            return true;
+	}
+
+        return false;
+    }
 }
-?>
