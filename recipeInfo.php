@@ -3,20 +3,31 @@ include 'navbar.php';
 
 $recipieID = $_GET['id'];
 
-echo $recipieID;
 $api_key = '"X-RapidAPI-Key :322dc0a550msh6970a9bebfd18b2p1010fcjsnaed4930a9684"';
 $api_url = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/".$recipieID."/information";
 $cmd = "curl -H " . $api_key . " " . $api_url;
-$output_arr = json_decode(shell_exec($cmd),true);
+$recipeInfo = json_decode(shell_exec($cmd),true);
 
-//$response = Unirest\Request::get("https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/$recipieID/information",
-//  array(
-//    "X-RapidAPI-Key" => "322dc0a550msh6970a9bebfd18b2p1010fcjsnaed4930a9684"
-//  )
-//);
-
-
-echo $output_arr['sourceUrl'];
-echo $output_arr['cookingMinutes'];
 ?>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title><?php $recipeInfo['title']; ?></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="main.css">
+    
+</head>
+<body>
+    <br>
+    <?php
+        echo    '<br><div clacc="image"><image src="' . $recipeInfo['image']. '"> </div>
+                <div class="title">' .$recipeInfo['title']. '</div>
+                <br><div class="recipie">' . $recipeInfo['instructions'] . '</div>';
+
+    ?>  
+</body>
+</html>
+
 
