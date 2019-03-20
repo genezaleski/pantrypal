@@ -15,7 +15,14 @@ $recipeInfo = json_decode(shell_exec($cmd),true);
     <?php
         echo    '<br><div clacc="image"><image src="' . $recipeInfo['image']. '"> </div>
                 <div class="title">' .$recipeInfo['title']. '</div>
-                <br><div class="recipie">' . $recipeInfo['instructions'] . '</div>';
+                <br>';
+        for($i = 0; i < $recipeInfo['extendedIngredients'][$i]; $i++){
+            $amount = $recipeInfo['extendedIngredients'][$i]['amount'];
+            $unit = $recipeInfo['extendedIngredients'][$i]['unit'];
+            $ingrName = $recipeInfo['extendedIngredients'][$i]['name'];
+            echo '<div class = "ingredients">' . $amount , " " ,  $unit , " " ,  $ingrName .' </div>';
+        }                
+        echo '<br><div class="recipe">' . $recipeInfo['instructions'] . '</div><br>';
 
     ?>  
 </body>
