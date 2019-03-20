@@ -58,7 +58,7 @@ if(!empty($search)){
             $id = $output_arr[$i]['id'];
 
             echo '<div class="imageResults">
-                <a href="recipeInfo.php?id=<?php echo $recipe;?>" ><img src="'. $image .'" alt="recipeImage" style="width:35%;"></a>
+                <a href="recipeInfo.php?id="' . $id . '" ><img src="'. $image .'" alt="recipeImage" style="width:35%;"></a>
                 <div class="recipeName">"' . $output_arr[$i]['title'] . '"</div>
                 </div>';
 
@@ -78,7 +78,7 @@ if(!empty($search)){
                 $id = $output_arr['results'][$i]['id'];
 
                 echo '<div class="imageResults">
-                    <a href="recipeInfo.php?id="'.$id.'"><img src="'. $image .'" alt="recipeImage" style="width:35%;"></a>
+                    <a href="recipeInfo.php?id='. $id .'"><img src="'. $image .'" alt="recipeImage" style="width:35%;"></a>
                     <div class="recipeName">"' . $output_arr['results'][$i]['title'] . '"</div>
                 </div>';
 
