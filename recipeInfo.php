@@ -1,3 +1,16 @@
+<style>
+body{
+    background: lightblue;
+    margin: 25px;
+}
+.title{
+    font-size: 20px;
+}
+.recipe{
+    width: 75%;
+}
+</style>
+
 <?php
 include 'navbar.php';
 
@@ -13,16 +26,21 @@ $recipeInfo = json_decode(shell_exec($cmd),true);
 <title><?php $recipeInfo['title']; ?></title>
     <br>
     <?php
-        echo    '<br><div clacc="image"><image src="' . $recipeInfo['image']. '"> </div>
-                <div class="title">' .$recipeInfo['title']. '</div>
-                <br>';
+        echo    '<br><br><div class="title">' .$recipeInfo['title']. '</div><br>
+                <div clacc="image"><image src="' . $recipeInfo['image']. '"> </div>
+                <br><h2> Ingredients </h2>';
         for($i = 0; i < $recipeInfo['extendedIngredients'][$i]; $i++){
             $amount = $recipeInfo['extendedIngredients'][$i]['amount'];
             $unit = $recipeInfo['extendedIngredients'][$i]['unit'];
             $ingrName = $recipeInfo['extendedIngredients'][$i]['name'];
             echo '<div class = "ingredients">' . $amount , " " ,  $unit , " " ,  $ingrName .' </div>';
+        }
+        $instructions = $recipeInfo['instructions'];
+        if($instructions == ""){
+            $instructions = "Whoops, there are no available instructions for this recipe.";
         }                
-        echo '<br><div class="recipe">' . $recipeInfo['instructions'] . '</div><br>';
+        echo '<br><h2> Insructions </h2> 
+        <div class="recipe">' . $instructions . '</div><br>';
 
     ?>  
 </body>
