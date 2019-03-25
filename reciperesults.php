@@ -2,6 +2,7 @@
 body{
     background-color: grey;
     background-size: 100%;
+    margin: 0px;
 }
 
 .searchbar{
@@ -13,10 +14,12 @@ body{
     margin-left: 550px;
 }
 
-.imageResults{
-    position: relative;
-    text-align: center;
-    color: white;
+.imgresults{
+    display: block;
+    max-width:420px;
+    max-height:236px;
+    width: auto;
+    height: auto;
 }
 
 .recipeName{
@@ -24,6 +27,20 @@ body{
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+}
+
+.column{
+    float: left;
+    width: 33.33%;
+    padding: 0px;
+    margin-left: 100px;
+    margin-right: -125px;
+}
+
+.row::after{
+    content: "";
+    clear: both;
+    display: table;
 }
 </style>
 
@@ -41,6 +58,9 @@ include 'navbar.php';
 <?php
 
 $search = $_POST['searchBar'];
+$image_results = array();
+$id = null;
+$id_list = array();
 
 if(!empty($search)){
     $api_key = '"X-RapidAPI-Key : a44d550177msh8aeb1867319b60bp1fbbc5jsn1d9edc60417a"';
@@ -57,12 +77,14 @@ if(!empty($search)){
             $image = $output_arr[$i]['image'];
             $id = $output_arr[$i]['id'];
 
-            echo '<div class="imageResults">
-                <a href=recipeInfo.php?id='.$id.'><img src="'. $image .'" alt="recipeImage" style="width:35%;"></a>
-                <div class="recipeName">"' . $output_arr[$i]['title'] . '"</div>
-                </div>';
+            array_push($image_results,$image);
+            array_push($id_list,$id);
+           //echo '<div class="imageResults">
+             //   <a href=recipeInfo.php?id='.$id.'><img src="'. $image .'" alt="recipeImage" style="flex: ' . $width/$height . ';"></a>
+              //  <div class="recipeName">"' . $output_arr[$i]['title'] . '"</div>
+              //  </div>';
 
-            echo "<br>";
+            //echo "<br>";
         }
     }
     else{                                 //If no commas, search by recipe name
@@ -77,15 +99,46 @@ if(!empty($search)){
                 $image = "https://spoonacular.com/recipeImages/" . $output_arr['results'][$i]['image'];
                 $id = $output_arr['results'][$i]['id'];
 
-                echo '<div class="imageResults">
-                    <a href=recipeInfo.php?id='.$id.'><img src="'. $image .'" alt="recipeImage" style="width:35%;"></a>
-                    <div class="recipeName">"' . $output_arr['results'][$i]['title'] . '"</div>
-                </div>';
+                array_push($image_results,$image);
+                array_push($id_list,$id);
+               // echo '<div class="imageResults">
+               //     <a href=recipeInfo.php?id='.$id.'><img src="'. $image .'" alt="recipeImage" style="width:35%;"></a>
+               //     <div class="recipeName">"' . $output_arr['results'][$i]['title'] . '"</div>
+               // </div>';
 
-                echo "<br><br>";
+                //echo "<br>";
             }
         }
     }
 }
+
+$one = '';
+$two = '';
+$three = '';
+
+for($i = 0; $i < sizeof($image_results); $i++){
+    if(($i % 3) == 1){
+        $one .= '<a href=recipeInfo.php?id='.$id_list[$i].'><img class="imgresults" src="'. $image_results[$i] .'" alt="recipeImage" style="width:100%;"></a>';
+    }
+    else if(($i % 3) == 2){
+        $two .= '<a href=recipeInfo.php?id='.$id_list[$i].'><img class="imgresults" src="'. $image_results[$i] .'" alt="recipeImage" style="width:100%;"></a>';
+    }
+    else if(($i % 3) == 0){
+        $three .= '<a href=recipeInfo.php?id='.$id_list[$i].'><img class="imgresults" src="'. $image_results[$i] .'" alt="recipeImage" style="width:100%;"></a>';
+    }
+}
+
+echo '<div class="row">
+        <div class="column">
+        ' . $one . '
+        </div>
+        <div class="column">
+        ' . $two . '
+        </div>
+        <div class="column">
+        ' . $three . '
+        </div>
+    </div>';
+
 ?> <!--End PHP-->
 
