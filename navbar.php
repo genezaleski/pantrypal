@@ -10,7 +10,6 @@ if (isset($_SESSION['username'])) {
 ?>
 
 <style>
-<style>
 .navbox{
     width: 104.3em;
     display: flex;
