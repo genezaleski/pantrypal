@@ -20,6 +20,8 @@ body{
     max-height:236px;
     width: auto;
     height: auto;
+    -webkit-filter: grayscale(0%);
+    margin-bottom: 15px;
 }
 
 .recipeName{
@@ -27,6 +29,7 @@ body{
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    -webkit-filter: grayscale(100%);
 }
 
 .column{
