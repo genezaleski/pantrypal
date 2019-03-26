@@ -11,7 +11,7 @@ if (isset($_SESSION['username'])) {
 
 <style>
 .navbox{
-    width: 104.3em;
+    width: 98.5%;
     display: flex;
     margin: 0 auto;
     margin-left: -10px;
@@ -80,6 +80,8 @@ if (isset($_SESSION['username'])) {
     <a href="index.php" target=""> Pantry Pal </a>
     <div class= "dropdown" style = "float:right">
         <button class="dropbtn">User Options<i class="fa fa-caret-down"></i></button>
+        <br>
+        <br>
         <div class= "drop-content">
         <html lang="en">
         <head>
