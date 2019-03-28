@@ -1,18 +1,19 @@
 <style>
 @font-face{
     font-family: 'results_font';
-    src: url(fonts/Acme-Regular.ttf);
+    src: url(Acme-Regular.ttf);
 }
 
 body{
     background-color: grey;
+    background-image: url(images/wooden-background-1538068471RLq);
     background-size: 100%;
     margin: 0px;
 }
 
 .searchbar{
     margin-left: 675px;
-    width: 300px;
+    width: 300px;s
 }
 
 .searchtitle{
@@ -64,6 +65,50 @@ body{
     clear: both;
     display: table;
 }
+
+.nav-side{
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    max-width: 250px;
+    background-color: orange;
+    z-index: 3;
+    box-sizing: border-box;
+    padding: 20px;
+    margin-left: -250px;
+    margin-top: 140px;
+}
+
+.nav-side.nav-open{
+    margin-left: 0px;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, .1);
+}
+
+.nav-side.nav-open .nav-toggle:before{
+    content: "\2190";
+}
+
+.nav-toggle{
+    position: absolute;
+    right: -40px;
+    top: 0;
+    width: 40px;
+    height: 40px;
+    background-color: orange;
+    line-height: 40px;
+    text-decoration: none;
+    text-align: center;
+    border-bottom-right-radius: 3px;
+    box-shadow: 1px 0 3px rgba(0,0,0,.1);
+}
+
+.nav-toggle:before{
+    content: "\2192";
+    font-weight: 600;
+
+}
 </style>
 
 <title>Search Results:</title>
@@ -76,6 +121,25 @@ include 'navbar.php';
     <input class="searchbar" type="text" name="searchBar" placeholder="put ingredients or recipe name here">
     <input type="submit" name="Submit" value="Search">
 </form>
+
+<!-- JS for filter slide out menu-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<!-- End JS for filter menu-->
+
+<nav class="nav-side">
+    Filters
+    <a href="#" class="nav-toggle"></a>
+</nav>
+
+<script language="JavaScript">
+    $('.nav-side .nav-toggle').on('click',function(e){
+        e.preventDefault();
+        $(this).parent().toggleClass('nav-open');
+    }
+    );
+</script>
+
 
 <?php
 
@@ -178,4 +242,3 @@ echo '<div class="row">
     </div>';
 
 ?> <!--End PHP-->
-
