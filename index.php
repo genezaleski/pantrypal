@@ -1,3 +1,8 @@
+<head>
+<meta   name="google-site-verification" 
+        content="W0LpZ8p6M13ICggYTyUZqikpTXnPCnY-0d_U6uQC5p0" />
+</head>
+
 <style>
 body{
     background-image: url(images/carrots-food-fresh-616404.jpg);
