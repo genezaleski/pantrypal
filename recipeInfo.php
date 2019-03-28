@@ -30,6 +30,37 @@
 
         right: 5px;
     }
+    .relatedImg{
+    display: block;
+    max-width:300px;
+    max-height: 300px;
+    width: auto;
+    height: auto;
+    -webkit-filter: grayscale(0%);
+    margin-bottom: 15px;
+    z-index: 1;
+}
+
+.relatedImg:hover{
+    -webkit-filter: grayscale(100%); 
+}
+
+.relatedTitle{
+    position: absolute;
+    display: block;
+    float: left;
+    margin-top: -150px;
+    margin-left: 50px;
+    margin-right: -150px;
+    z-index: 2;
+    font-family: 'results_font';
+    pointer-events: none;
+    font-size: 32px;
+    color: white;
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+    max-width:250px;
+    word-wrap:break-word;
+}
 
     .relatedImages {
         height: 10%;
@@ -110,9 +141,8 @@ $relatedLinks = json_decode(shell_exec($relatedCmd), true);
             //Generating related links with clickable images
             for ($r = 0; $r < $relatedLinks[$r]; $r++) {
                 echo '<div class = "related">
-            <a href = "recipeInfo.php?id=' . $relatedLinks[$r]['id'] . '">' . $relatedLinks[$r]['title'] . '<br>
-            <img src = "https://spoonacular.com/recipeImages/'.$relatedLinks[$r]['image'].'"></a>
-            <br>
+                 <a href=recipeInfo.php?id='.$relatedLinks[$r]['id'].'><img class="relatedImg" src="https://spoonacular.com/recipeImages/'. $relatedLinks[$r]['image'] .'" alt="recipeImage" style="width:100%;"></a>
+                 <div class="relatedTitle">' .$relatedLinks[$r]['title']. '</div>
             </div>';
             };;
             ?>
