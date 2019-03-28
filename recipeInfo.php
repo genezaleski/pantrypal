@@ -87,9 +87,9 @@ $relatedLinks = json_decode(shell_exec($relatedCmd), true);
 
 
             //Instructions with error handling for no instructions found
-            $instructions = $recipeInfo['instructions'];
+            $instructions = $recipeInfo['instructions'];            
             if ($instructions == "") {
-                $instructions = "Whoops, there are no available instructions for this recipe.";
+                $instructions = "Whoops, there are no available instructions for this recipe."; 
             }
             echo '<br><h2> Insructions </h2> 
     <div class="recipe">' . $instructions . '</div><br>';
