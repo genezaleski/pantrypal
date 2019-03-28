@@ -55,7 +55,7 @@
     z-index: 2;
     font-family: 'results_font';
     pointer-events: none;
-    font-size: 32px;
+    font-size: 25px;
     color: white;
     text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
     max-width:250px;
