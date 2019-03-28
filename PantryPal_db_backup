@@ -1,3 +1,5 @@
+CREATE DATABASE seniorproject;
+
 CREATE TABLE `User`
 (
   `user_id` int PRIMARY KEY not null auto_increment,

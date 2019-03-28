@@ -62,10 +62,6 @@
     word-wrap:break-word;
 }
 
-    .relatedImages {
-        height: 10%;
-        width: 13%;
-    }
 </style>
 
 <?php
@@ -137,7 +133,7 @@ $relatedLinks = json_decode(shell_exec($relatedCmd), true);
         </div>
         <div class="sidelinks">
             <?php 
-            //Unfinished (Needs  to be styled correctly)
+            echo '<h2> You may also like these Recipies</h2>';
             //Generating related links with clickable images
             for ($r = 0; $r < $relatedLinks[$r]; $r++) {
                 echo '<div class = "related">
