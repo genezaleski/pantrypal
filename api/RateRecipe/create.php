@@ -58,6 +58,6 @@ else{
     http_response_code(400);
 
     // tell the guest
-    echo json_encode(array("message" => "Unable to create user, data is incomplete."));
+    echo json_encode(array("message" => "Unable to create rating, data is incomplete."));
 }
 ?>

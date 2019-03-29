@@ -33,5 +33,30 @@ class User{
         return $stmt;
     }
 
+    // create user
+    function create(){
+        $query = "INSERT INTO
+                    " . $this->table_name . "
+                SET
+                    user_name=:user_name, oauth_token=:oauth_token";
+        
+        // prepare query
+        $stmt = $this->conn->prepare($query);
+
+        // sanitize
+        $this->user_name=htmlspecialchars(strip_tags($this->user_name));
+        $this->oauth_token=htmlspecialchars(strip_tags($this->oauth_token));
+
+        // bind values
+        $stmt->bindParam(":user_name", $this->user_name);
+        $stmt->bindParam(":oauth_token", $this->oauth_token);
+
+        // execute query
+        if($stmt->execute()){
+            return true;
+        }
+        
+        return false;
+    }
 }
 ?>
