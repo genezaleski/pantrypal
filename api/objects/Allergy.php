@@ -15,14 +15,14 @@ class Allergy{
         $this->conn = $db;
     }
 
-    // read 
+    // read
     function read(){
 
         // select all query
         $query = "SELECT
                     allery_item_id, allergy_itemName, user_id
                 FROM
-                    " . $this->table_name . ";
+                    " . $this->table_name . ;
 
         // prepare query statement
         $stmt = $this->conn->prepare($query);

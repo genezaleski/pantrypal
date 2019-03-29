@@ -17,7 +17,7 @@ class CommentRecipe{
         $this->conn = $db;
     }
 
-    // read 
+    // read
     function read(){
 
         // select all query
@@ -25,7 +25,7 @@ class CommentRecipe{
                     comment_id, user_id, recipe_id,
                     comment_text, comment_time
                 FROM
-                    " . $this->table_name . ";
+                    " . $this->table_name . ;
 
         // prepare query statement
         $stmt = $this->conn->prepare($query);

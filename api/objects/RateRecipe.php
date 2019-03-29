@@ -6,10 +6,10 @@ class RateRecipe{
     private $table_name = "RateRecipe";
 
     // object properties
-    public $ratedRecipe_id
-    public $recipe_id
-    public $user_id
-    public $rating
+    public $ratedRecipe_id;
+    public $recipe_id;
+    public $user_id;
+    public $rating;
     // constructor with $db as database connection
     public function __construct($db){
         $this->conn = $db;
@@ -23,7 +23,7 @@ class RateRecipe{
                     ratedRecipe_id, recipe_id, user_id,
                     rating
                 FROM
-                    " . $this->table_name . ";
+                    " . $this->table_name . ;
 
         // prepare query statement
         $stmt = $this->conn->prepare($query);
