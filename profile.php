@@ -1,12 +1,23 @@
 <html>
 
 <title>User profile</title>
-<?php 
+<?php
 include 'navbar.php';
 ?>
+<style>
+  .usercontainer{
+    width: 75%;
+    background-color: #ffffff;
+    text-align: center;
+    align: center;
+  }
 
-<h1> Users's Profile </h1>
+</style>
+
+<div class="usercontainer">
+  <h1> Hello<h1>
+</div>
 <h2> User's email </h2>
 <h2> User's inventory </h2>
 
-</html> 
+</html>

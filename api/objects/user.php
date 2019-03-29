@@ -1,26 +1,43 @@
 <?php
-class user{
- 
+class User{
+
     // database connection and table name
     private $conn;
     private $table_name = "User";
+<<<<<<< Updated upstream
  
     // object properties
     //public $user_id;
     public $user_name;
     public $oauth_token;
  
+=======
+
+    // object properties
+    public $user_id;
+    publi $oauth_token;
+    public $user_name;
+
+>>>>>>> Stashed changes
     // constructor with $db as database connection
     public function __construct($db){
         $this->conn = $db;
     }
 
+<<<<<<< Updated upstream
     // read users
+=======
+    // read
+>>>>>>> Stashed changes
     function read(){
 
         // select all query
         $query = "SELECT
+<<<<<<< Updated upstream
                     user_id, user_name, oauth_token
+=======
+                    user_id, oauth_token, user_name
+>>>>>>> Stashed changes
                 FROM
                     " . $this->table_name .";";
 
@@ -33,6 +50,7 @@ class user{
         return $stmt;
     }
 
+<<<<<<< Updated upstream
     // create user
     function create(){
  
@@ -60,5 +78,7 @@ class user{
  
         return false;
     }
+=======
+>>>>>>> Stashed changes
 }
 ?>
