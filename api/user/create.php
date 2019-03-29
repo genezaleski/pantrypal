@@ -21,9 +21,12 @@ $user = new user($db);
 $data = json_decode(file_get_contents("php://input"));
  
 // make sure data is not empty
-if(!empty($data->userName)){
+if(!empty($data->user_name)&&
+    !empty($data->oauth_token)
+){
     // set user property values
-    $user->userName = $data->userName;
+    $user->user_name = $data->user_name;
+    $user->oauth_token = $data->oauth_token;
 
     // create the user
     if($user->create()){

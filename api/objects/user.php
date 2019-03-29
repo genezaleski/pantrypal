@@ -1,43 +1,26 @@
 <?php
-class User{
-
+class user{
+ 
     // database connection and table name
     private $conn;
     private $table_name = "User";
-<<<<<<< Updated upstream
  
     // object properties
     //public $user_id;
     public $user_name;
     public $oauth_token;
  
-=======
-
-    // object properties
-    public $user_id;
-    publi $oauth_token;
-    public $user_name;
-
->>>>>>> Stashed changes
     // constructor with $db as database connection
     public function __construct($db){
         $this->conn = $db;
     }
 
-<<<<<<< Updated upstream
     // read users
-=======
-    // read
->>>>>>> Stashed changes
     function read(){
 
         // select all query
         $query = "SELECT
-<<<<<<< Updated upstream
                     user_id, user_name, oauth_token
-=======
-                    user_id, oauth_token, user_name
->>>>>>> Stashed changes
                 FROM
                     " . $this->table_name .";";
 
@@ -50,7 +33,6 @@ class User{
         return $stmt;
     }
 
-<<<<<<< Updated upstream
     // create user
     function create(){
  
@@ -58,18 +40,18 @@ class User{
         $query = "INSERT INTO
                     " . $this->table_name . "
                 SET
-                    user_name=:user_name, oauth_token=:oauth_token";
+                    oauth_token=:oauth_token, user_name=:user_name";
     
         // prepare query
         $stmt = $this->conn->prepare($query);
     
         // sanitize
-        $this->user_name=htmlspecialchars(strip_tags($this->user_name));
         $this->oauth_token=htmlspecialchars(strip_tags($this->oauth_token));
+        $this->user_name=htmlspecialchars(strip_tags($this->user_name));
     
         // bind values
-        $stmt->bindParam(":user_name", $this->user_name);
         $stmt->bindParam(":oauth_token", $this->oauth_token);
+        $stmt->bindParam(":user_name", $this->user_name);
     
         // execute query
         if($stmt->execute()){
@@ -78,7 +60,5 @@ class User{
  
         return false;
     }
-=======
->>>>>>> Stashed changes
 }
 ?>
