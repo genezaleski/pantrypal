@@ -151,13 +151,13 @@ $title = null;
 $title_list = array();
 
 if(!empty($search)){
-    $api_key = '"X-RapidAPI-Key : a44d550177msh8aeb1867319b60bp1fbbc5jsn1d9edc60417a"';
+    $api_key = '"X-RapidAPI-Key : 87c88962ddmsh12cc4705c3707b2p13794cjsnf4b26acb6bc4"';
     $api_url = null;
     $is_ingredients = strpos($search, ',');
     if($is_ingredients !== false ) { //If commas are in search string, search by ingredients
-        $api_url = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/findByIngredients?ingredients=" . urlencode($search);
+        $api_url = '"https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/findByIngredients?number=60&ingredients=' . urlencode($search) .'"';
 
-        $cmd = "curl -H " . $api_key . " " . $api_url;
+        $cmd = "curl " . $api_url . "  -H " . $api_key;
 
         $output_arr = json_decode(shell_exec($cmd),true);
 
@@ -178,13 +178,21 @@ if(!empty($search)){
         }
     }
     else{                                 //If no commas, search by recipe name
-        $api_url = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/search?query=" . $search;
+        $api_url = '"https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/search?number=60&query=' . urlencode($search) .'"';
 
-        $cmd = "curl -H " . $api_key . " " . $api_url;
+        $cmd = "curl " . $api_url . "  -H " . $api_key;
 
         $output_arr = json_decode(shell_exec($cmd),true);
 
-        for($i = 0; $i < $output_arr['number']; $i++){
+        //Get the number of results to avoid undefined indexes
+        if($output_arr['totalResults'] < $output_arr['number']){
+            $num = $output_arr['totalResults'];
+        }
+        else{
+            $num = $output_arr['number'];
+        }
+
+        for($i = 0; $i < $num; $i++){
             if($is_ingredients == false){
                 $image = "https://spoonacular.com/recipeImages/" . $output_arr['results'][$i]['image'];
                 $id = $output_arr['results'][$i]['id'];
