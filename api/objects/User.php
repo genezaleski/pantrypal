@@ -1,15 +1,15 @@
 <?php
-class RateRecipe{
+class User{
 
     // database connection and table name
     private $conn;
-    private $table_name = "RateRecipe";
+    private $table_name = "User";
 
     // object properties
-    public $ratedRecipe_id;
-    public $recipe_id;
     public $user_id;
-    public $rating;
+    public $oauth_token;
+    public $user_name;
+
     // constructor with $db as database connection
     public function __construct($db){
         $this->conn = $db;
@@ -20,8 +20,7 @@ class RateRecipe{
 
         // select all query
         $query = "SELECT
-                    ratedRecipe_id, recipe_id, user_id,
-                    rating
+                    user_id, oauth_token, user_name
                 FROM
                     " . $this->table_name . ";";
 
@@ -33,7 +32,6 @@ class RateRecipe{
 
         return $stmt;
     }
-
 
 }
 ?>

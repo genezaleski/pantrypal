@@ -10,44 +10,42 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 include_once '../config/database.php';
  
 // instantiate user object
-include_once '../objects/RateRecipe.php';
+include_once '../objects/User.php';
  
 $database = new Database();
 $db = $database->getConnection();
  
-$rateRecipe = new RateRecipe($db);
+$user = new user($db);
  
 // get posted data
 $data = json_decode(file_get_contents("php://input"));
  
 // make sure data is not empty
-if(!empty($data->recipe_id) &&
-    !empty($data->user_id) &&
-    !empty($data->rating)
+if(!empty($data->user_name)&&
+    !empty($data->oauth_token)
 ){
     // set user property values
-    $rateRecipe->recipe_id = $data->recipe_id;
-    $rateRecipe->user_id = $data->user_id;
-    $rateRecipe->rating = $data->rating;
+    $user->user_name = $data->user_name;
+    $user->oauth_token = $data->oauth_token;
 
-    // create the rateRecipe
-    if($rateRecipe->create()){
+    // create the user
+    if($user->create()){
 
         // set response code - 201 created
         http_response_code(201);
 
         // tell the user
-        echo json_encode(array("message" => "{$rateRecipe} was created."));
+        echo json_encode(array("message" => "{$user} was created."));
     }
 
-    // if unable to create the rateRecipe, tell the guest
+    // if unable to create the user, tell the guest
     else{
 
         // set response code - 503 service unavailable
         http_response_code(503);
 
         // tell the guest
-        echo json_encode(array("message" => "Unable to create {$rateRecipe}."));
+        echo json_encode(array("message" => "Unable to create {$user}."));
     }
 }
 
