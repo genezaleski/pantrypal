@@ -11,23 +11,20 @@
     }
     .title {
         font-size: 20px;
+        font: bold;
     }
-
     .recipe {
         width: 60%;
     }
-
     .related {
         list-style-position: inside;
     }
-
     img {
         max-height: 30%;
         max-width: 30%;
     }
     .a {
         float: right;
-
         right: 5px;
     }
     .relatedImg{
@@ -40,11 +37,9 @@
     margin-bottom: 15px;
     z-index: 1;
 }
-
 .relatedImg:hover{
     -webkit-filter: grayscale(100%); 
 }
-
 .relatedTitle{
     position: absolute;
     display: block;
@@ -60,6 +55,18 @@
     text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
     max-width:250px;
     word-wrap:break-word;
+}
+.likeBtn{
+    max-height: 50px;
+    max-width: 50px;
+}
+.likeBtn:click{
+    color:blue;
+} 
+.disLikeBtn{
+    max-height: 50px;
+    max-width: 50px;
+    transform: rotate(180deg);
 }
 
 </style>
@@ -97,12 +104,14 @@ $relatedLinks = json_decode(shell_exec($relatedCmd), true);
         <div class="main">
             <?php 
             //Title and image of recipe
-            echo    '<br><br><div class="title">' . $recipeInfo['title'] . '</div><br>
+            echo    '<br><br><h1>' . $recipeInfo['title'] . '</h1>
             <div class="mainImage"><img src="'.$recipeInfo['image'].'"> </div>
+
+
+            <input type="image" src="images/likeButton.png" name="likeBtn" class="likeBtn" id="likeBtn"/>
+            <input type="image" src="images/likeButton.png" name="disLikeBtn" class="disLikeBtn" id="disLikeBtn"/>
+
             <br><h2> Ingredients </h2>';
-
-
-
             //Loop that generates a list of the ingredients used
             for ($i = 0; $i < $recipeInfo['extendedIngredients'][$i]; $i++) {
                 $amount = $recipeInfo['extendedIngredients'][$i]['amount'];
@@ -129,11 +138,13 @@ $relatedLinks = json_decode(shell_exec($relatedCmd), true);
             //    }
             //}
 
+            echo 'Comments will go down here';
+            
             ?>
         </div>
         <div class="sidelinks">
             <?php 
-            echo '<h2> You may also like these Recipies</h2>';
+            echo '<h2> You may also like these Recipes</h2>';
             //Generating related links with clickable images
             for ($r = 0; $r < $relatedLinks[$r]; $r++) {
                 echo '<div class = "related">
