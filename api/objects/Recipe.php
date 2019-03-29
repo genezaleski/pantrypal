@@ -6,11 +6,11 @@ class Recipe{
     private $table_name = "Recipe";
 
     // object properties
-    public $recipe_id
-    public $api_name
-    public $api_recipe_id
-    public $title
-    public $recipe_link
+    public $recipe_id;
+    public $api_name;
+    public $api_recipe_id;
+    public $title;
+    public $recipe_link;
 
     // constructor with $db as database connection
     public function __construct($db){
