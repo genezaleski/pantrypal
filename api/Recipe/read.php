@@ -5,25 +5,25 @@ header("Content-Type: application/json; charset=UTF-8");
 
 // include database and user files
 include_once '../config/database.php';
-include_once '../objects/user.php';
+include_once '../objects/Recipe.php';
 
 // instantiate database and user object
 $database = new Database();
 $db = $database->getConnection();
 
 // initialize object
-$user = new user($db);
+$Recipe = new Recipe($db);
 
 // query users
-$stmt = $user->read();
+$stmt = $Recipe->read();
 $num = $stmt->rowCount();
 
 // check if more than 0 record found
 if($num>0){
 
     // users array
-    $users_arr=array();
-    $users_arr["users"]=array();
+    $Recipe_arr=array();
+    $Recipe_arr["Recipes"]=array();
 
     // retrieve our table contents
     // fetch() is faster than fetchAll()
@@ -34,20 +34,23 @@ if($num>0){
         // just $name only
         extract($row);
 
-        $user_item=array(
-            "user_id" => $user_id,
-            "user_name" => $user_name,
-            "oauth_token" => $oauth_token,
+        $Recipe_item=array(
+            "recipe_id" => $recipe_id,
+            "api_name" => $api_name,
+            "api_recipe_id" => $api_recipe_id,
+            "title" => $title,
+            "author" => $author,
+            "recipe_link" => $recipe_link
         );
 
-        array_push($users_arr["users"], $user_item);
+        array_push($Recipe_arr["Recipes"], $Recipe_item);
     }
 
     // set response code - 200 OK
     http_response_code(200);
 
     // show users data in json format
-    echo json_encode($users_arr);
+    echo json_encode($Recipe_arr);
 
 }else{
 
@@ -56,7 +59,7 @@ if($num>0){
 
     // tell the user no products found
     echo json_encode(
-        array("message" => "No users found.")
+        array("message" => "No recipes found.")
     );
 }
 ?>
