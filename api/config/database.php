@@ -4,7 +4,7 @@ class Database{
     // specify your own database credentials
     private $host = "localhost";
     private $db_name = "seniorproject";
-    private $username = "root";
+    private $username = "seniorproject";
     private $password = "diVed(22)Berth";
     public $conn;
  

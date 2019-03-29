@@ -3,54 +3,51 @@
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
  
-// include database and object files
+// include database and user files
 include_once '../config/database.php';
-include_once '../objects/product.php';
+include_once '../objects/user.php';
  
-// instantiate database and product object
+// instantiate database and user object
 $database = new Database();
 $db = $database->getConnection();
  
 // initialize object
-$product = new Product($db);
+$user = new user($db);
 
-// query products
-$stmt = $product->read();
+// query users
+$stmt = $user->read();
 $num = $stmt->rowCount();
 
 // check if more than 0 record found
 if($num>0){
 
-    // products array
-    $products_arr=array();
-    $products_arr["records"]=array();
+    // users array
+    $users_arr=array();
+    $users_arr["users"]=array();
 
     // retrieve our table contents
     // fetch() is faster than fetchAll()
-    // http://stackoverflow.com/questions/2770630/pdofetchall-vs-pdofetch-in-a-loop
+    // http://stackover:flow.com/questions/2770630/pdofetchall-vs-pdofetch-in-a-loop
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
         // extract row
         // this will make $row['name'] to
         // just $name only
         extract($row);
 
-        $product_item=array(
-            "id" => $id,
-            "name" => $name,
-            "description" => html_entity_decode($description),
-            "price" => $price,
-            "category_id" => $category_id,
-            "category_name" => $category_name
+        $user_item=array(
+            "user_id" => $user_id,
+            "user_name" => $user_name,
+            "oauth_token" => $oauth_token,
         );
  
-        array_push($products_arr["records"], $product_item);
+        array_push($users_arr["users"], $user_item);
     }
  
     // set response code - 200 OK
     http_response_code(200);
  
-    // show products data in json format
-    echo json_encode($products_arr);
+    // show users data in json format
+    echo json_encode($users_arr);
 
 }else{
 
@@ -59,8 +56,7 @@ if($num>0){
 
     // tell the user no products found
     echo json_encode(
-        array("message" => "No products found.")
+        array("message" => "No users found.")
     );
 }
- 
 ?>
