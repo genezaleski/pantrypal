@@ -60,9 +60,7 @@
     max-height: 50px;
     max-width: 50px;
 }
-.likeBtn:click{
-    color:blue;
-} 
+
 .disLikeBtn{
     max-height: 50px;
     max-width: 50px;
@@ -104,14 +102,50 @@ $relatedLinks = json_decode(shell_exec($relatedCmd), true);
         <div class="main">
             <?php 
             //Title and image of recipe
-            echo    '<br><br><h1>' . $recipeInfo['title'] . '</h1>
-            <div class="mainImage"><img src="'.$recipeInfo['image'].'"> </div>
+            echo    '<h1>' . $recipeInfo['title'] . '</h1>
+            <div class="mainImage"><img src="'.$recipeInfo['image'].'"> </div>';
+
+            ?>
+            
+            <input type = "image" alt="" src="images/likeButton.png" onClick="changeLikeImage()" name="likeBtn" class="likeBtn" id="likeBtn"/>
+            <input type = "image" alt="" src="images/likeButton.png" onClick="changeDisLikeImage()" name="disLikeBtn" class="disLikeBtn" id="disLikeBtn"/>
+            
+
+        <script language="javascript">
+
+        function changeLikeImage() {
+            console.log(document.getElementById("likeBtn").src);
+            if (document.getElementById("likeBtn").src.includes('likeButton.png')){
+                //Checking if the disLiked button is checked and unchecking it
+                if(document.getElementById("disLikeBtn").src.includes('disLikedButton.png')){
+                    document.getElementById("disLikeBtn").src = "images/likeButton.png";
+                }
+                document.getElementById("likeBtn").src = "images/likedButton.png";
+                //Set recipe to liked here using MySQL
+            }
+            else {
+                document.getElementById("likeBtn").src = "images/likeButton.png";
+            }
+        }
+        function changeDisLikeImage() {
+            console.log(document.getElementById("disLikeBtn").src);
+            if (document.getElementById("disLikeBtn").src.includes('likeButton.png')){
+                //Checking if the liked button is checked and unchecking it
+                if(document.getElementById("likeBtn").src.includes('likedButton.png')){
+                    document.getElementById("likeBtn").src = "images/likeButton.png";
+                }
+                document.getElementById("disLikeBtn").src = "images/disLikedButton.png";
+                //Set recipe to disliked here using MySQL
+            }
+            else {
+                document.getElementById("disLikeBtn").src = "images/likeButton.png";
+            }
+        }
+        </script>
 
 
-            <input type="image" src="images/likeButton.png" name="likeBtn" class="likeBtn" id="likeBtn"/>
-            <input type="image" src="images/likeButton.png" name="disLikeBtn" class="disLikeBtn" id="disLikeBtn"/>
-
-            <br><h2> Ingredients </h2>';
+        <?php
+            echo '<br><h2> Ingredients </h2>';
             //Loop that generates a list of the ingredients used
             for ($i = 0; $i < $recipeInfo['extendedIngredients'][$i]; $i++) {
                 $amount = $recipeInfo['extendedIngredients'][$i]['amount'];
@@ -128,7 +162,7 @@ $relatedLinks = json_decode(shell_exec($relatedCmd), true);
                 $instructions = "Whoops, there are no available instructions for this recipe."; 
             }
             echo '<br><h2> Insructions </h2> 
-    <div class="recipe">' . $instructions . '</div><br>';
+            <div class="recipe">' . $instructions . '</div><br>';
 
             //Unfinished, but will hopefully print a better list of instructions than just a dense paragraph
             //for($j = 0; $j < sizeOf($recipeInstr); $j++){
@@ -138,7 +172,7 @@ $relatedLinks = json_decode(shell_exec($relatedCmd), true);
             //    }
             //}
 
-            echo 'Comments will go down here';
+            echo 'Comments will go down here when ready';
             
             ?>
         </div>
