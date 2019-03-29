@@ -20,8 +20,7 @@ class RateRecipe{
 
         // select all query
         $query = "SELECT
-                    ratedRecipe_id, recipe_id, user_id,
-                    rating
+                    ratedRecipe_id, recipe_id, user_id, rating
                 FROM
                     " . $this->table_name . ";";
 
@@ -34,6 +33,34 @@ class RateRecipe{
         return $stmt;
     }
 
-
+    // create
+    function create(){
+ 
+        // query to insert record
+        $query = "INSERT INTO
+                    " . $this->table_name . "
+                SET
+                recipe_id=:recipe_id, user_id=:user_id, rating=:rating";
+     
+        // prepare query
+        $stmt = $this->conn->prepare($query);
+     
+        // sanitize
+        $this->recipe_id=htmlspecialchars(strip_tags($this->recipe_id));
+        $this->user_id=htmlspecialchars(strip_tags($this->user_id));
+        $this->rating=htmlspecialchars(strip_tags($this->rating));
+     
+        // bind values
+        $stmt->bindParam(":recipe_id", $this->recipe_id);
+        $stmt->bindParam(":user_id", $this->user_id);
+        $stmt->bindParam(":rating", $this->rating);
+     
+        // execute query
+        if($stmt->execute()){
+            return true;
+        }
+     
+        return false;
+    }
 }
 ?>
