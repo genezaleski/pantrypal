@@ -23,7 +23,7 @@ class RateRecipe{
                     ratedRecipe_id, recipe_id, user_id,
                     rating
                 FROM
-                    " . $this->table_name . ;
+                    " . $this->table_name . ";";
 
         // prepare query statement
         $stmt = $this->conn->prepare($query);
@@ -33,5 +33,7 @@ class RateRecipe{
 
         return $stmt;
     }
+
+
 }
 ?>

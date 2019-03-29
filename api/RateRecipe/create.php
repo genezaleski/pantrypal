@@ -10,7 +10,7 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 include_once '../config/database.php';
  
 // instantiate user object
-include_once '../objects/raterecipe.php';
+include_once '../objects/RateRecipe.php';
  
 $database = new Database();
 $db = $database->getConnection();
@@ -21,13 +21,11 @@ $rateRecipe = new RateRecipe($db);
 $data = json_decode(file_get_contents("php://input"));
  
 // make sure data is not empty
-if(!empty($data->ratedRecipe_id)&&
-    !empty($data->recipe_id) &&
-    !empty($data->$user_id) &&
-    !empty($data->$rating)
+if(!empty($data->recipe_id) &&
+    !empty($data->user_id) &&
+    !empty($data->rating)
 ){
     // set user property values
-    $rateRecipe->ratedRecipe_id = $data->ratedRecipe_id;
     $rateRecipe->recipe_id = $data->recipe_id;
     $rateRecipe->user_id = $data->user_id;
     $rateRecipe->rating = $data->rating;
@@ -42,7 +40,7 @@ if(!empty($data->ratedRecipe_id)&&
         echo json_encode(array("message" => "{$rateRecipe} was created."));
     }
 
-    // if unable to create the user, tell the guest
+    // if unable to create the rateRecipe, tell the guest
     else{
 
         // set response code - 503 service unavailable
