@@ -1,13 +1,3 @@
-<?php/*
-include_once 'config.php';
-if (isset($_SESSION['username'])) {
-    $user = $_SESSION['username'];
-    $profile = $user . "'s Profile";
-    } else {
-    $profile = "Profile";
-}
-*/
-?>
 
 <style>
 .navbox{
@@ -86,7 +76,7 @@ if (isset($_SESSION['username'])) {
         <html lang="en">
         <head>
           <meta name="google-signin-scope" content="profile email">
-          <meta name="google-signin-client_id" content="680756671435-l6dn77keu8bklio80u87s62l2df19qo5.apps.googleusercontent.com">
+          <meta name="google-signin-client_id" content="818469007806-1oi7h6015kjsggbd4m0i6j4ro9dq6vqt.apps.googleusercontent.com">
           <script src="https://apis.google.com/js/platform.js" async defer></script>
         </head>
         <body>
@@ -112,7 +102,7 @@ if (isset($_SESSION['username'])) {
             <a href="profile.php"> My Profile</a>
             <a href="inventory.php"> Inventory </a>
             <script src="https://apis.google.com/js/platform.js" async defer></script>
-            <meta name="google-signin-client_id" content="680756671435-l6dn77keu8bklio80u87s62l2df19qo5.apps.googleusercontent.com">
+            <meta name="google-signin-client_id" content="818469007806-1oi7h6015kjsggbd4m0i6j4ro9dq6vqt.apps.googleusercontent.com">
             <a href="#" onclick="signOut();">Sign out</a>
               <script>
                 function signOut() {

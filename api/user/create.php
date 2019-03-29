@@ -58,3 +58,4 @@ else{
     // tell the guest
     echo json_encode(array("message" => "Unable to create user, data is incomplete."));
 }
+?>
