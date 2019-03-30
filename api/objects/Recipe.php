@@ -24,7 +24,7 @@ class Recipe{
         $query = "SELECT
                     recipe_id, api_name, api_recipe_id, title, recipe_link
                 FROM
-                    " . $this->table_name . ;
+                    " . $this->table_name . ";";
 
         // prepare query statement
         $stmt = $this->conn->prepare($query);
