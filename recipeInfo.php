@@ -74,11 +74,12 @@ include 'navbar.php';
 
 $recipeID = $_GET['id'];
 
-$api_key = '"X-RapidAPI-Key :322dc0a550msh6970a9bebfd18b2p1010fcjsnaed4930a9684"';
+$my_api_key = '"X-RapidAPI-Key :322dc0a550msh6970a9bebfd18b2p1010fcjsnaed4930a9684"';
+$other_api_key = '"X-RapidAPI-Key : 4af690163bmshda5b867e43cbc70p155394jsnc38cedc3355a"';
 
 //Retrieving recipe info
 $api_url = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/" . $recipeID . "/information";
-$cmd = "curl -H " . $api_key . " " . $api_url;
+$cmd = "curl -H " . $my_api_key . " " . $api_url;
 $recipeInfo = json_decode(shell_exec($cmd), true);
 
 //Retriving recipe instructions broken into steps
@@ -88,7 +89,7 @@ $recipeInfo = json_decode(shell_exec($cmd), true);
 
 //Retriving similar recipies to add as links
 $related_url = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/" . $recipeID . "/similar";
-$relatedCmd = "curl -H " . $api_key . " " . $related_url;
+$relatedCmd = "curl -H " . $other_api_key . " " . $related_url;
 $relatedLinks = json_decode(shell_exec($relatedCmd), true);
 
 ?>
@@ -106,7 +107,7 @@ $relatedLinks = json_decode(shell_exec($relatedCmd), true);
             <div class="mainImage"><img src="'.$recipeInfo['image'].'"> </div>';
 
             ?>
-            
+            <!-- Like/Dislike Buttons -->
             <input type = "image" alt="" src="images/likeButton.png" onClick="changeLikeImage()" name="likeBtn" class="likeBtn" id="likeBtn"/>
             <input type = "image" alt="" src="images/likeButton.png" onClick="changeDisLikeImage()" name="disLikeBtn" class="disLikeBtn" id="disLikeBtn"/>
             
@@ -125,6 +126,7 @@ $relatedLinks = json_decode(shell_exec($relatedCmd), true);
             }
             else {
                 document.getElementById("likeBtn").src = "images/likeButton.png";
+                //Set like value to null since the button was unliked
             }
         }
         function changeDisLikeImage() {
@@ -139,6 +141,7 @@ $relatedLinks = json_decode(shell_exec($relatedCmd), true);
             }
             else {
                 document.getElementById("disLikeBtn").src = "images/likeButton.png";
+                //Set value to null since the disLike button was unclicked
             }
         }
         </script>
