@@ -17,15 +17,20 @@ $db = $database->getConnection();
 
 $Recipe = new Recipe($db);
 
-// get posted data
-$data = json_decode(file_get_contents("php://input"));
+$vars->api_name = isset($_GET['api_name']) ? $_GET['api_name'];
+$vars->api_recipe_id = isset($_GET['api_recipe_id']) ? $_GET['api_recipe_id'];
+$vars->title = isset($_GET['title']) ? $_GET['title'];
+$vars->author = isset($_GET['author']) ? $_GET['author'];
+$vars->recipe_link = isset($_GET['recipe_link'] ? $_GET['recipe_link']);
 
+// get posted data
+#$data = json_decode(file_get_contents("php://input"));
 // make sure data is not empty
-if(!empty($data->api_name)
-  &&!empty($data->api_recipe_id)
-  &&!empty($data->title)
-  &&!empty($data->author)
-  &&!empty($data->recipe_link)
+if(!empty($vars->api_name)
+  &&!empty($vars->api_recipe_id)
+  &&!empty($vars->title)
+  &&!empty($vars->author)
+  &&!empty($vars->recipe_link)
 ){
     // set user property values
     $Recipe->api_name = $data->api_name;
