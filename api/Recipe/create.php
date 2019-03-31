@@ -17,11 +17,11 @@ $db = $database->getConnection();
 
 $Recipe = new Recipe($db);
 
-$vars->api_name = isset($_GET['api_name']) ? $_GET['api_name'] : die();
-$vars->api_recipe_id = isset($_GET['api_recipe_id']) ? $_GET['api_recipe_id'] : die();
-$vars->title = isset($_GET['title']) ? $_GET['title'] : die();
-$vars->author = isset($_GET['author']) ? $_GET['author'] : die();
-$vars->recipe_link = isset($_GET['recipe_link'] ? $_GET['recipe_link']): die();
+$vars->api_name = isset($_GET['api_name']) ? $_GET['api_name'];
+$vars->api_recipe_id = isset($_GET['api_recipe_id']) ? $_GET['api_recipe_id'];
+$vars->title = isset($_GET['title']) ? $_GET['title'];
+$vars->author = isset($_GET['author']) ? $_GET['author'];
+$vars->recipe_link = isset($_GET['recipe_link'] ? $_GET['recipe_link']);
 
 // get posted data
 #$data = json_decode(file_get_contents("php://input"));
