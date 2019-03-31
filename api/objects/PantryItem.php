@@ -22,7 +22,7 @@ class PantryItem{
         $query = "SELECT
                     pantry_item_id, item_name, user_id
                 FROM
-                    " . $this->table_name . ;
+                    " . $this->table_name . ";";
 
         // prepare query statement
         $stmt = $this->conn->prepare($query);
