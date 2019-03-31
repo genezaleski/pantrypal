@@ -47,14 +47,14 @@ if($num>0){
     http_response_code(200);
 
     // show users data in json format
-    echo json_encode($users_arr);
+    echo json_encode($users_arr, JSON_PRETTY_PRINT);
 
 }else{
 
     // set response code - 404 Not found
     http_response_code(404);
 
-    // tell the user no products found
+    // tell the user no usersfound
     echo json_encode(
         array("message" => "No users found.")
     );
