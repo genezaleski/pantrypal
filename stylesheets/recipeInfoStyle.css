@@ -1,0 +1,76 @@
+.maincontent {
+
+    display: grid;
+    grid-template-columns: 70% 30%;
+}
+
+body {
+    background: lightblue;
+    margin: 25px;
+}
+
+.title {
+    font-size: 20px;
+    font: bold;
+}
+
+.recipe {
+    width: 60%;
+}
+
+.related {
+    list-style-position: inside;
+}
+
+img {
+    max-height: 30%;
+    max-width: 30%;
+}
+
+.a {
+    float: right;
+    right: 5px;
+}
+
+.relatedImg {
+    display: block;
+    max-width: 300px;
+    max-height: 300px;
+    width: auto;
+    height: auto;
+    -webkit-filter: grayscale(0%);
+    margin-bottom: 15px;
+    z-index: 1;
+}
+
+.relatedImg:hover {
+    -webkit-filter: grayscale(100%);
+}
+
+.relatedTitle {
+    position: absolute;
+    display: block;
+    float: left;
+    margin-top: -150px;
+    margin-left: 50px;
+    margin-right: -150px;
+    z-index: 2;
+    font-family: 'results_font';
+    pointer-events: none;
+    font-size: 25px;
+    color: white;
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+    max-width: 250px;
+    word-wrap: break-word;
+}
+
+.likeBtn {
+    max-height: 50px;
+    max-width: 50px;
+}
+
+.disLikeBtn {
+    max-height: 50px;
+    max-width: 50px;
+    transform: rotate(180deg);
+}

@@ -1,73 +1,4 @@
-<style>
-    .maincontent {
-        
-        display: grid;
-        grid-template-columns: 70% 30%;
-    }
-
-    body {
-        background: lightblue;
-        margin: 25px;
-    }
-    .title {
-        font-size: 20px;
-        font: bold;
-    }
-    .recipe {
-        width: 60%;
-    }
-    .related {
-        list-style-position: inside;
-    }
-    img {
-        max-height: 30%;
-        max-width: 30%;
-    }
-    .a {
-        float: right;
-        right: 5px;
-    }
-    .relatedImg{
-    display: block;
-    max-width:300px;
-    max-height: 300px;
-    width: auto;
-    height: auto;
-    -webkit-filter: grayscale(0%);
-    margin-bottom: 15px;
-    z-index: 1;
-}
-.relatedImg:hover{
-    -webkit-filter: grayscale(100%); 
-}
-.relatedTitle{
-    position: absolute;
-    display: block;
-    float: left;
-    margin-top: -150px;
-    margin-left: 50px;
-    margin-right: -150px;
-    z-index: 2;
-    font-family: 'results_font';
-    pointer-events: none;
-    font-size: 25px;
-    color: white;
-    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
-    max-width:250px;
-    word-wrap:break-word;
-}
-.likeBtn{
-    max-height: 50px;
-    max-width: 50px;
-}
-
-.disLikeBtn{
-    max-height: 50px;
-    max-width: 50px;
-    transform: rotate(180deg);
-}
-
-</style>
+<link rel="stylesheet" type="text/css" href="stylesheets/recipeInfoStyle.css">
 
 <?php
 include 'navbar.php';
@@ -92,6 +23,12 @@ $related_url = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/reci
 $relatedCmd = "curl -H " . $other_api_key . " " . $related_url;
 $relatedLinks = json_decode(shell_exec($relatedCmd), true);
 
+//Pulling in likes and dislikes  to be used 
+$likeDataCmd = "curl http://52.91.254.222/api/RateRecipe/read.php";
+$decodedLikeData = json_decode(shell_exec($likeData), true);
+
+echo $decodedLikeData;
+
 ?>
 
 <title><?php $recipeInfo['title']; ?></title>
@@ -104,51 +41,71 @@ $relatedLinks = json_decode(shell_exec($relatedCmd), true);
             <?php 
             //Title and image of recipe
             echo    '<h1>' . $recipeInfo['title'] . '</h1>
-            <div class="mainImage"><img src="'.$recipeInfo['image'].'"> </div>';
+            <div class="mainImage"><img src="' . $recipeInfo['image'] . '"> </div>';
 
             ?>
             <!-- Like/Dislike Buttons -->
-            <input type = "image" alt="" src="images/likeButton.png" onClick="changeLikeImage()" name="likeBtn" class="likeBtn" id="likeBtn"/>
-            <input type = "image" alt="" src="images/likeButton.png" onClick="changeDisLikeImage()" name="disLikeBtn" class="disLikeBtn" id="disLikeBtn"/>
-            
+            <input type="image" alt="" src="images/likeButton.png" onClick="changeLikeImage()" name="likeBtn" class="likeBtn" id="likeBtn" />
+            <input type="image" alt="" src="images/likeButton.png" onClick="changeDisLikeImage()" name="disLikeBtn" class="disLikeBtn" id="disLikeBtn" />
+            <?php
 
-        <script language="javascript">
-
-        function changeLikeImage() {
-            console.log(document.getElementById("likeBtn").src);
-            if (document.getElementById("likeBtn").src.includes('likeButton.png')){
-                //Checking if the disLiked button is checked and unchecking it
-                if(document.getElementById("disLikeBtn").src.includes('disLikedButton.png')){
-                    document.getElementById("disLikeBtn").src = "images/likeButton.png";
+            $liked = 0;
+            $disliked = 0;
+            $likedPercent = 0;
+            for ($i = 0; i < $decodedLikeData['ratings'][$i]; $i++) {
+                if ($decodedLikeData['ratings']["$i"]['recipe_id'] == $recipeID) {
+                    if ($decodedLikeData['ratings']["$i"]['rating'] == "like") {
+                        $liked++;
+                    } elseif ($decodedLikeData['ratings']["$i"]['rating'] == "dislike") {
+                        $disliked++;
+                    }
                 }
-                document.getElementById("likeBtn").src = "images/likedButton.png";
-                //Set recipe to liked here using MySQL
             }
-            else {
-                document.getElementById("likeBtn").src = "images/likeButton.png";
-                //Set like value to null since the button was unliked
-            }
-        }
-        function changeDisLikeImage() {
-            console.log(document.getElementById("disLikeBtn").src);
-            if (document.getElementById("disLikeBtn").src.includes('likeButton.png')){
-                //Checking if the liked button is checked and unchecking it
-                if(document.getElementById("likeBtn").src.includes('likedButton.png')){
-                    document.getElementById("likeBtn").src = "images/likeButton.png";
+            $likedPercent = $liked / ($liked + $disliked);
+
+            echo '<h2>' . $likedPercent. ' % of people liked this recipe</h2>';
+            ?>
+
+            <script language="javascript">
+                function changeLikeImage() {
+                    if (document.getElementById("likeBtn").src.includes('likeButton.png')) {
+                        //Checking if the disLiked button is checked and unchecking it
+                        if (document.getElementById("disLikeBtn").src.includes('disLikedButton.png')) {
+                            document.getElementById("disLikeBtn").src = "images/likeButton.png";
+                        }
+                        document.getElementById("likeBtn").src = "images/likedButton.png";
+                        /*
+                        'http://52.91.254.222/api/RateRecipe/create.php' {
+                            "recipe_id": $recipeID,
+                            "user_id": "8",
+                            "rating": "like"
+                        }*/
+                        //Set recipe to liked here using MySQL
+                    } else {
+                        document.getElementById("likeBtn").src = "images/likeButton.png";
+                        //Remove like value from database
+
+                    }
                 }
-                document.getElementById("disLikeBtn").src = "images/disLikedButton.png";
-                //Set recipe to disliked here using MySQL
-            }
-            else {
-                document.getElementById("disLikeBtn").src = "images/likeButton.png";
-                //Set value to null since the disLike button was unclicked
-            }
-        }
-        </script>
 
+                function changeDisLikeImage() {
+                    if (document.getElementById("disLikeBtn").src.includes('likeButton.png')) {
+                        //Checking if the liked button is checked and unchecking it
+                        if (document.getElementById("likeBtn").src.includes('likedButton.png')) {
+                            document.getElementById("likeBtn").src = "images/likeButton.png";
+                        }
+                        document.getElementById("disLikeBtn").src = "images/disLikedButton.png";
+                        //Set recipe to disliked here using MySQL
+                    } else {
+                        document.getElementById("disLikeBtn").src = "images/likeButton.png";
+                        //Remove disLike from database
+                    }
+                }
+            </script>
 
-        <?php
-            echo '<br><h2> Ingredients </h2>';
+            <?php 
+
+            echo '<h2> Ingredients </h2>';
             //Loop that generates a list of the ingredients used
             for ($i = 0; $i < $recipeInfo['extendedIngredients'][$i]; $i++) {
                 $amount = $recipeInfo['extendedIngredients'][$i]['amount'];
@@ -160,9 +117,9 @@ $relatedLinks = json_decode(shell_exec($relatedCmd), true);
 
 
             //Instructions with error handling for no instructions found
-            $instructions = $recipeInfo['instructions'];            
+            $instructions = $recipeInfo['instructions'];
             if ($instructions == "") {
-                $instructions = "Whoops, there are no available instructions for this recipe."; 
+                $instructions = "Whoops, there are no available instructions for this recipe.";
             }
             echo '<br><h2> Insructions </h2> 
             <div class="recipe">' . $instructions . '</div><br>';
@@ -176,7 +133,7 @@ $relatedLinks = json_decode(shell_exec($relatedCmd), true);
             //}
 
             echo 'Comments will go down here when ready';
-            
+
             ?>
         </div>
         <div class="sidelinks">
@@ -185,8 +142,8 @@ $relatedLinks = json_decode(shell_exec($relatedCmd), true);
             //Generating related links with clickable images
             for ($r = 0; $r < $relatedLinks[$r]; $r++) {
                 echo '<div class = "related">
-                 <a href=recipeInfo.php?id='.$relatedLinks[$r]['id'].'><img class="relatedImg" src="https://spoonacular.com/recipeImages/'. $relatedLinks[$r]['image'] .'" alt="recipeImage" style="width:100%;"></a>
-                 <div class="relatedTitle">' .$relatedLinks[$r]['title']. '</div>
+                 <a href=recipeInfo.php?id=' . $relatedLinks[$r]['id'] . '><img class="relatedImg" src="https://spoonacular.com/recipeImages/' . $relatedLinks[$r]['image'] . '" alt="recipeImage" style="width:100%;"></a>
+                 <div class="relatedTitle">' . $relatedLinks[$r]['title'] . '</div>
             </div>';
             };;
             ?>
