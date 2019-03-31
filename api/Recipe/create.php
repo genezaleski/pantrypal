@@ -18,7 +18,7 @@ $db = $database->getConnection();
 $Recipe = new Recipe($db);
 
 $Recipe->api_name = isset($_GET['api_name']) ? $_GET['api_name'] : die();
-$Recipe->api_recipe_id = isset($_GET['api_name']) ? $_GET['api_name'] : die();
+$Recipe->api_recipe_id = isset($_GET['api_recipe_id']) ? $_GET['api_recipe_id'] : die();
 $Recipe->title = isset($_GET['title']) ? $_GET['title'] : die();
 $Recipe->author = isset($_GET['author']) ? $_GET['author'] : die();
 $Recipe->recipe_link = isset($_GET['recipe_link'] ? $_GET['recipe_link']): die();
