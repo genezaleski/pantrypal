@@ -1,116 +1,4 @@
-<style>
-@font-face{
-    font-family: 'results_font';
-    src: url(Acme-Regular.ttf);
-}
-
-body{
-    background-color: grey;
-    background-image: url(images/wooden-background-1538068471RLq);
-    background-size: 100%;
-    margin: 0px;
-}
-
-.searchbar{
-    margin-left: 675px;
-    width: 300px;s
-}
-
-.searchtitle{
-    margin-left: 550px;
-}
-
-.imgresults{
-    display: block;
-    max-width:420px;
-    max-height:236px;
-    width: auto;
-    height: auto;
-    -webkit-filter: grayscale(0%);
-    margin-bottom: 15px;
-    z-index: 1;
-}
-
-.imgresults:hover{
-    -webkit-filter: grayscale(100%); 
-}
-
-.recipeName{
-    position: absolute;
-    display: block;
-    float: left;
-    margin-top: -220px;
-    margin-left: 100px;
-    margin-right: -300px;
-    z-index: 2;
-    font-family: 'results_font';
-    pointer-events: none;
-    font-size: 32px;
-    color: white;
-    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
-    max-width:250px;
-    word-wrap:break-word;
-}
-
-.column{
-    float: left;
-    width: 33.33%;
-    padding: 0px;
-    margin-left: 100px;
-    margin-right: -125px;
-}
-
-.row::after{
-    content: "";
-    clear: both;
-    display: table;
-}
-
-.nav-side{
-    position: fixed;
-    left: 0;
-    top: 0;
-    height: 100%;
-    width: 100%;
-    max-width: 250px;
-    background-color: orange;
-    z-index: 3;
-    box-sizing: border-box;
-    padding: 20px;
-    margin-left: -250px;
-    margin-top: 140px;
-}
-
-.nav-side.nav-open{
-    margin-left: 0px;
-    box-shadow: 1px 1px 3px rgba(0, 0, 0, .1);
-}
-
-.nav-side.nav-open .nav-toggle:before{
-    content: "\2190";
-}
-
-.nav-toggle{
-    position: absolute;
-    right: -40px;
-    top: 0;
-    width: 40px;
-    height: 40px;
-    background-color: orange;
-    line-height: 40px;
-    text-decoration: none;
-    text-align: center;
-    border-bottom-right-radius: 3px;
-    box-shadow: 1px 0 3px rgba(0,0,0,.1);
-}
-
-.nav-toggle:before{
-    content: "\2192";
-    font-weight: 600;
-
-}
-</style>
-
+<link rel="stylesheet" type="text/css" href="stylesheets/resultspagestyle.css">
 <title>Search Results:</title>
 
 <?php
@@ -128,8 +16,24 @@ include 'navbar.php';
 <!-- End JS for filter menu-->
 
 <nav class="nav-side">
-    Filters
+    <p class="filters">Filters</p>
     <a href="#" class="nav-toggle"></a>
+    <label class="container"> Vegetarian
+        <input type="checkbox">
+        <span class="checkmark"></span>
+    </label>
+    <label class="container"> Allergies
+        <input type="checkbox">
+        <span class="checkmark"></span>
+    </label>
+    <label class="container"> Breakfast
+        <input type="checkbox">
+        <span class="checkmark"></span>
+    </label>
+    <label class="container"> Dinner
+        <input type="checkbox">
+        <span class="checkmark"></span>
+    </label>
 </nav>
 
 <script language="JavaScript">
@@ -216,6 +120,7 @@ $one = '';
 $two = '';
 $three = '';
 
+//Puts images into columns
 for($i = 0; $i < sizeof($image_results); $i++){
     if(($i % 3) == 1){
         $one .= '<div class="imglink">

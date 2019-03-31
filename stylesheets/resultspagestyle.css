@@ -1,0 +1,183 @@
+@font-face{
+    font-family: 'results_font';
+    src: url(fonts/Acme-Regular.ttf);
+}
+
+body{
+    background-color: grey;
+    background-image: url(images/wooden-background-1538068471RLq.jpg);
+    background-size: 100%;
+    margin: 0px;
+}
+
+.searchbar{
+    margin-left: 675px;
+    width: 300px;
+}
+
+.searchtitle{
+    margin-left: 550px;
+}
+
+.imgresults{
+    display: block;
+    max-width:420px;
+    max-height:236px;
+    width: auto;
+    height: auto;
+    -webkit-filter: grayscale(0%);
+    margin-bottom: 15px;
+    z-index: 1;
+}
+
+.imgresults:hover{
+    -webkit-filter: grayscale(100%); 
+}
+
+.recipeName{
+    position: absolute;
+    display: block;
+    float: left;
+    margin-top: -220px;
+    margin-left: 100px;
+    margin-right: -300px;
+    z-index: 2;
+    font-family: 'results_font';
+    pointer-events: none;
+    font-size: 32px;
+    color: white;
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+    max-width:250px;
+    word-wrap:break-word;
+}
+
+.column{
+    float: left;
+    width: 33.33%;
+    padding: 0px;
+    margin-left: 100px;
+    margin-right: -125px;
+}
+
+.row::after{
+    content: "";
+    clear: both;
+    display: table;
+}
+
+.nav-side{
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    max-width: 250px;
+    background-color: orange;
+    z-index: 3;
+    box-sizing: border-box;
+    padding: 20px;
+    margin-left: -250px;
+    margin-top: 140px;
+    font-family: 'results_font';
+}
+
+.nav-side.nav-open{
+    margin-left: 0px;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, .1);
+}
+
+.nav-side.nav-open .nav-toggle:before{
+    content: "\2190";
+}
+
+.nav-toggle{
+    position: absolute;
+    right: -40px;
+    top: 0;
+    width: 40px;
+    height: 40px;
+    background-color: orange;
+    line-height: 40px;
+    text-decoration: none;
+    text-align: center;
+    border-bottom-right-radius: 3px;
+    box-shadow: 1px 0 3px rgba(0,0,0,.1);
+}
+
+.nav-toggle:before{
+    content: "\2192";
+    font-weight: 600;
+
+}
+
+.container{
+    display: block;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 22px;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    font-family: 'results_font';
+}
+
+.container input{
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+.checkmark{
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 25px;
+    width: 25px;
+    background-color: #eee;
+}
+
+/* On mouse-over, add a grey background color */
+.container:hover input ~ .checkmark {
+  background-color: #ccc;
+}
+
+/* When the checkbox is checked, add a blue background */
+.container input:checked ~ .checkmark {
+  background-color: black;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the checkmark when checked */
+.container input:checked ~ .checkmark:after {
+  display: block;
+}
+
+/* Style the checkmark/indicator */
+.container .checkmark:after {
+  left: 9px;
+  top: 5px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+.filters{
+    font-family: 'results_font';
+    font-size: 28px;
+    margin-top: -10px;
+    margin-bottom: 20px;
+}
