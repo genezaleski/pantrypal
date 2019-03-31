@@ -35,7 +35,5 @@ class CommentRecipe{
 
         return $stmt;
     }
-
-
 }
 ?>
