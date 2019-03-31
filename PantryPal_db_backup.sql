@@ -26,10 +26,11 @@ CREATE TABLE `CommentRecipe`
 
 CREATE TABLE `Recipe`
 (
-  `recipe_id` int PRIMARY KEY not null,
+  `recipe_id` int PRIMARY KEY auto_increment not null,
   `api_name` varchar(255) not null,
   `api_recipe_id` varchar(255) not null,
   `title` varchar(255) not null,
+  `author` varchar(255) not null,
   `recipe_link` varchar(2083) not null
 );
 
@@ -47,14 +48,14 @@ CREATE TABLE `PantryItem`
   `user_id` int not null
 );
 
-ALTER TABLE `User` ADD FOREIGN KEY (`user_id`) REFERENCES `RateRecipe` (`user_id`);
-
-ALTER TABLE `Recipe` ADD FOREIGN KEY (`recipe_id`) REFERENCES `RateRecipe` (`recipe_id`);
-
 ALTER TABLE `Allergy` ADD FOREIGN KEY (`user_id`) REFERENCES `User` (`user_id`);
 
 ALTER TABLE `PantryItem` ADD FOREIGN KEY (`user_id`) REFERENCES `User` (`user_id`);
 
-ALTER TABLE `User` ADD FOREIGN KEY (`user_id`) REFERENCES `CommentRecipe` (`user_id`);
+ALTER TABLE `RateRecipe` ADD FOREIGN KEY (`user_id`) REFERENCES `User` (`user_id`);
 
-ALTER TABLE `Recipe` ADD FOREIGN KEY (`recipe_id`) REFERENCES `CommentRecipe` (`recipe_id`);
+ALTER TABLE `RateRecipe` ADD FOREIGN KEY (`recipe_id`) REFERENCES `Recipe` (`recipe_id`);
+
+ALTER TABLE `CommentRecipe` ADD FOREIGN KEY (`user_id`) REFERENCES `User` (`user_id`);
+
+ALTER TABLE `CommentRecipe` ADD FOREIGN KEY (`recipe_id`) REFERENCES `Recipe` (`recipe_id`);
