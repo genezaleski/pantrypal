@@ -22,7 +22,7 @@ class Recipe{
 
         // select all query
         $query = "SELECT
-                    recipe_id, api_name, api_recipe_id, title, recipe_link
+                    recipe_id, api_name, api_recipe_id, title, author, recipe_link
                 FROM
                     " . $this->table_name . ";";
 
@@ -33,6 +33,39 @@ class Recipe{
         $stmt->execute();
 
         return $stmt;
+    }
+
+    function create(){
+      $query = "INSERT INTO
+                  " . $this->table_name . "
+              SET
+                  api_name=:api_name, api_recipe_id=:api_recipe_id,
+                  title=:title, author=:author, recipe_link=:recipe_link";
+
+      // prepare query
+      $stmt = $this->conn->prepare($query);
+
+      // sanitize
+      $this->api_name=htmlspecialchars(strip_tags($this->api_name));
+      $this->api_recipe_id=htmlspecialchars(strip_tags($this->api_recipe_id));
+      $this->title=htmlspecialchars(strip_tags($this->title));
+      $this->author=htmlspecialchars(strip_tags($this->author));
+      $this->recipe_link=htmlspecialchars(strip_tags($this->recipe_link));
+
+      // bind values
+      $stmt->bindParam(":api_name", $this->api_name);
+      $stmt->bindParam(":api_recipe_id", $this->api_recipe_id);
+      $stmt->bindParam(":title", $this->title);
+      $stmt->bindParam(":author", $this->author);
+      $stmt->bindParam(":recipe_link", $this->recipe_link);
+
+      // execute query
+      if($stmt->execute()){
+          return true;
+      }
+
+      return false;
+
     }
 }
 ?>

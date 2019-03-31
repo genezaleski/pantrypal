@@ -8,14 +8,14 @@ values ('QQQQQ','alexjenkins223'),
 
 
 insert into Recipe (api_name,api_recipe_id,title,recipe_link)
-values ('spoon','123qef',"Mom's Mac and Cheese",'foodnetwork.com/mac&cheese'),
-('spoon','405tcx',"Best PB&J",'foodnetwork.com/pb&j'),
-('spoon','sf0123',"Amazingly Cheesy Grilled Cheese",'foodnetwork.com/grilledcheese'),
-('spoon','3902sd',"Not Your Standard Chicken Salad!",'foodnetwork.com/chickensalad'),
-('spoon','dfapoi',"5 Minute Tuna Salad",'foodnetwork.com/tunasalad'),
-('spoon','1230sd',"Original Caesar Salad",'foodnetwork.com/caesarsalad'),
-('spoon','po023d',"30 Minute Buffalo Chicken",'foodnetwork.com/buffalochicken'),
-('spoon','kk1234',"Ez Bake Pizza",'foodnetwork.com/pizza');
+values ('spoon','123qef',"Mom's Mac and Cheese","Food Netwok",'foodnetwork.com/mac&cheese'),
+('spoon','405tcx',"Best PB&J","Food Network",'foodnetwork.com/pb&j'),
+('spoon','sf0123',"Amazingly Cheesy Grilled Cheese","Food Network",'foodnetwork.com/grilledcheese'),
+('spoon','3902sd',"Not Your Standard Chicken Salad!","Food Network",'foodnetwork.com/chickensalad'),
+('spoon','dfapoi',"5 Minute Tuna Salad","Food Network",'foodnetwork.com/tunasalad'),
+('spoon','1230sd',"Original Caesar Salad","Food Network",'foodnetwork.com/caesarsalad'),
+('spoon','po023d',"30 Minute Buffalo Chicken",'"Food Network",foodnetwork.com/buffalochicken'),
+('spoon','kk1234',"Ez Bake Pizza","Food Network",'foodnetwork.com/pizza');
 
 insert into Allergy (allergy_itemName, user_id)
 values ('banana',3),

@@ -26,7 +26,7 @@ CREATE TABLE `CommentRecipe`
 
 CREATE TABLE `Recipe`
 (
-  `recipe_id` int PRIMARY KEY auto_increment not null,
+  `recipe_id` int PRIMARY KEY not null auto_increment,
   `api_name` varchar(255) not null,
   `api_recipe_id` varchar(255) not null,
   `title` varchar(255) not null,

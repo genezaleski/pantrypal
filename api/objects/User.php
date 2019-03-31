@@ -39,7 +39,7 @@ class User{
                     " . $this->table_name . "
                 SET
                     user_name=:user_name, oauth_token=:oauth_token";
-        
+
         // prepare query
         $stmt = $this->conn->prepare($query);
 
@@ -55,7 +55,7 @@ class User{
         if($stmt->execute()){
             return true;
         }
-        
+
         return false;
     }
 }
