@@ -39,7 +39,8 @@ class Recipe{
       $query = "INSERT INTO
                   " . $this->table_name . "
               SET
-                  user_name=:user_name, oauth_token=:oauth_token";
+                  api_name=:api_name, api_recipe_id=:api_recipe_id,
+                  title=:title, author=:author, recipe_link=:recipe_link";
 
       // prepare query
       $stmt = $this->conn->prepare($query);
