@@ -14,7 +14,7 @@ $db = $database->getConnection();
 // initialize object
 $PantryItem = new PantryItem($db);
 
-// query ratings
+// query pantry
 $stmt = $PantryItem->read();
 $num = $stmt->rowCount();
 
