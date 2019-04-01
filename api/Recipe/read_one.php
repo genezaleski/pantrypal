@@ -18,7 +18,7 @@ $db = $database->getConnection();
 $Recipe = new Recipe($db);
 
 // set ID property of recipe to read
-$Recipe->recipe_id = isset($_GET['recipe_id']) ? $_GET['recipe_id'] : die();
+$Recipe->recipe_id = curl_unescape($recipe_id, "recipe_id");
 
 // read the details of recipe to be edited
 $Recipe->readOne();
