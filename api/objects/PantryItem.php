@@ -6,9 +6,11 @@ class PantryItem{
     private $table_name = "PantryItem";
 
     // object properties
-    public $user_id;
-    public $item_name;
     public $pantry_item_id;
+    public $item_name;
+    public $user_id;
+
+
 
     // constructor with $db as database connection
     public function __construct($db){
