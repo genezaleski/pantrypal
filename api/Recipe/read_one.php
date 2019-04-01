@@ -18,7 +18,13 @@ $db = $database->getConnection();
 $Recipe = new Recipe($db);
 
 // set ID property of recipe to read
-$Recipe->recipe_id = curl_unescape($recipe_id, "recipe_id");
+$url = '/api/Recipe/read_one/';
+$ch = curl_init($url);
+$readString = http_build_query($data, '', '&');
+$response = curl_exec($ch);
+curl_close($ch);
+
+$Recipe->recipe_id = curl_unescape($respone, $recipe_id);
 
 // read the details of recipe to be edited
 $Recipe->readOne();
