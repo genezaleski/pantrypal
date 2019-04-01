@@ -37,7 +37,7 @@ if(!empty($data->recipe_id) &&
         http_response_code(201);
 
         // tell the user
-        echo json_encode(array("message" => "{$rateRecipe} was created."));
+        echo json_encode(array("message" => "Rating was created."));
     }
 
     // if unable to create the rateRecipe, tell the guest
@@ -47,7 +47,7 @@ if(!empty($data->recipe_id) &&
         http_response_code(503);
 
         // tell the guest
-        echo json_encode(array("message" => "Unable to create {$rateRecipe}."));
+        echo json_encode(array("message" => "Unable to create rating."));
     }
 }
 

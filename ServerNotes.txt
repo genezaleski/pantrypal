@@ -1,0 +1,17 @@
+Begin
+"ssh -i C:\Users\E5450\webprojects\sp\pantrypal.pem ubuntu@ec2-52-91-254-222.compute-1.amazonaws.com"
+
+Patch 
+"sudo apt upgrade"
+
+Reboot
+"sudo reboot"
+
+Database
+"mysql -u seniorproject -p" password: diVed(22)Berth
+	adding users - INSERT INTO user (userName) VALUE ('user2');
+	removing users -  DELETE FROM user WHERE user_id = 2;
+	Status - Select user_id, userName from seniorproject.user;
+
+Making a POST HTTP Request *Note: recipe_id and user_id must exist and not overrite a previous rating.
+curl -d '{"recipe_id" : "8", "user_id" : "9", "rating" : "like"}' -H "Content-Type: application/json" -X POST http://localhost:80/api/RateRecipe/create.php

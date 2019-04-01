@@ -17,20 +17,15 @@ $db = $database->getConnection();
 
 $Recipe = new Recipe($db);
 
-$vars->api_name = isset($_GET['api_name']) ? $_GET['api_name'] ;
-$vars->api_recipe_id = isset($_GET['api_recipe_id']) ;
-$vars->title = isset($_GET['title']) ? $_GET['title'] ;
-$vars->author = isset($_GET['author']) ? $_GET['author'];
-$vars->recipe_link = isset($_GET['recipe_link'] ? $_GET['recipe_link']);
-
 // get posted data
-#$data = json_decode(file_get_contents("php://input"));
+$data = json_decode(file_get_contents("php://input"));
+
 // make sure data is not empty
 if(!empty($vars->api_name)
-  &&!empty($vars->api_recipe_id)
-  &&!empty($vars->title)
-  &&!empty($vars->author)
-  &&!empty($vars->recipe_link)
+  && !empty($vars->api_recipe_id)
+  && !empty($vars->title)
+  && !empty($vars->author)
+  && !empty($vars->recipe_link)
 ){
     // set user property values
     $Recipe->api_name = $data->api_name;
@@ -46,7 +41,7 @@ if(!empty($vars->api_name)
         http_response_code(201);
 
         // tell the user
-        echo json_encode(array("message" => "{$Recipe} was created."));
+        echo json_encode(array("message" => "Recipe was created."));
     }
 
     // if unable to create the recipe, tell the guest
@@ -56,7 +51,7 @@ if(!empty($vars->api_name)
         http_response_code(503);
 
         // tell the guest
-        echo json_encode(array("message" => "Unable to create {$Recipe}."));
+        echo json_encode(array("message" => "Unable to create Recipe."));
     }
 }
 

@@ -15,7 +15,7 @@ include_once '../objects/User.php';
 $database = new Database();
 $db = $database->getConnection();
  
-$user = new user($db);
+$user = new User($db);
  
 // get posted data
 $data = json_decode(file_get_contents("php://input"));
@@ -35,7 +35,7 @@ if(!empty($data->user_name)&&
         http_response_code(201);
 
         // tell the user
-        echo json_encode(array("message" => "{$user} was created."));
+        echo json_encode(array("message" => "User was created."));
     }
 
     // if unable to create the user, tell the guest
@@ -45,7 +45,7 @@ if(!empty($data->user_name)&&
         http_response_code(503);
 
         // tell the guest
-        echo json_encode(array("message" => "Unable to create {$user}."));
+        echo json_encode(array("message" => "Unable to create user."));
     }
 }
 
