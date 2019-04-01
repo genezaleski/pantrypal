@@ -32,5 +32,31 @@ class Allergy{
 
         return $stmt;
     }
+
+    // create
+    function create(){
+        $query = "INSERT INTO
+                    " . $this->table_name . "
+                SET
+                allergy_itemName=:allergy_itemName, user_id=:user_id";
+
+        // prepare query
+        $stmt = $this->conn->prepare($query);
+
+        // sanitize
+        $this->allergy_itemName=htmlspecialchars(strip_tags($this->allergy_itemName));
+        $this->user_id=htmlspecialchars(strip_tags($this->user_id));
+
+        // bind values
+        $stmt->bindParam(":recipe_id", $this->allergy_itemName);
+        $stmt->bindParam(":user_id", $this->user_id);        
+
+        // execute query
+        if($stmt->execute()){
+            return true;
+        }
+
+        return false;
+    }
 }
 ?>
