@@ -10,6 +10,7 @@ class Recipe{
     public $api_name;
     public $api_recipe_id;
     public $title;
+    public $author;
     public $recipe_link;
 
     // constructor with $db as database connection
