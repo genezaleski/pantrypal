@@ -21,11 +21,11 @@ $Recipe = new Recipe($db);
 $data = json_decode(file_get_contents("php://input"));
 
 // make sure data is not empty
-if(!empty($vars->api_name)
-  && !empty($vars->api_recipe_id)
-  && !empty($vars->title)
-  && !empty($vars->author)
-  && !empty($vars->recipe_link)
+if(!empty($data->api_name)
+  && !empty($data->api_recipe_id)
+  && !empty($data->title)
+  && !empty($data->author)
+  && !empty($data->recipe_link)
 ){
     // set user property values
     $Recipe->api_name = $data->api_name;
@@ -34,8 +34,8 @@ if(!empty($vars->api_name)
     $Recipe->author = $data->author;
     $Recipe->recipe_link = $data->recipe_link;
 
-    // create the user
-    if($user->create()){
+    // create the recipe
+    if($Recipe->create()){
 
         // set response code - 201 created
         http_response_code(201);
