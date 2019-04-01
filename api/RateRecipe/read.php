@@ -34,8 +34,8 @@ if($num>0){
         // just $name only
         extract($row);
 
-        $rating_item=$rating_item=array( 
-            "{$ratedRecipe_id}" => 
+        $rating_item=$rating_item=array(
+            "{$ratedRecipe_id}" =>
             array(
             //"ratedRecipe_id" => $ratedRecipe_id,
             "recipe_id" => $recipe_id,
