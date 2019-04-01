@@ -30,7 +30,7 @@ if($num>0){
 
         $Allergy=array(
             "allergy_item_id" => $allergy_item_id,
-            "allergy_item_name" => $allergy_item_name,
+            "allergy_itemName" => $allergy_itemName,
             "user_id" => $user_id
         );
 
