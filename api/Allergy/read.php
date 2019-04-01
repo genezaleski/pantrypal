@@ -34,7 +34,7 @@ if($num>0){
             "user_id" => $user_id
         );
 
-	array_push($Allergy_arr["Allergy"], $Allergy_item);
+	array_push($Allergy_arr["Allergy"], $Allergy);
     }
 
     // set response code - 200 OK
