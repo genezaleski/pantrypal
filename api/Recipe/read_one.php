@@ -21,11 +21,11 @@ $Recipe = new Recipe($db);
 $Recipe->recipe_id = isset($_GET['recipe_id']) ? $_GET['recipe_id'] : die();
 
 // read the details of recipe to be edited
-$product->readOne();
+$Recipe->readOne();
 
-if($product->name!=null){
+if($Recipe->name!=null){
     // create array
-    $product_arr = array(
+    $Recipe_arr = array(
         "recipe_id" =>  $Recipe->recipe_id,
         "api_name" => $Recipe->api_name,
         "api_recipe_id" => $Recipe->api_recipe_id,
@@ -38,7 +38,7 @@ if($product->name!=null){
     http_response_code(200);
 
     // make it json format
-    echo json_encode($product_arr);
+    echo json_encode($Recipe_arr);
 }
 
 else{
