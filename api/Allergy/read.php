@@ -7,7 +7,7 @@ header("Content-Type: application/json; charset=UTF-8");
 include_once '../config/database.php';
 include_once '../objects/Allergy.php';
 
-// instantiate database and allergy object
+// instantiate database and user object
 $database = new Database();
 $db = $database->getConnection();
 
@@ -23,14 +23,14 @@ if($num>0){
 
     // allergy array
     $Allergy_arr=array();
-    $Allergy_arr["AllergyItem"]=array();
+    $Allergy_arr["Allergy"]=array();
 
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
         extract($row);
 
-        $Allergy_item=array(
+        $Allergy=array(
             "allergy_item_id" => $allergy_item_id,
-            "allergy_item_name" => $allergy_item_id,
+            "allergy_item_name" => $allergy_item_name,
             "user_id" => $user_id
         );
 
