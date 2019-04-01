@@ -20,7 +20,7 @@ class Allergy{
 
         // select all query
         $query = "SELECT
-                    allery_item_id, allergy_itemName, user_id
+                    allergy_item_id, allergy_itemName, user_id
                 FROM
                     " . $this->table_name . ";";
 
