@@ -44,7 +44,7 @@ class Recipe{
             FROM
                 " . $this->table_name . "
             WHERE
-                recipe_id = $recipe_id ";";
+                recipe_id = " . $recipe_id . ";";
 
                 // prepare query statement
       $stmt = $this->conn->prepare( $query );
