@@ -29,7 +29,7 @@ else{
 // read the details of recipe to be edited
 $Recipe->readOne();
 
-if($Recipe->recipe_id = null){
+if($Recipe->recipe_id != null){
     // create array
     $Recipe_arr = array(
         "recipe_id" =>  $Recipe->recipe_id,
