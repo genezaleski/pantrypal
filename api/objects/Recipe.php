@@ -36,7 +36,7 @@ class Recipe{
         return $stmt;
     }
 
-    function readOne($recipe_id){
+    function readOne(){
 
       // query to read single record
       $query = "SELECT
@@ -50,7 +50,7 @@ class Recipe{
       $stmt = $this->conn->prepare( $query );
 
       // bind id of product to be updated
-      $stmt->bindParam(1, $this->id);
+      $stmt->bindParam(1, $this->recipe_id);
 
       // execute query
       $stmt->execute();
