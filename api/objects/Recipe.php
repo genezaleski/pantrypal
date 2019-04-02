@@ -44,15 +44,13 @@ class Recipe{
             FROM
                 " . $this->table_name . "
             WHERE
-                p.id = ?
-            LIMIT
-                0,1";
+                recipe_id = $recipe_id ";";
 
                 // prepare query statement
       $stmt = $this->conn->prepare( $query );
 
       // bind id of product to be updated
-      $stmt->bindParam(1, $this->id);
+      $stmt->bindParam(1, $this->recipe_id);
 
       // execute query
       $stmt->execute();
