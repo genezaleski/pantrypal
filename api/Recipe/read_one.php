@@ -23,11 +23,11 @@ if(!isset($_GET['recipe_id'])){
   echo "id not included";
 }
 else{
-
+  $Recipe->recipe_id = $_GET['recipe_id']
 }
 
 // read the details of recipe to be edited
-$Recipe->recipe_id = readOne($_GET['recipe_id']);
+$Recipe->recipe_id = readOne();
 
 if($Recipe->recipe_id != null){
     // create array
