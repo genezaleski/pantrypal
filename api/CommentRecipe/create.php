@@ -9,7 +9,7 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 // get database connection
 include_once '../config/database.php';
  
-// instantiate user object
+// instantiate comment object
 include_once '../objects/CommentRecipe.php';
  
 $database = new Database();
@@ -23,33 +23,31 @@ $data = json_decode(file_get_contents("php://input"));
 // make sure data is not empty
 if(!empty($data->user_id)&&
     !empty($data->recipe_id)&&
-    !empty($data->comment_text)&&
-    !empty($data->comment_time)
+    !empty($data->comment_text)
 ){
-    // set user property values
+    // set comment property values
     $comment->user_id = $data->user_id;
     $comment->recipe_id = $data->recipe_id;
     $comment->comment_text = $data->comment_text;
-    $comment->comment_time = $data->comment_time;
 
-    // create the user
+    // create the comment
     if($comment->create()){
 
         // set response code - 201 created
         http_response_code(201);
 
         // tell the user
-        echo json_encode(array("message" => "User was created."));
+        echo json_encode(array("message" => "Comment was created."));
     }
 
-    // if unable to create the user, tell the guest
+    // if unable to create the Comment, tell the guest
     else{
 
         // set response code - 503 service unavailable
         http_response_code(503);
 
         // tell the guest
-        echo json_encode(array("message" => "Unable to create user."));
+        echo json_encode(array("message" => "Unable to create comment."));
     }
 }
 
@@ -60,6 +58,6 @@ else{
     http_response_code(400);
 
     // tell the guest
-    echo json_encode(array("message" => "Unable to create user, data is incomplete."));
+    echo json_encode(array("message" => "Unable to create comment, data is incomplete."));
 }
 ?>
