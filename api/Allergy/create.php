@@ -9,45 +9,43 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 // get database connection
 include_once '../config/database.php';
  
-// instantiate rating object
-include_once '../objects/RateRecipe.php';
+// instantiate allergy object
+include_once '../objects/Allergy.php';
  
 $database = new Database();
 $db = $database->getConnection();
  
-$rateRecipe = new RateRecipe($db);
+$allergy = new Allergy($db);
  
 // get posted data
 $data = json_decode(file_get_contents("php://input"));
  
 // make sure data is not empty
-if(!empty($data->recipe_id) &&
-    !empty($data->user_id) &&
-    !empty($data->rating)
+if(!empty($data->$allergy_itemName)&&
+    !empty($data->user_id)
 ){
-    // set rating property values
-    $rateRecipe->recipe_id = $data->recipe_id;
-    $rateRecipe->user_id = $data->user_id;
-    $rateRecipe->rating = $data->rating;
+    // set allergy property values
+    $allergy->allergy_itemName = $data->allergy_itemName;
+    $allergy->user_id = $data->user_id;
 
-    // create the rateRecipe
-    if($rateRecipe->create()){
+    // create the allergy
+    if($allergy->create()){
 
         // set response code - 201 created
         http_response_code(201);
 
-        // tell the user
-        echo json_encode(array("message" => "Rating was created."));
+        // tell the allergy
+        echo json_encode(array("message" => "allergy was created."));
     }
 
-    // if unable to create the rateRecipe, tell the guest
+    // if unable to create the allergy, tell the guest
     else{
 
         // set response code - 503 service unavailable
         http_response_code(503);
 
         // tell the guest
-        echo json_encode(array("message" => "Unable to create rating."));
+        echo json_encode(array("message" => "Unable to create allergy."));
     }
 }
 
@@ -58,6 +56,6 @@ else{
     http_response_code(400);
 
     // tell the guest
-    echo json_encode(array("message" => "Unable to create rating, data is incomplete."));
+    echo json_encode(array("message" => "Unable to create allergy, data is incomplete."));
 }
 ?>

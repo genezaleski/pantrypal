@@ -34,5 +34,31 @@ class PantryItem{
 
         return $stmt;
     }
+
+    // create
+    function create(){
+        $query = "INSERT INTO
+                    " . $this->table_name . "
+                SET
+                    item_name=:item_name, user_id=:user_id";
+
+        // prepare query
+        $stmt = $this->conn->prepare($query);
+
+        // sanitize
+        $this->item_name=htmlspecialchars(strip_tags($this->item_name));
+        $this->user_id=htmlspecialchars(strip_tags($this->user_id));
+
+        // bind values
+        $stmt->bindParam(":item_name", $this->item_name);
+        $stmt->bindParam(":user_id", $this->user_id);
+
+        // execute query
+        if($stmt->execute()){
+            return true;
+        }
+
+        return false;
+    }
 }
 ?>
