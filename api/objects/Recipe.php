@@ -36,7 +36,7 @@ class Recipe{
         return $stmt;
     }
 
-    function readOne(){
+    function readOne($recipe_id){
 
       // query to read single record
       $query = "SELECT
@@ -44,9 +44,7 @@ class Recipe{
             FROM
                 " . $this->table_name . "
             WHERE
-                p.id = ?
-            LIMIT
-                0,1";
+                recipe_id = $recipe_id ";";
 
                 // prepare query statement
       $stmt = $this->conn->prepare( $query );
