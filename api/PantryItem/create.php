@@ -9,7 +9,7 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 // get database connection
 include_once '../config/database.php';
  
-// instantiate user object
+// instantiate pantry item object
 include_once '../objects/PantryItem.php';
  
 $database = new Database();
@@ -24,28 +24,28 @@ $data = json_decode(file_get_contents("php://input"));
 if(!empty($data->item_name)&&
     !empty($data->user_id)
 ){
-    // set user property values
-    $item->user_name = $data->item_name;
-    $item->oauth_token = $data->user_id;
+    // set pantry item property values
+    $item->item_name = $data->item_name;
+    $item->user_id = $data->user_id;
 
-    // create the user
+    // create the pantry item
     if($item->create()){
 
         // set response code - 201 created
         http_response_code(201);
 
-        // tell the user
-        echo json_encode(array("message" => "User was created."));
+        // tell the pantry item
+        echo json_encode(array("message" => "Pantry item was created."));
     }
 
-    // if unable to create the user, tell the guest
+    // if unable to create the pantry item, tell the guest
     else{
 
         // set response code - 503 service unavailable
         http_response_code(503);
 
         // tell the guest
-        echo json_encode(array("message" => "Unable to create user."));
+        echo json_encode(array("message" => "Unable to create pantry item."));
     }
 }
 
@@ -56,6 +56,6 @@ else{
     http_response_code(400);
 
     // tell the guest
-    echo json_encode(array("message" => "Unable to create user, data is incomplete."));
+    echo json_encode(array("message" => "Unable to create pantry item, data is incomplete."));
 }
 ?>
