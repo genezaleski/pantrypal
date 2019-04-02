@@ -41,7 +41,8 @@ class CommentRecipe{
         $query = "INSERT INTO
                     " . $this->table_name . "
                 SET
-                    user_id=:user_id, recipe_id=:recipe_id, comment_text=:comment_text";
+                    user_id=:user_id, recipe_id=:recipe_id, comment_text=:comment_text,
+                    comment_time=NOW()";
 
         // prepare query
         $stmt = $this->conn->prepare($query);
