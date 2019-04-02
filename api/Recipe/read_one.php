@@ -33,7 +33,7 @@ if($Recipe->recipe_id = null){
     // create array
     $Recipe_arr = array(
         "recipe_id" =>  $Recipe->recipe_id,
-        "api_name" => $Recipe->api_name,
+        "api_name" => "okasdadokadpoakd",
         "api_recipe_id" => $Recipe->api_recipe_id,
         "title" => $Recipe->title,
         "author" => $Recipe->author,
