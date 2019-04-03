@@ -48,7 +48,7 @@ class Allergy{
         $this->user_id=htmlspecialchars(strip_tags($this->user_id));
 
         // bind values
-        $stmt->bindParam(":recipe_id", $this->allergy_itemName);
+        $stmt->bindParam(":allergy_itemName", $this->allergy_itemName);
         $stmt->bindParam(":user_id", $this->user_id);        
 
         // execute query
