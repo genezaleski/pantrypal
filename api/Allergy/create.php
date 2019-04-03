@@ -21,7 +21,7 @@ $allergy = new Allergy($db);
 $data = json_decode(file_get_contents("php://input"));
  
 // make sure data is not empty
-if(!empty($data->$allergy_itemName)&&
+if(!empty($data->allergy_itemName)&&
     !empty($data->user_id)
 ){
     // set allergy property values
@@ -35,7 +35,7 @@ if(!empty($data->$allergy_itemName)&&
         http_response_code(201);
 
         // tell the allergy
-        echo json_encode(array("message" => "allergy was created."));
+        echo json_encode(array("message" => "Allergy was created."));
     }
 
     // if unable to create the allergy, tell the guest
