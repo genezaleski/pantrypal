@@ -1,20 +1,22 @@
 use seniorproject;
 
-insert into User (oauth_token,user_name)
-values ('QQQQQ','alexjenkins223'),
-('BBBBB','johnabram234'),
-('ABCDE','user1'),
-('DDDCE','bobstewart22');
+insert into User (oauth_token,user_name,first_name,last_name)
+values ('QQQQQ','alexjenkins223','alex','jenkins'),
+('BBBBB','johnabram234','john','abram'),
+('ABCDE','user1','user','one'),
+('DDDCE','bobstewart22','bob','stewart'),
+('QQASD', 'testuser2','tester','tester'),
+('AWQED','samhelper23','sam','helper');
 
 
-insert into Recipe (api_name,api_recipe_id,title,recipe_link)
+insert into Recipe (api_name,api_recipe_id,title,author,recipe_link)
 values ('spoon','123qef',"Mom's Mac and Cheese","Food Netwok",'foodnetwork.com/mac&cheese'),
 ('spoon','405tcx',"Best PB&J","Food Network",'foodnetwork.com/pb&j'),
 ('spoon','sf0123',"Amazingly Cheesy Grilled Cheese","Food Network",'foodnetwork.com/grilledcheese'),
 ('spoon','3902sd',"Not Your Standard Chicken Salad!","Food Network",'foodnetwork.com/chickensalad'),
 ('spoon','dfapoi',"5 Minute Tuna Salad","Food Network",'foodnetwork.com/tunasalad'),
 ('spoon','1230sd',"Original Caesar Salad","Food Network",'foodnetwork.com/caesarsalad'),
-('spoon','po023d',"30 Minute Buffalo Chicken",'"Food Network",foodnetwork.com/buffalochicken'),
+('spoon','po023d',"30 Minute Buffalo Chicken","Food Network",'foodnetwork.com/buffalochicken'),
 ('spoon','kk1234',"Ez Bake Pizza","Food Network",'foodnetwork.com/pizza');
 
 insert into Allergy (allergy_itemName, user_id)
@@ -52,9 +54,9 @@ values (3,2,'like'),
 (4,2,'dislike'),
 (4,1,'like'),
 (5,6,'like'),
-(4, 218411, 'like'),
-(5, 218411, 'like'),
-(6, 218411, 'dislike');
+(4, 3, 'like'),
+(5, 2, 'like'),
+(6, 2, 'dislike');
 
 
 
