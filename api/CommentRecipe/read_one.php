@@ -23,7 +23,7 @@ $comment->recipe_id = isset($_GET['recipe_id']) ? $_GET['recipe_id'] : die();
 // read the details of comment to be edited
 $comment->readOne();
 
-if($comment->name!=null){
+if($comment->recipe_id!=null){
     // create array
     $comment_arr = array(
         "comment_id" =>  $comment->comment_id,
