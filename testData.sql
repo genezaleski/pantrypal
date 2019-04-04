@@ -51,13 +51,10 @@ insert into RateRecipe (user_id, recipe_id, rating)
 values (3,2,'like'),
 (4,2,'dislike'),
 (4,1,'like'),
-(5,6,'like');
-
-
-
-
-
-
+(5,6,'like'),
+(4, 218411, 'like'),
+(5, 218411, 'like'),
+(6, 218411, 'dislike');
 
 
 

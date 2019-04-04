@@ -66,5 +66,34 @@ class CommentRecipe{
 
         return false;
     }
+
+    // used when filling up the update comment form
+    function readOne(){
+    
+        // query to read single record
+        $query = "SELECT
+                    user_id, recipe_id, comment_text
+                FROM
+                    " . $this->table_name . "
+                WHERE
+                    recipe_id = ?";
+    
+        // prepare query statement
+        $stmt = $this->conn->prepare( $query );
+    
+        // bind id of comment to be updated
+        $stmt->bindParam(1, $this->recipe_id);
+    
+        // execute query
+        $stmt->execute();
+    
+        // get retrieved row
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+        // set values to object properties
+        $this->user_id = $row['user_id'];
+        $this->recipe_id = $row['recipe_id'];
+        $this->comment_text = $row['comment_text'];
+    }
 }
 ?>
