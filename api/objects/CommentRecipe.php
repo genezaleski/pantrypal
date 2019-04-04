@@ -91,11 +91,11 @@ class CommentRecipe{
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
     
         // set values to object properties
-        $this->comment_id = $row['user_id'];
+        $this->comment_id = $row['comment_id'];
         $this->user_id = $row['user_id'];
         $this->recipe_id = $row['recipe_id'];
         $this->comment_text = $row['comment_text'];
-        $this->comment_text = $row['comment_time'];
+        $this->comment_time = $row['comment_time'];
     }
 }
 ?>

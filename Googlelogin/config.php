@@ -7,9 +7,8 @@
 define('DB_HOST', 'localhost');
 define('DB_USERNAME', 'root');
 define('DB_PASSWORD', 'root');
-define('DB_NAME', 'pantrypal test');
-define('DB_USER_TBL', 'users');
-define('Servers','AllowNoPassword' = true);
+define('DB_NAME', 'Pantrypal test');
+define('DB_USER_TBL', 'user');
 
 // Google API configuration
 define('GOOGLE_CLIENT_ID', '1067865018960-fpf02piennheuoc69meqtehcev12qnbo.apps.googleusercontent.com');
@@ -27,10 +26,9 @@ require_once 'google-api-php-client/contrib/Google_Oauth2Service.php';
 
 // Call Google API
 $gClient = new Google_Client();
-$gClient->setApplicationName('PantryPal');
+$gClient->setApplicationName('Login to Pantrypal');
 $gClient->setClientId(GOOGLE_CLIENT_ID);
 $gClient->setClientSecret(GOOGLE_CLIENT_SECRET);
 $gClient->setRedirectUri(GOOGLE_REDIRECT_URL);
 
 $google_oauthV2 = new Google_Oauth2Service($gClient);
-?>
