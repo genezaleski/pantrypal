@@ -25,9 +25,10 @@ $relatedLinks = json_decode(shell_exec($relatedCmd), true);
 
 //Pulling in likes and dislikes  to be used 
 $likeDataCmd = "curl http://52.91.254.222/api/RateRecipe/read.php";
-$decodedLikeData = json_decode(shell_exec($likeData), true);
+$decodedLikeData = json_decode(shell_exec($likeDataCmd), true);
 
-echo $decodedLikeData;
+$commentCmd = "curl http://52.91.254.222/api/CommentRecipe/read.php";
+$decodedComments = json_decode(shell_exec($commentCmd), true);
 
 ?>
 
@@ -38,7 +39,7 @@ echo $decodedLikeData;
 
     <div class="maincontent">
         <div class="main">
-            <?php 
+            <?php
             //Title and image of recipe
             echo    '<h1>' . $recipeInfo['title'] . '</h1>
             <div class="mainImage"><img src="' . $recipeInfo['image'] . '"> </div>';
@@ -52,18 +53,24 @@ echo $decodedLikeData;
             $liked = 0;
             $disliked = 0;
             $likedPercent = 0;
-            for ($i = 0; i < $decodedLikeData['ratings'][$i]; $i++) {
-                if ($decodedLikeData['ratings']["$i"]['recipe_id'] == $recipeID) {
-                    if ($decodedLikeData['ratings']["$i"]['rating'] == "like") {
+            for ($i = 0; $i < sizeOf($decodedLikeData['ratings']); $i++) {
+                if ($decodedLikeData['ratings'][$i]['recipe_id'] == $recipeID) {
+                    if ($decodedLikeData['ratings'][$i]['rating'] == "like") {
                         $liked++;
-                    } elseif ($decodedLikeData['ratings']["$i"]['rating'] == "dislike") {
+                    } elseif ($decodedLikeData['ratings'][$i]['rating'] == "dislike") {
                         $disliked++;
                     }
                 }
             }
-            $likedPercent = $liked / ($liked + $disliked);
+            if (($liked + $disliked) != 0) {
+                $likedPercent = $liked / ($liked + $disliked);
+                echo '<h2>' . $likedPercent . ' % of people liked this recipe</h2>';
+            } else {
+                $likedPercent = 0;
+                echo '<h2> This recipe has not been rated yet </h2>';
+            }
 
-            echo '<h2>' . $likedPercent. ' % of people liked this recipe</h2>';
+
             ?>
 
             <script language="javascript">
@@ -74,13 +81,10 @@ echo $decodedLikeData;
                             document.getElementById("disLikeBtn").src = "images/likeButton.png";
                         }
                         document.getElementById("likeBtn").src = "images/likedButton.png";
-                        /*
-                        'http://52.91.254.222/api/RateRecipe/create.php' {
-                            "recipe_id": $recipeID,
-                            "user_id": "8",
-                            "rating": "like"
-                        }*/
                         //Set recipe to liked here using MySQL
+                        //curl - d '{"recipe_id" : "'.$recipeID.
+                        //'", "user_id" : "9", "rating" : "like"}' - H "Content-Type: application/json" - X POST 'http://localhost:80/api/RateRecipe/create.php';
+
                     } else {
                         document.getElementById("likeBtn").src = "images/likeButton.png";
                         //Remove like value from database
@@ -96,6 +100,8 @@ echo $decodedLikeData;
                         }
                         document.getElementById("disLikeBtn").src = "images/disLikedButton.png";
                         //Set recipe to disliked here using MySQL
+                        //curl - d '{"recipe_id" : "'.$recipeID.
+                        //'", "user_id" : "9", "rating" : "dislike"}' - H "Content-Type: application/json" - X POST 'http://localhost:80/api/RateRecipe/create.php';
                     } else {
                         document.getElementById("disLikeBtn").src = "images/likeButton.png";
                         //Remove disLike from database
@@ -103,7 +109,7 @@ echo $decodedLikeData;
                 }
             </script>
 
-            <?php 
+            <?php
 
             echo '<h2> Ingredients </h2>';
             //Loop that generates a list of the ingredients used
@@ -132,17 +138,32 @@ echo $decodedLikeData;
             //    }
             //}
 
-            echo 'Comments will go down here when ready';
+            
+
+            echo '<h2> User Comments </h2>
+                <textarea rows="4" cols="50" name="comment" form="usrform" placeholder="Write your comment down here"></textarea>
+                <form action="/action_page.php" id="usrform">
+                    <input type="submit">
+                </form>';
+
+            //Loop that prints out all comments for current recipe
+            for($i = 0; $i < sizeOf($decodedComments['comments']); $i++){
+                if($decodedComments['comments'][$i]['recipe_id'] == $recipeID){
+                    echo ''. $decodedComments['comments'][$i]['user_id']. ' says: 
+                    ' .$decodedComments['comments'][$i]['comment_text'] . '<br>';
+                }
+            }
 
             ?>
-        </div>
+            </div>
         <div class="sidelinks">
-            <?php 
+            <?php
             echo '<h2> You may also like these Recipes</h2>';
             //Generating related links with clickable images
             for ($r = 0; $r < $relatedLinks[$r]; $r++) {
                 echo '<div class = "related">
-                 <a href=recipeInfo.php?id=' . $relatedLinks[$r]['id'] . '><img class="relatedImg" src="https://spoonacular.com/recipeImages/' . $relatedLinks[$r]['image'] . '" alt="recipeImage" style="width:100%;"></a>
+                 <a href=recipeInfo.php?id=' . $relatedLinks[$r]['id'] . '><img class="relatedImg" src="https://spoonacular.com/recipeImages/'
+                  . $relatedLinks[$r]['image'] . '" alt="recipeImage" style="width:100%;"></a>
                  <div class="relatedTitle">' . $relatedLinks[$r]['title'] . '</div>
             </div>';
             };;
@@ -151,4 +172,4 @@ echo $decodedLikeData;
     </div>
 </body>
 
-</html> 
+</html>
