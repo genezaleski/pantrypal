@@ -18,7 +18,7 @@ $db = $database->getConnection();
 $comment = new CommentRecipe($db);
 
 // set comment_id property of record to read
-$comment->comment_id = isset($_GET['comment_id']) ? $_GET['comment_id'] : die();
+$comment->recipe_id = isset($_GET['recipe_id']) ? $_GET['recipe_id'] : die();
 
 // read the details of comment to be edited
 $comment->readOne();
