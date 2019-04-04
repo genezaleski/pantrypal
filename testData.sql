@@ -1,12 +1,12 @@
 use seniorproject;
 
-insert into User (oauth_token,user_name,first_name,last_name)
-values ('QQQQQ','alexjenkins223','alex','jenkins'),
-('BBBBB','johnabram234','john','abram'),
-('ABCDE','user1','user','one'),
-('DDDCE','bobstewart22','bob','stewart'),
-('QQASD', 'testuser2','tester','tester'),
-('AWQED','samhelper23','sam','helper');
+insert into User (oauth_uid,user_name,first_name,last_name,picture_path,modified)
+values ('QQQQQ','alexjenkins223','alex','jenkins',"http://www.google.com/alexjenkins223/avatar.jpg", '2019-3-11 13:23:44'),
+('BBBBB','johnabram234','john','abram', "http://www.google.com/johnabram234/avatar.jpg",'2018-9-17 13:23:44'),
+('ABCDE','user1','user','one', "http://www.google.com/user1/avatar.jpg",'2019-5-11 15:23:44'),
+('DDDCE','bobstewart22','bob','stewart', "http://www.google.com/bobstewart22/avatar.jpg",'2019-6-22 09:23:44'),
+('QQASD', 'testuser2','tester','tester', "http://www.google.com/testuser2/avatar.jpg",'2017-11-16 15:45:23'),
+('AWQED','samhelper23','sam','helper', "http://www.google.com/samhelper/avatar.jpg",'2018-7-11 11:22:23');
 
 
 insert into Recipe (api_name,api_recipe_id,title,author,recipe_link)
@@ -15,8 +15,8 @@ values ('spoon','123qef',"Mom's Mac and Cheese","Food Netwok",'foodnetwork.com/m
 ('spoon','sf0123',"Amazingly Cheesy Grilled Cheese","Food Network",'foodnetwork.com/grilledcheese'),
 ('spoon','3902sd',"Not Your Standard Chicken Salad!","Food Network",'foodnetwork.com/chickensalad'),
 ('spoon','dfapoi',"5 Minute Tuna Salad","Food Network",'foodnetwork.com/tunasalad'),
-('spoon','1230sd',"Original Caesar Salad","Food Network",'foodnetwork.com/caesarsalad'),
-('spoon','po023d',"30 Minute Buffalo Chicken","Food Network",'foodnetwork.com/buffalochicken'),
+('spoon','1230sd',"Original Caesar Salad","Food Network",'foodnetwork.com/caesarsalad' ),
+('spoon','po023d',"30 Minute Buffalo Chicken","Food Network",'foodnetwork.com/buffalochicken' ),
 ('spoon','kk1234',"Ez Bake Pizza","Food Network",'foodnetwork.com/pizza');
 
 insert into Allergy (allergy_itemName, user_id)
