@@ -4,7 +4,9 @@ CREATE TABLE `User`
 (
   `user_id` int PRIMARY KEY not null auto_increment,
   `oauth_token` varchar(255),
-  `user_name` varchar(255) not null
+  `user_name` varchar(255) not null,
+  `first_name` varchar(255) not null,
+  `last_name` varchar(255)
 );
 
 CREATE TABLE `RateRecipe`
