@@ -1,11 +1,11 @@
 @font-face{
     font-family: 'results_font';
-    src: url(fonts/Acme-Regular.ttf);
+    src: url(../fonts/Acme-Regular.ttf);
 }
 
 body{
     background-color: grey;
-    background-image: url(images/wooden-background-1538068471RLq.jpg);
+    background-image: url(../images/wooden-background-1538068471RLq.jpg);
     background-size: 100%;
     margin: 0px;
 }
