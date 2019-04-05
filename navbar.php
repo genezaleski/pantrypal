@@ -6,7 +6,7 @@
     margin: 0 auto;
     margin-left: -10px;
     margin-top: -10px;
-    margin-right: -10px; 
+    margin-right: -10px;
     padding: 20px;
     background-color: orange;
 }
@@ -33,6 +33,7 @@
 
 /* The container <div> - needed to position the dropdown content */
 .dropdown {
+  margin-top: 7px;
   position: relative;
   display: inline-block;
 }
@@ -65,9 +66,22 @@
 /* Change the background color of the dropdown button when the dropdown content is shown */
 .dropdown:hover .dropbtn {background-color: #3e8e41;}
 
+.searchbarNav{
+    margin-top: 20px;
+    width: 300px;
+}
+
+.navSearch{
+  margin-right: 300px;
+}
+
 </style>
 <div class=navbox>
     <a href="index.php" target=""> Pantry Pal </a>
+    <form class="navSearch" name="recipeSearch" method="post" action="reciperesults.php">
+        <input class="searchbarNav" type="text" name="searchBar" placeholder="Put Ingredients or Recipe Name Here">
+        <input type="submit" name="Submit" value="Search">
+    </form>
     <div class= "dropdown" style = "float:right">
         <button class="dropbtn">User Options<i class="fa fa-caret-down"></i></button>
         <br>
@@ -116,4 +130,3 @@
     </div>
 </div>
 <br>
-

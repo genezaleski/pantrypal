@@ -5,11 +5,6 @@
 include 'navbar.php';
 ?>
 
-<form name="recipeSearch" method="post" action="reciperesults.php">
-    <input class="searchbar" type="text" name="searchBar" placeholder="put ingredients or recipe name here">
-    <input type="submit" name="Submit" value="Search">
-</form>
-
 <!-- JS for filter slide out menu-->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
