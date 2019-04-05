@@ -44,7 +44,7 @@ class Recipe{
             FROM
                 " . $this->table_name . "
             WHERE
-                api_name = " . $api_name . "AND api_recipe_id = " . $api_recipe_id .";";
+                api_name = ?";
 
                 // prepare query statement
       $stmt = $this->conn->prepare( $query );
