@@ -57,7 +57,7 @@ class CommentRecipe{
         $stmt->bindParam(":user_id", $this->user_id);
         $stmt->bindParam(":recipe_id", $this->recipe_id);
         $stmt->bindParam(":comment_text", $this->comment_text);
-        
+
 
         // execute query
         if($stmt->execute()){
@@ -69,27 +69,27 @@ class CommentRecipe{
 
     // used when filling up the update comment form
     function readOne(){
-    
+
         // query to read single record
         $query = "SELECT
-                    comment_id, user_id, recipe_id, comment_text, comment_time
+                    user_id, comment_id, recipe_id, comment_text, comment_time
                 FROM
                     " . $this->table_name . "
                 WHERE
                     recipe_id = ?";
-    
+
         // prepare query statement
         $stmt = $this->conn->prepare( $query );
-    
+
         // bind id of comment to be updated
         $stmt->bindParam(1, $this->recipe_id);
-    
+
         // execute query
         $stmt->execute();
-    
+
         // get retrieved row
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
-    
+
         // set values to object properties
         $this->comment_id = $row['comment_id'];
         $this->user_id = $row['user_id'];

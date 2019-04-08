@@ -37,14 +37,17 @@ class Recipe{
     }
 
     function readOne(){
-
       // query to read single record
       $query = "SELECT
                 recipe_id, api_name, api_recipe_id, title, author, recipe_link
             FROM
                 " . $this->table_name . "
             WHERE
+<<<<<<< Updated upstream
                 api_recipe_id = ?";
+=======
+                recipe_id = ?";
+>>>>>>> Stashed changes
 
                 // prepare query statement
       $stmt = $this->conn->prepare( $query );
@@ -70,9 +73,8 @@ class Recipe{
     function create(){
       $query = "INSERT INTO
                   " . $this->table_name . "
-              SET
-                  api_name=:api_name, api_recipe_id=:api_recipe_id,
-                  title=:title, author=:author, recipe_link=:recipe_link";
+              SET api_name=:api_name, api_recipe_id=:api_recipe_id,
+              title=:title, author=:author, recipe_link=:recipe_link";
 
       // prepare query
       $stmt = $this->conn->prepare($query);
