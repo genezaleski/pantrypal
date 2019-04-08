@@ -110,6 +110,26 @@ if(!empty($search)){
         }
     }
 }
+else{//search field is empty. Returns a random recipe
+
+    $api_key = "'X-RapidAPI-Key : 87c88962ddmsh12cc4705c3707b2p13794cjsnf4b26acb6bc4'";
+$api_url = "'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/random?number=60'";
+$api_host = "'X-RapidAPI-Host: spoonacular-recipe-food-nutrition-v1.p.rapidapi.com'";
+$cmd = "curl " . $api_url . "  -H " . $api_key;
+$output_arr = json_decode(shell_exec($cmd),true);
+$results = $output_arr['recipes'];
+$output_arr = $results;
+
+for($i = 0; $i < sizeof($output_arr); $i++){
+    $image = $output_arr[$i]['image'];
+    $id = $output_arr[$i]['id'];
+    $title = $output_arr[$i]['title'];
+
+    array_push($id_list,$id);
+    array_push($title_list,$title);
+    array_push($image_results,$image);
+}//end for
+}//end else
 
 $one = '';
 $two = '';
