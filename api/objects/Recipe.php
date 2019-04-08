@@ -59,7 +59,7 @@ class Recipe{
       $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
       // set values to object properties
-      $this->name = $row['recipe_id'];
+      $this->recipe_id = $row['recipe_id'];
       $this->api_name = $row['api_name'];
       $this->api_recipe_id = $row['api_recipe_id'];
       $this->title = $row['title'];
