@@ -44,14 +44,13 @@ class Recipe{
             FROM
                 " . $this->table_name . "
             WHERE
-                api_name = ? AND api_recipe_id = ?";
+                api_recipe_id = ?";
 
                 // prepare query statement
       $stmt = $this->conn->prepare( $query );
 
       // bind id of product to be updated
-      $stmt->bindParam(1, $this->api_name);
-      $stmt->bindParam(2, $this->api_recipe_id);
+      $stmt->bindParam(1, $this->api_recipe_id);
 
       // execute query
       $stmt->execute();
