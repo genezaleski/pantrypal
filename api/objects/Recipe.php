@@ -43,11 +43,7 @@ class Recipe{
             FROM
                 " . $this->table_name . "
             WHERE
-<<<<<<< Updated upstream
-                api_recipe_id = ?";
-=======
                 recipe_id = ?";
->>>>>>> Stashed changes
 
                 // prepare query statement
       $stmt = $this->conn->prepare( $query );
