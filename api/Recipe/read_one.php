@@ -18,10 +18,20 @@ $db = $database->getConnection();
 $Recipe = new Recipe($db);
 
 // set ID property of recipe to read
-$Recipe->api_recipe_id = isset($_GET['api_recipe_id']) ? $_GET['api_recipe_id'] : die();
+
+if(isset($_GET['recipe_id'])){
+  $Recipe->recipe_id = $_GET['recipe_id'];
+  $Recipe->readOne();
+}
+elseif(isset($_GET['api_name']) && isset($_GET['api_recipe_id'])){
+  $Recipe->api_name = $_GET['api_name'];
+  $Recipe->api_recipe_id = $_GET['api_recipe_id'];
+  $Recipe->readOneAPI();
+}
+//$Recipe->api_recipe_id = isset($_GET['recipe_id']) ? $_GET['recipe_id'] : die();
 
 // read the details of recipe to be edited
-$Recipe->readOne();
+//$Recipe->readOne();
 
 if($Recipe->recipe_id != null){
     // create array

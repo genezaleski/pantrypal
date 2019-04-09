@@ -36,6 +36,7 @@ class Recipe{
         return $stmt;
     }
 
+    //return a recipe with a given recipe_id
     function readOne(){
       // query to read single record
       $query = "SELECT
@@ -49,7 +50,7 @@ class Recipe{
       $stmt = $this->conn->prepare( $query );
 
       // bind id of product to be updated
-      $stmt->bindParam(1, $this->api_recipe_id);
+      $stmt->bindParam(1, $this->recipe_id);
 
       // execute query
       $stmt->execute();
@@ -58,6 +59,33 @@ class Recipe{
       $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
       // set values to object properties
+      $this->recipe_id = $row['recipe_id'];
+      $this->api_name = $row['api_name'];
+      $this->api_recipe_id = $row['api_recipe_id'];
+      $this->title = $row['title'];
+      $this->author = $row['author'];
+      $this->recipe_link = $row['recipe_link'];
+    }
+
+    //returns a recipe with a given api_name and api_recipe_id
+    function readOneAPI(){
+      $query = "SELECT
+                recipe_id, api_name, api_recipe_id, title, author, recipe_link
+            FROM
+                " . $this->table_name . "
+            WHERE
+                api_name=? AND api_recipe_id=?";
+
+
+      $stmt = $this->conn->prepare( $query );
+
+      $stmt->bindParam(1, $this->api_name);
+      $stmt->bindParam(2, $this->api_recipe_id);
+
+      $stmt->execute();
+
+      $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
       $this->recipe_id = $row['recipe_id'];
       $this->api_name = $row['api_name'];
       $this->api_recipe_id = $row['api_recipe_id'];
