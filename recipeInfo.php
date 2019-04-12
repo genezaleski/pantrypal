@@ -138,20 +138,33 @@ $decodedComments = json_decode(shell_exec($commentCmd), true);
             //    }
             //}
 
-            
-
             echo '<h2> User Comments </h2>
-                <textarea rows="4" cols="50" name="comment" form="usrform" placeholder="Write your comment down here"></textarea>
-                <form action="/action_page.php" id="usrform">
-                    <input type="submit">
+                <form action="recipeInfo.php?id='.$_GET['id'].'" method="post" id="usrform">
+                    <textarea rows="4" cols="50" name="comment" form="usrform" placeholder="Write your comment down here"></textarea>
+                    <button type="submit" name="id" value="'.$_GET['id'].'" href="reciperesults.php" onclick="window.location.reload()"> Submit </button>
                 </form>';
+
+            //Comment is stored in $_POST['comment'];
+
+            $newComment = json_encode(array(
+                'user_id' => 4,
+                'recipe_id' => 2,
+                'comment_text' => $_POST['comment']
+            ));
+
+            $url_post = 'http://52.91.254.222/api/CommentRecipe/create.php';
+            $ch = curl_init($url_post);
+            curl_setopt($ch,CURLOPT_POST,1);
+            curl_setopt($ch,CURLOPT_POSTFIELDS,$newComment);
+            curl_setopt($ch,CURLOPT_HTTPHEADER,array('Content-Type: application/json'));
+            $curl_result = curl_exec($ch);
 
             //Loop that prints out all comments for current recipe
             for($i = 0; $i < sizeOf($decodedComments['comments']); $i++){
-                if($decodedComments['comments'][$i]['recipe_id'] == $recipeID){
+                //if($decodedComments['comments'][$i]['recipe_id'] == $recipeID){
                     echo ''. $decodedComments['comments'][$i]['user_id']. ' says: 
                     ' .$decodedComments['comments'][$i]['comment_text'] . '<br>';
-                }
+                //}
             }
 
             ?>
