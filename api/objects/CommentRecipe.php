@@ -114,8 +114,24 @@ class CommentRecipe{
         // execute query
         $stmt->execute();
 
-        // get retrieved row
-        //$row = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $stmt;
+    }
+
+    function profilePage(){
+
+        $query = "SELECT *
+        FROM " . $this->table_name . "
+        WHERE user_id = ?
+        ORDER BY comment_time DESC";
+
+        // prepare query statement
+        $stmt = $this->conn->prepare( $query );
+
+        // bind recipe_id of comment to be updated
+        $stmt->bindParam(1, $this->user_id);
+
+        // execute query
+        $stmt->execute();
 
         return $stmt;
     }
