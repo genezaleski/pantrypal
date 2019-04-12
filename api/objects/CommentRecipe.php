@@ -97,5 +97,27 @@ class CommentRecipe{
         $this->comment_text = $row['comment_text'];
         $this->comment_time = $row['comment_time'];
     }
+
+    function recipePage(){
+
+        $query = "SELECT *
+        FROM " . $this->table_name . "
+        WHERE recipe_id = ?
+        ORDER BY comment_time";
+
+        // prepare query statement
+        $stmt = $this->conn->prepare( $query );
+
+        // bind recipe_id of comment to be updated
+        $stmt->bindParam(1, $this->recipe_id);
+
+        // execute query
+        $stmt->execute();
+
+        // get retrieved row
+        //$row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        return $stmt;
+    }
 }
 ?>

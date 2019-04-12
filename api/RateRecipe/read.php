@@ -35,13 +35,13 @@ if($num>0){
         extract($row);
 
         $rating_item=$rating_item=array(
-            "{$ratedRecipe_id}" =>
-            array(
-            //"ratedRecipe_id" => $ratedRecipe_id,
+            //"{$ratedRecipe_id}" =>
+            //array(
+            "ratedRecipe_id" => $ratedRecipe_id,
             "recipe_id" => $recipe_id,
             "user_id" => $user_id,
             "rating" => $rating
-        ));
+        );
 
 	array_push($rating_arr["ratings"], $rating_item);
     }
