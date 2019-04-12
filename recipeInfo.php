@@ -13,22 +13,50 @@ $api_url = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/
 $cmd = "curl -H " . $my_api_key . " " . $api_url;
 $recipeInfo = json_decode(shell_exec($cmd), true);
 
-//Retriving recipe instructions broken into steps
-//$analysed_url = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/".$recipeID."/analyzedInstructions?stepBreakdown=false";
-//$instrCmd = "curl -H " . $api_key . " " . $analysedRecipe;
-//$recipeInstr = json_decode(shell_exec($instrCmd),true);
-
 //Retriving similar recipies to add as links
 $related_url = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/" . $recipeID . "/similar";
 $relatedCmd = "curl -H " . $other_api_key . " " . $related_url;
 $relatedLinks = json_decode(shell_exec($relatedCmd), true);
 
-//Pulling in likes and dislikes  to be used 
-$likeDataCmd = "curl http://52.91.254.222/api/RateRecipe/read.php";
+//Pulling in likes and dislikes to be used 
+$likeDataCmd = "curl --location --request GET http://52.91.254.222/api/RateRecipe/read.php";
 $decodedLikeData = json_decode(shell_exec($likeDataCmd), true);
+$ratings = $decodedComments['ratings'];
 
-$commentCmd = "curl http://52.91.254.222/api/CommentRecipe/read.php";
+//Pulling in all comments to find the ones relevant to this recipe
+$commentCmd = "curl --location --request  GET http://52.91.254.222/api/CommentRecipe/read.php";
 $decodedComments = json_decode(shell_exec($commentCmd), true);
+
+//Pulling in all recipes to check if the recipe exists in the database
+$rListCmd = "curl http://52.91.254.222/api/Recipe/read.php";
+$rListDecode = json_decode(shell_exec($rListCmd), true);
+
+/**If our recipe database does not contain the currently selected recipe, create it in the database
+    This allows for the usage of likes and comments*/
+$rExists = false;
+for ($r = 0; $r < sizeof($rListDecode['Recipes']); $r++) {
+    if ($rListDecode['Recipes'][$r]['api_recipe_id'] == $recipeID) {
+        $rExists = true;
+    }
+}
+if ($rExists == false) {
+    $createRecipeUrl = 'http://52.91.254.222/api/Recipe/create.php';
+    $recipeJSON = array(
+        'api_name' => 'spoon',
+        'api_recipe_id' => $recipeID,
+        'title' => $recipeInfo['title'],
+        'author' => $recipeInfo['creditText'],
+        'recipe_link' => $recipeInfo['sourceUrl']
+    );
+
+    $recipeJSONEncoded = json_encode($recipeJSON);
+
+
+    $contType = '"Content-Type: application/json"';
+    $curlCMD = 'curl -d "' . $recipeJSONEncoded . '" -H ' . $contType . ' -X POST ' . $createRecipeUrl;
+
+    shell_exec($curlCMD);
+}
 
 ?>
 
@@ -69,6 +97,7 @@ $decodedComments = json_decode(shell_exec($commentCmd), true);
                 $likedPercent = 0;
                 echo '<h2> This recipe has not been rated yet </h2>';
             }
+
 
 
             ?>
@@ -130,32 +159,36 @@ $decodedComments = json_decode(shell_exec($commentCmd), true);
             echo '<br><h2> Insructions </h2> 
             <div class="recipe">' . $instructions . '</div><br>';
 
-            //Unfinished, but will hopefully print a better list of instructions than just a dense paragraph
-            //for($j = 0; $j < sizeOf($recipeInstr); $j++){
-            //    echo '<h3>' .$recipeInstr[$j]['name'].'</h3>';
-            //    for($n = 0; $n < $recipeInstr[$j]['steps']; $n++){
-            //        echo '<div class="instruction">'. $n , " " , $recipeInstr[$j]['steps'][$n]['step'] . '<div>';
-            //    }
-            //}
-
-            
-
             echo '<h2> User Comments </h2>
-                <textarea rows="4" cols="50" name="comment" form="usrform" placeholder="Write your comment down here"></textarea>
-                <form action="/action_page.php" id="usrform">
-                    <input type="submit">
-                </form>';
-
+            <form action="recipeInfo.php?id=' . $_GET['id'] . '" method="post" id="usrform">
+            <textarea rows="4" cols="50" name="comment" form="usrform" placeholder="Write your comment down here"></textarea>
+            <button type="submit" name="id" value="' . $_GET['id'] . '" href="reciperesults.php" onclick="window.location.reload()"> Submit </button>
+        </form>';
+            //Comment is stored in $_POST['comment'];
+            $newComment = json_encode(array(
+                'user_id' => 4,
+                'recipe_id' => 2,
+                'comment_text' => $_POST['comment']
+            ));
+            $url_post = 'http://52.91.254.222/api/CommentRecipe/create.php';
+            $ch = curl_init($url_post);
+            curl_setopt($ch, CURLOPT_POST, 1);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $newComment);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+            $curl_result = curl_exec($ch);
             //Loop that prints out all comments for current recipe
-            for($i = 0; $i < sizeOf($decodedComments['comments']); $i++){
-                if($decodedComments['comments'][$i]['recipe_id'] == $recipeID){
-                    echo ''. $decodedComments['comments'][$i]['user_id']. ' says: 
-                    ' .$decodedComments['comments'][$i]['comment_text'] . '<br>';
+            for ($i = 0; $i < sizeOf($decodedComments['comments']); $i++) {
+                if ($decodedComments['comments'][$i]['recipe_id'] == $recipeID) {
+                    //if($decodedComments['comments'][$i]['recipe_id'] == $recipeID){
+                    echo '' . $decodedComments['comments'][$i]['user_id'] . ' says: 
+            ' . $decodedComments['comments'][$i]['comment_text'] . '<br>';
                 }
+                //}
             }
+            ?>
 
             ?>
-            </div>
+        </div>
         <div class="sidelinks">
             <?php
             echo '<h2> You may also like these Recipes</h2>';
@@ -163,7 +196,7 @@ $decodedComments = json_decode(shell_exec($commentCmd), true);
             for ($r = 0; $r < $relatedLinks[$r]; $r++) {
                 echo '<div class = "related">
                  <a href=recipeInfo.php?id=' . $relatedLinks[$r]['id'] . '><img class="relatedImg" src="https://spoonacular.com/recipeImages/'
-                  . $relatedLinks[$r]['image'] . '" alt="recipeImage" style="width:100%;"></a>
+                    . $relatedLinks[$r]['image'] . '" alt="recipeImage" style="width:100%;"></a>
                  <div class="relatedTitle">' . $relatedLinks[$r]['title'] . '</div>
             </div>';
             };;
