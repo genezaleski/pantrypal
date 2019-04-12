@@ -10,26 +10,29 @@ include 'navbar.php';
 
 <!-- End JS for filter menu-->
 
+<form name="filters" method="post" action="reciperesults.php">
 <nav class="nav-side">
     <p class="filters">Filters</p>
     <a href="#" class="nav-toggle"></a>
     <label class="container"> Vegetarian
-        <input type="checkbox">
+        <input type="checkbox" value="TRUE" name="Vegetarian">
         <span class="checkmark"></span>
     </label>
     <label class="container"> Allergies
-        <input type="checkbox">
+        <input type="checkbox" value="TRUE" name="Allergies">
         <span class="checkmark"></span>
     </label>
-    <label class="container"> Breakfast
-        <input type="checkbox">
+    <label class="container"> Main Courses
+        <input type="checkbox" value="TRUE" name="mainCourse">
         <span class="checkmark"></span>
     </label>
-    <label class="container"> Dinner
-        <input type="checkbox">
+    <label class="container"> Appetizers
+        <input type="checkbox" value="TRUE" name="Appetizer">
         <span class="checkmark"></span>
     </label>
+    <button type="submit" name="searchBar" value="<?php echo $_POST['searchBar']?>" href="reciperesults.php" onclick="window.location.reload()"> Apply </button>
 </nav>
+</form>
 
 <script language="JavaScript">
     $('.nav-side .nav-toggle').on('click',function(e){
@@ -43,6 +46,25 @@ include 'navbar.php';
 <?php
 
 $search = $_POST['searchBar'];
+
+$isveggie ='';
+$course='';
+
+if(isset($_POST['Vegetarian'])){
+    $isveggie = $isveggie . "diet=vegetarian&";
+    echo "Veggie is true";
+}
+if(isset($_POST['Allergies'])){
+    //echo "Allergies is set to: " . $_POST['Allergies'];
+    echo "Allergies is true";
+}
+if(isset($_POST['mainCourse'])){
+    $course = $course . "type=main+course&";
+}
+else if(isset($_POST['Appetizer'])){
+    $course = $course . "type=appetizer&";
+}
+
 $image_results = array();
 $id = null;
 $id_list = array();
@@ -77,7 +99,8 @@ if(!empty($search)){
         }
     }
     else{                                 //If no commas, search by recipe name
-        $api_url = '"https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/search?number=60&query=' . urlencode($search) .'"';
+	$api_url = '"https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/search?'.$isveggie.'number=60&'.$course.'query=' . urlencode($search) .'"';
+
 
         $cmd = "curl " . $api_url . "  -H " . $api_key;
 
@@ -112,7 +135,7 @@ if(!empty($search)){
 }
 else{//search field is empty. Returns a random recipe
 
-    $api_key = "'X-RapidAPI-Key : 87c88962ddmsh12cc4705c3707b2p13794cjsnf4b26acb6bc4'";
+$api_key = "'X-RapidAPI-Key : 87c88962ddmsh12cc4705c3707b2p13794cjsnf4b26acb6bc4'";
 $api_url = "'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/random?number=60'";
 $api_host = "'X-RapidAPI-Host: spoonacular-recipe-food-nutrition-v1.p.rapidapi.com'";
 $cmd = "curl " . $api_url . "  -H " . $api_key;
