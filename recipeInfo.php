@@ -141,7 +141,7 @@ $decodedComments = json_decode(shell_exec($commentCmd), true);
             echo '<h2> User Comments </h2>
                 <form action="recipeInfo.php?id='.$_GET['id'].'" method="post" id="usrform">
                     <textarea rows="4" cols="50" name="comment" form="usrform" placeholder="Write your comment down here"></textarea>
-                    <button type="submit" name="id" value="'.$_GET['id'].'" href="reciperesults.php" onclick="window.location.reload()"> Submit </button>
+                    <button type="submit" name="id" value="'.$_GET['id'].'" onclick="window.location.reload()"> Submit </button>
                 </form>';
 
             //Comment is stored in $_POST['comment'];
@@ -151,6 +151,8 @@ $decodedComments = json_decode(shell_exec($commentCmd), true);
                 'recipe_id' => 2,
                 'comment_text' => $_POST['comment']
             ));
+
+            $_POST['comment'] = '';
 
             $url_post = 'http://52.91.254.222/api/CommentRecipe/create.php';
             $ch = curl_init($url_post);
