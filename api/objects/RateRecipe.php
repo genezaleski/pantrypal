@@ -9,8 +9,9 @@ class RateRecipe{
     public $ratedRecipe_id;
     public $recipe_id;
     public $user_id;
-    public $likes;
-    public $dislikes;
+
+    public $likes; //count
+    public $dislikes; //count
 
     // constructor with $db as database connection
     public function __construct($db){
@@ -37,11 +38,15 @@ class RateRecipe{
 
 
     function getLikes(){
-      $query = "SELECT
-            recipe_id, count(ratedRecipe_id) as likes
-          FROM
-            ". $this->table_name . "
-            where rating = 'like' and recipe_id=?";
+      //join two values into a table
+      $query = "SELECT * FROM
+              (SELECT recipe_id, count(ratedRecipe_id) as likes
+                FROM ". $this->table_name ."
+                WHERE rating = 'like' and recipe_id=?) A
+            CROSS JOIN
+              (SELECT count(ratedRecipe_id) as dislikes
+                FROM ". $this->table_name ."
+              WHERE rating = 'dislike' and recipe_id=?) B";
 
 
 
@@ -50,7 +55,7 @@ class RateRecipe{
 
       // bind id of product to be updated
       $stmt->bindParam(1, $this->recipe_id);
-
+      $stmt->bindParam(2, $this->recipe_id);
 
 
       // execute query
@@ -61,6 +66,7 @@ class RateRecipe{
 
       $this->recipe_id = $row['recipe_id'];
       $this->likes = $row['likes'];
+      $this->dislikes = $row['dislikes'];
 
 
 

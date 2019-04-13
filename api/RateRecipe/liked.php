@@ -1,7 +1,4 @@
 <?php
-  /*  1)  get number of likes given recipe_id
-      2)  get all recipe_id where 'likes' given a user_id
-      3)  get number of likes given api_name and api_recipe_id  */
     header("Access-Control-Allow-Origin: *");
     header("Access-Control-Allow-Headers: access");
     header("Access-Control-Allow-Methods: GET");
@@ -22,6 +19,10 @@
       $RateRecipe->recipe_id = $_GET['recipe_id'];
       $RateRecipe->getLikes();
     }
+    // elseif(isset($_GET["user_id"])){
+    //   $RateRecipe->user_id = $_GET["user_id"];
+    //   $RateRecipe->getLikesUser();
+    // }
 
 
 
@@ -30,6 +31,7 @@
         $Rating_arr = array(
           'recipe_id' => $RateRecipe->recipe_id,
           'likes' => $RateRecipe->likes,
+          'dislikes' => $RateRecipe->dislikes
         );
 
 
