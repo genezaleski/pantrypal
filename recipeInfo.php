@@ -30,6 +30,37 @@ $decodedLikeData = json_decode(shell_exec($likeDataCmd), true);
 $commentCmd = "curl http://52.91.254.222/api/CommentRecipe/read.php";
 $decodedComments = json_decode(shell_exec($commentCmd), true);
 
+$rExists = false;
+for ($r = 0; $r < sizeof($rListDecode['Recipes']); $r++) {
+    if ($rListDecode['Recipes'][$r]['api_recipe_id'] == $recipeID) {
+        $rExists = true;
+    }
+}
+if ($rExists == false) {
+    $createRecipeUrl = 'http://52.91.254.222/api/Recipe/create.php';
+    $recipeJSON = array(
+        'api_name' => 'spoon',
+        'api_recipe_id' => $recipeID,
+        'title' => $recipeInfo['title'],
+        'author' => $recipeInfo['creditText'],
+        'recipe_link' => $recipeInfo['sourceUrl']
+    );
+    $recipeJSONEncoded = json_encode($recipeJSON);
+
+    $options = array(
+        'http' => array(
+            'method'  => 'POST',
+            'content' => $recipeJSONEncoded,
+            'header' =>  "Content-Type: application/json\r\n" .
+                "Accept: application/json\r\n"
+        )
+    );
+
+    $context  = stream_context_create($options);
+    $result = file_get_contents($createRecipeUrl, false, $context);
+    $response = json_decode($result);
+}
+
 ?>
 
 <title><?php $recipeInfo['title']; ?></title>
@@ -139,13 +170,34 @@ $decodedComments = json_decode(shell_exec($commentCmd), true);
             //}
 
             echo '<h2> User Comments </h2>
-                <form action="recipeInfo.php?id='.$_GET['id'].'" method="post" id="usrform">
+                <form action="recipeInfo.php?id=' . $_GET['id'] . '" method="post" id="usrform">
                     <textarea rows="4" cols="50" name="comment" form="usrform" placeholder="Write your comment down here"></textarea>
-                    <button type="submit" name="id" value="'.$_GET['id'].'" onclick="window.location.reload()"> Submit </button>
+                    <button type="submit" name="id" value="' . $_GET['id'] . '" onclick="window.location.reload()"> Submit </button>
                 </form>';
 
+
+            $url_post = 'http://52.91.254.222/api/CommentRecipe/create.php';
+            $newComment = json_encode(array(
+                'user_id' => 4,
+                'recipe_id' => 2,
+                'comment_text' => $_POST['comment']
+            ));
+
+            $options = array(
+                'http' => array(
+                    'method'  => 'POST',
+                    'content' => $newComment,
+                    'header' =>  "Content-Type: application/json\r\n" .
+                        "Accept: application/json\r\n"
+                )
+            );
+
+            $stream  = stream_context_create($options);
+            $result = file_get_contents($url_post, false, $stream);
+            $response = json_decode($result);
             //Comment is stored in $_POST['comment'];
 
+            /*
             $newComment = json_encode(array(
                 'user_id' => 4,
                 'recipe_id' => 2,
@@ -161,16 +213,17 @@ $decodedComments = json_decode(shell_exec($commentCmd), true);
             curl_setopt($ch,CURLOPT_HTTPHEADER,array('Content-Type: application/json'));
             $curl_result = curl_exec($ch);
 
+            */
             //Loop that prints out all comments for current recipe
-            for($i = 0; $i < sizeOf($decodedComments['comments']); $i++){
+            for ($i = 0; $i < sizeOf($decodedComments['comments']); $i++) {
                 //if($decodedComments['comments'][$i]['recipe_id'] == $recipeID){
-                    echo ''. $decodedComments['comments'][$i]['user_id']. ' says: 
-                    ' .$decodedComments['comments'][$i]['comment_text'] . '<br>';
+                echo '' . $decodedComments['comments'][$i]['user_id'] . ' says: 
+                    ' . $decodedComments['comments'][$i]['comment_text'] . '<br>';
                 //}
             }
 
             ?>
-            </div>
+        </div>
         <div class="sidelinks">
             <?php
             echo '<h2> You may also like these Recipes</h2>';
@@ -178,7 +231,7 @@ $decodedComments = json_decode(shell_exec($commentCmd), true);
             for ($r = 0; $r < $relatedLinks[$r]; $r++) {
                 echo '<div class = "related">
                  <a href=recipeInfo.php?id=' . $relatedLinks[$r]['id'] . '><img class="relatedImg" src="https://spoonacular.com/recipeImages/'
-                  . $relatedLinks[$r]['image'] . '" alt="recipeImage" style="width:100%;"></a>
+                    . $relatedLinks[$r]['image'] . '" alt="recipeImage" style="width:100%;"></a>
                  <div class="relatedTitle">' . $relatedLinks[$r]['title'] . '</div>
             </div>';
             };;
