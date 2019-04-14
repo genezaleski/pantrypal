@@ -33,6 +33,24 @@ class Allergy{
         return $stmt;
     }
 
+    //return allergies with given user_id
+    function readUser(){
+      $query = "SELECT
+                allergy_item_id, allergy_itemName
+            FROM
+                " . $this->table_name . "
+            WHERE
+                user_id = ?";
+
+      $stmt = $this->conn->prepare( $query );
+
+      $stmt->bindParam(1, $this->user_id);
+
+      $stmt->execute();
+
+      return $stmt;
+    }
+
     // create
     function create(){
         $query = "INSERT INTO
@@ -49,7 +67,7 @@ class Allergy{
 
         // bind values
         $stmt->bindParam(":allergy_itemName", $this->allergy_itemName);
-        $stmt->bindParam(":user_id", $this->user_id);        
+        $stmt->bindParam(":user_id", $this->user_id);
 
         // execute query
         if($stmt->execute()){
@@ -57,6 +75,29 @@ class Allergy{
         }
 
         return false;
+    }
+
+    // delete the product
+    function delete(){
+
+        // delete query
+        $query = "DELETE FROM " . $this->table_name . "
+                  WHERE allergy_item_id = ? and user_id = ?";
+
+        // prepare query
+        $stmt = $this->conn->prepare($query);
+
+        // bind id of record to delete
+        $stmt->bindParam(1, $this->allergy_item_id);
+        $stmt->bindParam(2, $this->user_id);
+
+        // execute query
+        if($stmt->execute()){
+            return true;
+        }
+
+        return false;
+
     }
 }
 ?>
