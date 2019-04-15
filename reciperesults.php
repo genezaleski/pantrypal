@@ -34,6 +34,7 @@ include 'navbar.php';
 </nav>
 </form>
 
+<!-- Code for toggle button for filter slide out -->
 <script language="JavaScript">
     $('.nav-side .nav-toggle').on('click',function(e){
         e.preventDefault();
@@ -50,6 +51,7 @@ $search = $_POST['searchBar'];
 $isveggie ='';
 $course='';
 
+//Checks if filters have been set and applies them to url
 if(isset($_POST['Vegetarian'])){
     $isveggie = $isveggie . "diet=vegetarian&";
     echo "Veggie is true";
@@ -114,6 +116,7 @@ if(!empty($search)){
             $num = $output_arr['number'];
         }
 
+	//This loop organizes the results json into arrays so they can be displayed in grid format
         for($i = 0; $i < $num; $i++){
             if($is_ingredients == false){
                 $image = "https://spoonacular.com/recipeImages/" . $output_arr['results'][$i]['image'];
@@ -180,6 +183,8 @@ for($i = 0; $i < sizeof($image_results); $i++){
     }
 }
 
+//Takes images sepearated into columns ($one,$two,$three) and displays them in the different column
+//classes to apply the appropriate style
 echo '<div class="row">
         <div class="column">
         ' . $one . '
