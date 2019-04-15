@@ -138,6 +138,19 @@ if ($rExists == false) {
                         //Remove disLike from database
                     }
                 }
+
+		                //Calls postComment.php script on button click to post comment
+                function postComment(phpComment){
+                    var xmlhtml = new XMLHttpRequest();
+                    xmlhtml.open('POST','ajax_scripts/postComment.php',true);
+                    xmlhtml.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                    //xmlhtml.onreadystatechange = function(){
+                    //    if(this.readyState == 4 && this.status == 200){
+                    //       alert(this.responseText);
+                    //    }
+                    //}
+		    xmlhtml.send("comment="+phpComment);
+		}
             </script>
 
             <?php
@@ -167,51 +180,17 @@ if ($rExists == false) {
             //    for($n = 0; $n < $recipeInstr[$j]['steps']; $n++){
             //        echo '<div class="instruction">'. $n , " " , $recipeInstr[$j]['steps'][$n]['step'] . '<div>';
             //    }
-            //}
+	    //}
+	    ?>
 
-            echo '<h2> User Comments </h2>
-                <form action="recipeInfo.php?id=' . $_GET['id'] . '" method="post" id="usrform">
+	    <h2> User Comments </h2>
+            <form action="recipeInfo.php?id=<?php echo $_GET['id']?>" method="post" id="usrform">
                     <textarea rows="4" cols="50" name="comment" form="usrform" placeholder="Write your comment down here"></textarea>
-                    <button type="submit" name="id" value="' . $_GET['id'] . '" onclick="window.location.reload()"> Submit </button>
-                </form>';
+                    <button type="submit" id="ajaxButton" name="commentClick" value="TRUE" onClick="postComment(this.form.comment.value)"> Submit </button>
+            </form>
 
 
-            $url_post = 'http://52.91.254.222/api/CommentRecipe/create.php';
-            $newComment = json_encode(array(
-                'user_id' => 4,
-                'recipe_id' => 2,
-                'comment_text' => $_POST['comment']
-            ));
-
-            $options = array(
-                'http' => array(
-                    'method'  => 'POST',
-                    'content' => $newComment,
-                    'header' =>  "Content-Type: application/json\r\n" .
-                        "Accept: application/json\r\n"
-                )
-            );
-
-            $stream  = stream_context_create($options);
-            $result = file_get_contents($url_post, false, $stream);
-            $response = json_decode($result);
-            //Comment is stored in $_POST['comment'];
-
-            /*
-            $newComment = json_encode(array(
-                'user_id' => 4,
-                'recipe_id' => 2,
-                'comment_text' => $_POST['comment']
-            ));
-
-            $_POST['comment'] = '';
-
-            $url_post = 'http://52.91.254.222/api/CommentRecipe/create.php';
-            $ch = curl_init($url_post);
-            curl_setopt($ch,CURLOPT_POST,1);
-            curl_setopt($ch,CURLOPT_POSTFIELDS,$newComment);
-            curl_setopt($ch,CURLOPT_HTTPHEADER,array('Content-Type: application/json'));
-            $curl_result = curl_exec($ch);
+	    <?php
 
             */
             //Loop that prints out all comments for current recipe
