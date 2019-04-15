@@ -2,34 +2,26 @@
 
 <?php
 include 'navbar.php';
-
 $recipeID = $_GET['id'];
-
 $my_api_key = '"X-RapidAPI-Key :322dc0a550msh6970a9bebfd18b2p1010fcjsnaed4930a9684"';
 $other_api_key = '"X-RapidAPI-Key : 4af690163bmshda5b867e43cbc70p155394jsnc38cedc3355a"';
-
 //Retrieving recipe info
 $api_url = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/" . $recipeID . "/information";
 $cmd = "curl -H " . $my_api_key . " " . $api_url;
 $recipeInfo = json_decode(shell_exec($cmd), true);
-
 //Retriving recipe instructions broken into steps
 //$analysed_url = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/".$recipeID."/analyzedInstructions?stepBreakdown=false";
 //$instrCmd = "curl -H " . $api_key . " " . $analysedRecipe;
 //$recipeInstr = json_decode(shell_exec($instrCmd),true);
-
 //Retriving similar recipies to add as links
 $related_url = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/" . $recipeID . "/similar";
 $relatedCmd = "curl -H " . $other_api_key . " " . $related_url;
 $relatedLinks = json_decode(shell_exec($relatedCmd), true);
-
 //Pulling in likes and dislikes  to be used 
 $likeDataCmd = "curl http://52.91.254.222/api/RateRecipe/read.php";
 $decodedLikeData = json_decode(shell_exec($likeDataCmd), true);
-
 $commentCmd = "curl http://52.91.254.222/api/CommentRecipe/read.php";
 $decodedComments = json_decode(shell_exec($commentCmd), true);
-
 $rExists = false;
 for ($r = 0; $r < sizeof($rListDecode['Recipes']); $r++) {
     if ($rListDecode['Recipes'][$r]['api_recipe_id'] == $recipeID) {
@@ -46,7 +38,6 @@ if ($rExists == false) {
         'recipe_link' => $recipeInfo['sourceUrl']
     );
     $recipeJSONEncoded = json_encode($recipeJSON);
-
     $options = array(
         'http' => array(
             'method'  => 'POST',
@@ -55,12 +46,10 @@ if ($rExists == false) {
                 "Accept: application/json\r\n"
         )
     );
-
     $context  = stream_context_create($options);
     $result = file_get_contents($createRecipeUrl, false, $context);
     $response = json_decode($result);
 }
-
 ?>
 
 <title><?php $recipeInfo['title']; ?></title>
@@ -74,13 +63,11 @@ if ($rExists == false) {
             //Title and image of recipe
             echo    '<h1>' . $recipeInfo['title'] . '</h1>
             <div class="mainImage"><img src="' . $recipeInfo['image'] . '"> </div>';
-
             ?>
             <!-- Like/Dislike Buttons -->
             <input type="image" alt="" src="images/likeButton.png" onClick="changeLikeImage()" name="likeBtn" class="likeBtn" id="likeBtn" />
             <input type="image" alt="" src="images/likeButton.png" onClick="changeDisLikeImage()" name="disLikeBtn" class="disLikeBtn" id="disLikeBtn" />
             <?php
-
             $liked = 0;
             $disliked = 0;
             $likedPercent = 0;
@@ -100,8 +87,6 @@ if ($rExists == false) {
                 $likedPercent = 0;
                 echo '<h2> This recipe has not been rated yet </h2>';
             }
-
-
             ?>
 
             <script language="javascript">
@@ -115,14 +100,11 @@ if ($rExists == false) {
                         //Set recipe to liked here using MySQL
                         //curl - d '{"recipe_id" : "'.$recipeID.
                         //'", "user_id" : "9", "rating" : "like"}' - H "Content-Type: application/json" - X POST 'http://localhost:80/api/RateRecipe/create.php';
-
                     } else {
                         document.getElementById("likeBtn").src = "images/likeButton.png";
                         //Remove like value from database
-
                     }
                 }
-
                 function changeDisLikeImage() {
                     if (document.getElementById("disLikeBtn").src.includes('likeButton.png')) {
                         //Checking if the liked button is checked and unchecking it
@@ -138,17 +120,15 @@ if ($rExists == false) {
                         //Remove disLike from database
                     }
                 }
-
-		function postComment(phpComment){
-			var xmlhtml = new XMLHttpRequest();
-			xmlhtml.open('POST','ajax_scripts/postComment.php',true);
-			xmlhtml.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
-			xmlhtml.send("comment="+phpComment);
-		}
+                function postComment(phpComment){
+                    var xmlhtml = new XMLHttpRequest();
+                    xmlhtml.open('POST','ajax_scripts/postComment.php',true);
+                    xmlhtml.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                    xmlhtml.send("comment="+phpComment);
+                }
             </script>
 
             <?php
-
             echo '<h2> Ingredients </h2>';
             //Loop that generates a list of the ingredients used
             for ($i = 0; $i < $recipeInfo['extendedIngredients'][$i]; $i++) {
@@ -157,9 +137,6 @@ if ($rExists == false) {
                 $ingrName = $recipeInfo['extendedIngredients'][$i]['name'];
                 echo '<div class = "ingredients">' . $amount, " ",  $unit, " ",  $ingrName . ' </div>';
             }
-
-
-
             //Instructions with error handling for no instructions found
             $instructions = $recipeInfo['instructions'];
             if ($instructions == "") {
@@ -167,7 +144,6 @@ if ($rExists == false) {
             }
             echo '<br><h2> Insructions </h2> 
             <div class="recipe">' . $instructions . '</div><br>';
-
             //Unfinished, but will hopefully print a better list of instructions than just a dense paragraph
             //for($j = 0; $j < sizeOf($recipeInstr); $j++){
             //    echo '<h3>' .$recipeInstr[$j]['name'].'</h3>';
@@ -175,55 +151,35 @@ if ($rExists == false) {
             //        echo '<div class="instruction">'. $n , " " , $recipeInstr[$j]['steps'][$n]['step'] . '<div>';
             //    }
             //}
-?>
+            ?>
 
             <h2> User Comments </h2>
-	    <form action="recipeInfo.php?id='" . <?php echo $_GET('id');?>. "'" method="post" id="usrform">
+            <form action="recipeInfo.php?id=<?php echo $_GET['id']?>" method="post" id="usrform">
                     <textarea rows="4" cols="50" name="comment" form="usrform" placeholder="Write your comment down here"></textarea>
-                    <button type="submit" id="ajaxButton" name="commentClick" value="TRUE" onclick="postComment(this.form.comment.value)"> Submit </button>
-                </form>
-<?php
+                    <button type="submit" id="ajaxButton" name="commentClick" value="TRUE" onClick="postComment(this.form.comment.value)"> Submit </button>
+            </form>
 
+            <?php
             $url_post = 'http://52.91.254.222/api/CommentRecipe/create.php';
-	    // --------------The following is executed in ajax_scripts/postComment.php
-	    // --------------Keeping in as comments for testing purposes
-            //$newComment = json_encode(array(
-            //    'user_id' => 4,
-            //    'recipe_id' => 2,
-            //    'comment_text' => $_POST['comment']
-            //));
-
-            //$options = array(
-            //    'http' => array(
-            //        'method'  => 'POST',
-            //        'content' => $newComment,
-            //        'header' =>  "Content-Type: application/json\r\n" .
-            //            "Accept: application/json\r\n"
-            //    )
-            //);
-
-            //$stream  = stream_context_create($options);
-            //$result = file_get_contents($url_post, false, $stream);
-            //$response = json_decode($result);
-            //Comment is stored in $_POST['comment'];
-
             /*
             $newComment = json_encode(array(
                 'user_id' => 4,
                 'recipe_id' => 2,
                 'comment_text' => $_POST['comment']
             ));
-
-            $_POST['comment'] = '';
-
-            $url_post = 'http://52.91.254.222/api/CommentRecipe/create.php';
-            $ch = curl_init($url_post);
-            curl_setopt($ch,CURLOPT_POST,1);
-            curl_setopt($ch,CURLOPT_POSTFIELDS,$newComment);
-            curl_setopt($ch,CURLOPT_HTTPHEADER,array('Content-Type: application/json'));
-            $curl_result = curl_exec($ch);
-
+            $options = array(
+                'http' => array(
+                    'method'  => 'POST',
+                    'content' => $newComment,
+                    'header' =>  "Content-Type: application/json\r\n" .
+                        "Accept: application/json\r\n"
+                )
+            );
+            $stream  = stream_context_create($options);
+            $result = file_get_contents($url_post, false, $stream);
+            $response = json_decode($result);
             */
+
             //Loop that prints out all comments for current recipe
             for ($i = 0; $i < sizeOf($decodedComments['comments']); $i++) {
                 //if($decodedComments['comments'][$i]['recipe_id'] == $recipeID){
@@ -231,7 +187,6 @@ if ($rExists == false) {
                     ' . $decodedComments['comments'][$i]['comment_text'] . '<br>';
                 //}
             }
-
             ?>
         </div>
         <div class="sidelinks">
