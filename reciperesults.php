@@ -34,7 +34,6 @@ include 'navbar.php';
 </nav>
 </form>
 
-<!-- Code for toggle button for filter slide out -->
 <script language="JavaScript">
     $('.nav-side .nav-toggle').on('click',function(e){
         e.preventDefault();
@@ -51,14 +50,11 @@ $search = $_POST['searchBar'];
 $isveggie ='';
 $course='';
 
-//Checks if filters have been set and applies them to url
 if(isset($_POST['Vegetarian'])){
     $isveggie = $isveggie . "diet=vegetarian&";
-    echo "Veggie is true";
 }
 if(isset($_POST['Allergies'])){
     //echo "Allergies is set to: " . $_POST['Allergies'];
-    echo "Allergies is true";
 }
 if(isset($_POST['mainCourse'])){
     $course = $course . "type=main+course&";
@@ -78,16 +74,25 @@ if(!empty($search)){
     $api_url = null;
     $is_ingredients = strpos($search, ',');
     if($is_ingredients !== false ) { //If commas are in search string, search by ingredients
-        $api_url = '"https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/findByIngredients?number=60&ingredients=' . urlencode($search) .'"';
+        //$api_url = '"https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/findByIngredients?number=60&ingredients=' . urlencode($search) .'"';
+        $api_url = '"https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/searchComplex?'.$isveggie.'includeIngredients="'.urlencode($search).'"&'.$course.'ranking=2&limitLicense=true&offset=0&number=60"';
 
         $cmd = "curl " . $api_url . "  -H " . $api_key;
+        //$cmd2 = "curl " . $api_url1 . "  -H " . $api_key;
 
         $output_arr = json_decode(shell_exec($cmd),true);
 
-        for($i = 0; $i < sizeof($output_arr); $i++){
-            $image = $output_arr[$i]['image'];
-            $id = $output_arr[$i]['id'];
-            $title = $output_arr[$i]['title'];
+        if($output_arr['totalResults'] < $output_arr['number']){
+            $num = $output_arr['totalResults'];
+        }
+        else{
+            $num = $output_arr['number'];
+        }
+
+        for($i = 0; $i < $output_arr['number']; $i++){
+            $image = $output_arr['results'][$i]['image'];
+            $id = $output_arr['results'][$i]['id'];
+            $title = $output_arr['results'][$i]['title'];
 
             array_push($id_list,$id);
             array_push($title_list,$title);
@@ -101,8 +106,8 @@ if(!empty($search)){
         }
     }
     else{                                 //If no commas, search by recipe name
-	$api_url = '"https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/search?'.$isveggie.'number=60&'.$course.'query=' . urlencode($search) .'"';
-
+    $api_url = '"https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/search?'.$isveggie.'number=60&'.$course.'query=' . urlencode($search) .'"';
+    //$api_url = '"https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/searchComplex?query="'.urlencode($search).'"&'.$isveggie.$course.'ranking=2&limitLicense=true&offset=0&number=60"';
 
         $cmd = "curl " . $api_url . "  -H " . $api_key;
 
@@ -116,10 +121,10 @@ if(!empty($search)){
             $num = $output_arr['number'];
         }
 
-	//This loop organizes the results json into arrays so they can be displayed in grid format
         for($i = 0; $i < $num; $i++){
             if($is_ingredients == false){
                 $image = "https://spoonacular.com/recipeImages/" . $output_arr['results'][$i]['image'];
+                //$image = $output_arr['results'][$i]['image'];
                 $id = $output_arr['results'][$i]['id'];
                 $title = $output_arr['results'][$i]['title'];
 
@@ -183,8 +188,6 @@ for($i = 0; $i < sizeof($image_results); $i++){
     }
 }
 
-//Takes images sepearated into columns ($one,$two,$three) and displays them in the different column
-//classes to apply the appropriate style
 echo '<div class="row">
         <div class="column">
         ' . $one . '
@@ -198,3 +201,4 @@ echo '<div class="row">
     </div>';
 
 ?> <!--End PHP-->
+
