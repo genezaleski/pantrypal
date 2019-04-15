@@ -138,6 +138,13 @@ if ($rExists == false) {
                         //Remove disLike from database
                     }
                 }
+
+		function postComment(phpComment){
+			var xmlhtml = new XMLHttpRequest();
+			xmlhtml.open('POST','ajax_scripts/postComment.php',true);
+			xmlhtml.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+			xmlhtml.send("comment="+phpComment);
+		}
             </script>
 
             <?php
@@ -168,33 +175,36 @@ if ($rExists == false) {
             //        echo '<div class="instruction">'. $n , " " , $recipeInstr[$j]['steps'][$n]['step'] . '<div>';
             //    }
             //}
+?>
 
-            echo '<h2> User Comments </h2>
-                <form action="recipeInfo.php?id=' . $_GET['id'] . '" method="post" id="usrform">
+            <h2> User Comments </h2>
+	    <form action="recipeInfo.php?id='" . <?php echo $_GET('id');?>. "'" method="post" id="usrform">
                     <textarea rows="4" cols="50" name="comment" form="usrform" placeholder="Write your comment down here"></textarea>
-                    <button type="submit" name="id" value="' . $_GET['id'] . '" onclick="window.location.reload()"> Submit </button>
-                </form>';
-
+                    <button type="submit" id="ajaxButton" name="commentClick" value="TRUE" onclick="postComment(this.form.comment.value)"> Submit </button>
+                </form>
+<?php
 
             $url_post = 'http://52.91.254.222/api/CommentRecipe/create.php';
-            $newComment = json_encode(array(
-                'user_id' => 4,
-                'recipe_id' => 2,
-                'comment_text' => $_POST['comment']
-            ));
+	    // --------------The following is executed in ajax_scripts/postComment.php
+	    // --------------Keeping in as comments for testing purposes
+            //$newComment = json_encode(array(
+            //    'user_id' => 4,
+            //    'recipe_id' => 2,
+            //    'comment_text' => $_POST['comment']
+            //));
 
-            $options = array(
-                'http' => array(
-                    'method'  => 'POST',
-                    'content' => $newComment,
-                    'header' =>  "Content-Type: application/json\r\n" .
-                        "Accept: application/json\r\n"
-                )
-            );
+            //$options = array(
+            //    'http' => array(
+            //        'method'  => 'POST',
+            //        'content' => $newComment,
+            //        'header' =>  "Content-Type: application/json\r\n" .
+            //            "Accept: application/json\r\n"
+            //    )
+            //);
 
-            $stream  = stream_context_create($options);
-            $result = file_get_contents($url_post, false, $stream);
-            $response = json_decode($result);
+            //$stream  = stream_context_create($options);
+            //$result = file_get_contents($url_post, false, $stream);
+            //$response = json_decode($result);
             //Comment is stored in $_POST['comment'];
 
             /*
