@@ -1,47 +1,43 @@
 <?php
-  /*  1)  get number of likes given recipe_id
-      2)  get all recipe_id where 'likes' given a user_id
-      3)  get number of likes given api_name and api_recipe_id  */
-    header("Access-Control-Allow-Origin: *");
-    header("Access-Control-Allow-Headers: access");
-    header("Access-Control-Allow-Methods: GET");
-    header("Access-Control-Allow-Credentials: true");
-    header('Content-Type: application/json');
+  header("Access-Control-Allow-Origin: *");
+  header("Access-Control-Allow-Headers: access");
+  header("Access-Control-Allow-Methods: GET");
+  header("Access-Control-Allow-Credentials: true");
+  header('Content-Type: application/json');
 
-    include_once '../config/database.php';
-    include_once '../objects/RateRecipe.php';
+  include_once '../config/database.php';
+  include_once '../objects/RateRecipe.php';
 
-    //setup database conn
-    $database = new Database();
-    $db = $database->getConnection();
+  //setup database conn
+  $database = new Database();
+  $db = $database->getConnection();
 
-    // prepare RateRecipe object
-    $RateRecipe = new RateRecipe($db);
+  // prepare RateRecipe object
+  $RateRecipe = new RateRecipe($db);
 
-    if(isset($_GET['recipe_id'])) {
-      $RateRecipe->recipe_id = $_GET['recipe_id'];
-      $RateRecipe->getLikes();
+  if(isset($_GET["user_id"])){
+    $RateRecipe->user_id = $_GET["user_id"];
+    $stmt = $RateRecipe->getLikesUser();
+
+    $LikedRecipe_arr=array();
+    $LikedRecipe_arr["Liked Recipes"]=array();
+
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+
+      extract($row);
+
+      $LikedRecipe_item=array(
+        "recipe_id" => $recipe_id
+      );
+
+      array_push($LikedRecipe_arr["Liked Recipes"], $LikedRecipe_item);
     }
 
-
-
-    if($RateRecipe->recipe_id != null){
-
-        $Rating_arr = array(
-          'recipe_id' => $RateRecipe->recipe_id,
-          'likes' => $RateRecipe->likes,
-        );
-
-
-
-
-      echo json_encode($Rating_arr, JSON_PRETTY_PRINT);
-    }
-    else{
-      http_response_code(404);
-
-      echo json_encode(array("message"=> "Recipe does not exist"));
-    }
-
-
+    http_response_code(200);
+    echo json_encode($LikedRecipe_arr["Liked Recipes"], JSON_PRETTY_PRINT);
+  }
+  else{
+    http_response_code(404);
+    echo json_encode(array("message"=> "User does not exist"));
+  }
 ?>
