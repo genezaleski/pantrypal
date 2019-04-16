@@ -1,0 +1,99 @@
+@font-face{
+    font-family: 'results_font';
+    src: url(../fonts/Acme-Regular.ttf);
+}
+
+body{
+    background-color: grey;
+    background-image: url(../images/canned_fruit_culp_arkansas.jpg);
+    background-size: 100%;
+    margin: 0px;
+}
+
+.dispUsername{
+    font-family: 'results_font';
+    font-size: 64px;
+    color: white;
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+    font-weight: bold;
+}
+
+.urInventory{
+    display: inline;
+    font-family: 'results_font';
+    font-size: 36px;
+    color: black;
+    text-align: center;
+}
+
+.info{
+    display: inline-block;
+    font-family: 'results_font';
+    font-size: 36px;
+    color: black;
+    border-left: 8px solid orange;
+    border-right: 8px solid orange;
+    border-top: 8px solid orange;
+    border-bottom: 8px solid orange;
+    border-style: groove;
+    background-color: orange;
+    text-align: center;
+}
+
+.newItemBox{
+    position: absolute;
+    margin-left: 250px;
+    margin-top: -35px;
+}
+
+.inventoryAddBox{
+    padding:5px; 
+    border:2px solid #ccc; 
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+}
+
+.inventoryAddBox:focus {
+    border-color:#333;
+}
+
+.inventoryAddButton {
+    padding:5px 15px; 
+    background:#ccc; 
+    border:0 none;
+    cursor:pointer;
+    -webkit-border-radius: 5px;
+    border-radius: 5px; 
+}
+
+.inventoryAddButton:hover{
+    padding:5px 15px; 
+    background:black; 
+    color: white;
+    border:0 none;
+    cursor:pointer;
+    -webkit-border-radius: 5px;
+    border-radius: 5px; 
+}
+
+.inventoryAddButton2{
+    padding:10px 30px; 
+    background:#ccc; 
+    border:0 none;
+    cursor:pointer;
+    -webkit-border-radius: 10px;
+    border-radius: 10px; 
+    margin-left: 150px;
+}
+
+.inventoryAddButton2:hover{
+    padding:10px 30px; 
+    background:black; 
+    color: white;
+    border:0 none;
+    cursor:pointer;
+    -webkit-border-radius: 10px;
+    border-radius: 10px; 
+    margin-left: 150px;
+}
+
