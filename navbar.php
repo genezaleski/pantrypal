@@ -92,6 +92,7 @@
           <meta name="google-signin-scope" content="profile email">
           <meta name="google-signin-client_id" content="818469007806-1oi7h6015kjsggbd4m0i6j4ro9dq6vqt.apps.googleusercontent.com">
           <script src="https://apis.google.com/js/platform.js" async defer></script>
+          <script  src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
         </head>
         <body>
           <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
@@ -109,6 +110,22 @@
               // The ID token you need to pass to your backend:
               var id_token = googleUser.getAuthResponse().id_token;
               console.log("ID Token: " + id_token);
+              
+              var name = profile.getName();
+              sendProfile(name, id_token);
+
+              function sendProfile(name, token){
+                    var xmlhtml = new XMLHttpRequest();
+                    var encoded64 = window.btoa(token);
+                    var length = encoded64.length;
+                    console.log(length);
+                    encoded64 = encoded64.substring(0,255);
+                    console.log(encoded64);
+                    xmlhtml.open('POST','ajax_scripts/createProfile.php',true);
+                    xmlhtml.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                    xmlhtml.send("user="+name+"&id="+encoded64);
+                }//end sendprofile
+
             }
           </script>
         </body>
