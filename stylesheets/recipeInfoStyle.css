@@ -74,3 +74,38 @@ img {
     max-width: 50px;
     transform: rotate(180deg);
 }
+
+/* Recipe comment formatting*/
+
+@import "compass/css3";
+
+.vjs-comment-list {
+    list-style-type: none;
+    position: relative;
+    background: #fff;
+    font-size: 24px;
+    position: relative;
+    max-width: 350px;
+    -moz-user-select: text !important;
+    margin-bottom: 10px;
+    font-family: "Times New Roman", Times, Arial, sans-serif !important;
+  border-right:  solid 5px #118C4E;
+}
+
+.comment-user-name{
+
+  top:0;
+  left:80px;
+  font-size: 18px;
+  font-family: "Times New Roman", Times, Arial, sans-serif !important;
+  font-weight: bold;
+
+}
+
+.comment-id {
+    top: 0;
+    left: 100px;
+    font-size: 8;
+    color: red;
+    font-family: "Times New Roman", Times, Arial, sans-serif !important;
+}

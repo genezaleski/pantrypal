@@ -186,8 +186,8 @@ if($rExists == false){
             //Loop that prints out all comments for current recipe
             for ($i = 0; $i < sizeOf($decodedComments['comments']); $i++) {
                 if($decodedComments['comments'][$i]['recipe_id'] == $DB_ID){
-                    echo '' . $decodedComments['comments'][$i]['user_id'] . ' says: 
-                    ' . $decodedComments['comments'][$i]['comment_text'] . '<br>';
+	            echo '<div class="comment-user-name">' . $decodedComments['comments'][$i]['user_id'] . ' says</div>
+                    <div class="vjs-comment-list">' . $decodedComments['comments'][$i]['comment_text'] . '</div><br>';
                 }
             }
             ?>
