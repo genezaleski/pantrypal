@@ -177,7 +177,7 @@ if($rExists == false){
             <h2> User Comments </h2>
             <form action="recipeInfo.php?id=<?php echo $_GET['id']?>" method="post" id="usrform">
                     <textarea rows="4" cols="50" name="comment" form="usrform" placeholder="Write your comment down here"></textarea>
-                    <button type="submit" id="ajaxButton" name="commentClick" value="TRUE" onClick="postComment(this.form.comment.value,,<?php echo $DB_ID;?>)"> Submit </button>
+                    <button type="submit" id="ajaxButton" name="commentClick" value="TRUE" onClick="postComment(this.form.comment.value,<?php echo $DB_ID;?>)"> Submit </button>
             </form>
 
             <?php
