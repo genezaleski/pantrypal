@@ -36,7 +36,7 @@ for ($r = 0; $r < sizeof($rListDecode['Recipes']); $r++) {
         $rExists = true;
     }
 }
-if ($rExists == false) {
+if($rExists == false){
     $createRecipeUrl = 'http://52.91.254.222/api/Recipe/create.php';
     $recipeJSON = array(
         'api_name' => 'spoon',
