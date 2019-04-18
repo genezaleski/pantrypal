@@ -9,6 +9,13 @@ $other_api_key = '"X-RapidAPI-Key : 4af690163bmshda5b867e43cbc70p155394jsnc38ced
 $api_url = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/" . $recipeID . "/information";
 $cmd = "curl -H " . $my_api_key . " " . $api_url;
 $recipeInfo = json_decode(shell_exec($cmd), true);
+
+//Retrieve db recipe id
+$dbIdCmd = 'curl "http://52.91.254.222/api/Recipe/read_one.php?api_name=spoon&api_recipe_id='.$recipeID.'"';
+$decodedID = json_decode(shell_exec($dbIdCmd), true);
+$DB_ID = $decodedID['recipe_id'];
+
+
 //Retriving recipe instructions broken into steps
 //$analysed_url = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/".$recipeID."/analyzedInstructions?stepBreakdown=false";
 //$instrCmd = "curl -H " . $api_key . " " . $analysedRecipe;
@@ -28,7 +35,7 @@ for ($r = 0; $r < sizeof($rListDecode['Recipes']); $r++) {
         $rExists = true;
     }
 }
-if ($rExists == false) {
+if($rExists == false){
     $createRecipeUrl = 'http://52.91.254.222/api/Recipe/create.php';
     $recipeJSON = array(
         'api_name' => 'spoon',
@@ -120,11 +127,12 @@ if ($rExists == false) {
                         //Remove disLike from database
                     }
                 }
-                function postComment(phpComment){
+                function postComment(phpComment,dbID){
+                    //document.write(phpComment + dbID);
                     var xmlhtml = new XMLHttpRequest();
                     xmlhtml.open('POST','ajax_scripts/postComment.php',true);
                     xmlhtml.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-                    xmlhtml.send("comment="+phpComment);
+                    xmlhtml.send("comment="+phpComment+"&item="+dbID);
                 }
             </script>
 
@@ -156,7 +164,7 @@ if ($rExists == false) {
             <h2> User Comments </h2>
             <form action="recipeInfo.php?id=<?php echo $_GET['id']?>" method="post" id="usrform">
                     <textarea rows="4" cols="50" name="comment" form="usrform" placeholder="Write your comment down here"></textarea>
-                    <button type="submit" id="ajaxButton" name="commentClick" value="TRUE" onClick="postComment(this.form.comment.value)"> Submit </button>
+                    <button type="submit" id="ajaxButton" name="commentClick" value="TRUE" onClick="postComment(this.form.comment.value,<?php echo $DB_ID;?>)"> Submit </button>
             </form>
 
             <?php
@@ -182,10 +190,10 @@ if ($rExists == false) {
 
             //Loop that prints out all comments for current recipe
             for ($i = 0; $i < sizeOf($decodedComments['comments']); $i++) {
-                //if($decodedComments['comments'][$i]['recipe_id'] == $recipeID){
-                echo '' . $decodedComments['comments'][$i]['user_id'] . ' says: 
+                if($decodedComments['comments'][$i]['recipe_id'] == $DB_ID){
+                    echo '' . $decodedComments['comments'][$i]['user_id'] . ' says: 
                     ' . $decodedComments['comments'][$i]['comment_text'] . '<br>';
-                //}
+                }
             }
             ?>
         </div>
@@ -206,3 +214,4 @@ if ($rExists == false) {
 </body>
 
 </html>
+
