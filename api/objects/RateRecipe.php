@@ -110,6 +110,28 @@ class RateRecipe{
         return false;
     }
 
+    function delete(){
+
+        // delete query
+        $query = "DELETE FROM " . $this->table_name . "
+                  WHERE recipe_id = ? and user_id = ?";
+
+        // prepare query
+        $stmt = $this->conn->prepare($query);
+
+        // bind id of record to delete
+        $stmt->bindParam(1, $this->recipe_id);
+        $stmt->bindParam(2, $this->user_id);
+
+        // execute query
+        if($stmt->execute()){
+            return true;
+        }
+
+        return false;
+
+    }
+
     function updateLikes(){
 
       //query to update likes

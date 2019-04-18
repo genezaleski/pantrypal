@@ -35,6 +35,19 @@ class PantryItem{
         return $stmt;
     }
 
+    function readOne(){
+      $query = "SELECT
+                  pantry_item_id, item_name
+                FROM
+                    " . $this->table_name . "
+                    WHERE user_id = ?";
+
+      $stmt = $this->conn->prepare($query);
+      $stmt->bindParam(1, $this->user_id);
+      $stmt->execute();
+      return $stmt;
+    }
+
     // create
     function create(){
         $query = "INSERT INTO

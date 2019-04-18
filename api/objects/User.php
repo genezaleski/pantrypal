@@ -58,5 +58,31 @@ class User{
 
         return false;
     }
+
+    function readOne(){
+        // query to read single record
+        $query = "SELECT *
+            FROM
+                " . $this->table_name . "
+              WHERE
+                  user_name = ?";
+  
+                  // prepare query statement
+        $stmt = $this->conn->prepare( $query );
+  
+        // bind id of product to be updated
+        $stmt->bindParam(1, $this->user_name);
+  
+        // execute query
+        $stmt->execute();
+  
+        // get retrieved row
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+  
+        // set values to object properties
+        $this->user_id = $row['user_id'];
+        $this->oauth_token = $row['oauth_token'];
+        $this->user_name = $row['user_name'];
+      }
 }
 ?>
