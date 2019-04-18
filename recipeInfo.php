@@ -76,8 +76,8 @@ if($rExists == false){
             <div class="mainImage"><img src="' . $recipeInfo['image'] . '"> </div>';
             ?>
             <!-- Like/Dislike Buttons -->
-            <input type="image" alt="" src="images/likeButton.png" onClick="changeLikeImage()" name="likeBtn" class="likeBtn" id="likeBtn"/>
-            <input type="image" alt="" src="images/likeButton.png" onClick="changeDisLikeImage()" name="disLikeBtn" class="disLikeBtn" id="disLikeBtn"/>
+            <input type="image" alt="" src="images/likeButton.png" onClick="changeLikeImage()" name="likeBtn" class="likeBtn" id="likeBtn" />
+            <input type="image" alt="" src="images/likeButton.png" onClick="changeDisLikeImage()" name="disLikeBtn" class="disLikeBtn" id="disLikeBtn" />
             <?php
             $liked = 0;
             $disliked = 0;

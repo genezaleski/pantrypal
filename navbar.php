@@ -111,9 +111,16 @@
               var id_token = googleUser.getAuthResponse().id_token;
               console.log("ID Token: " + id_token);
               
-              var name = profile.getName();
+              //truncates email to remove everything after the '@'
+              var name = profile.getEmail();
+              var emailLength = name.search("@");
+              name = name.substring(0,emailLength);
+
+              //checks if user exists in the database and
+              //creates them if they dont
               sendProfile(name, id_token);
 
+              //function to create the user
               function sendProfile(name, token){
                     var xmlhtml = new XMLHttpRequest();
                     var encoded64 = window.btoa(token);
@@ -125,7 +132,6 @@
                     xmlhtml.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
                     xmlhtml.send("user="+name+"&id="+encoded64);
                 }//end sendprofile
-
             }
           </script>
         </body>
