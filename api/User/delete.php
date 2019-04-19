@@ -19,7 +19,7 @@
 
   // get allergy_item_id id
   if(isset($_GET['user_id']) ){
-    $RateRecipe->user_id = $_GET['user_id'];
+    $User->user_id = $_GET['user_id'];
   }
   else{
     http_response_code(404);
