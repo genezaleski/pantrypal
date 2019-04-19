@@ -9,6 +9,9 @@ class User{
     public $user_id;
     public $oauth_token;
     public $user_name;
+    public $first_name;
+    public $last_name;
+    public $picture_path
 
     // constructor with $db as database connection
     public function __construct($db){
@@ -20,7 +23,7 @@ class User{
 
         // select all query
         $query = "SELECT
-                    user_id, oauth_token, user_name
+                    user_id, user_name, first_name, last_name, picture_path
                 FROM
                     " . $this->table_name . ";";
 
@@ -38,7 +41,9 @@ class User{
         $query = "INSERT INTO
                     " . $this->table_name . "
                 SET
-                    user_name=:user_name, oauth_token=:oauth_token";
+                    user_name=:user_name, oauth_token=:oauth_token,
+                    first_name=:first_name, last_name=:last_name,
+                    picture_path";
 
         // prepare query
         $stmt = $this->conn->prepare($query);
@@ -50,6 +55,9 @@ class User{
         // bind values
         $stmt->bindParam(":user_name", $this->user_name);
         $stmt->bindParam(":oauth_token", $this->oauth_token);
+        $stmt->bindParam("first_name", $this->first_name);
+        $stmt->bindParam("last_name", $this->last_name);
+        $stmt->bindParam("picture_path", $this->$picture_path)
 
         // execute query
         if($stmt->execute()){
@@ -66,19 +74,19 @@ class User{
                 " . $this->table_name . "
               WHERE
                   user_name = ?";
-  
+
                   // prepare query statement
         $stmt = $this->conn->prepare( $query );
-  
+
         // bind id of product to be updated
         $stmt->bindParam(1, $this->user_name);
-  
+
         // execute query
         $stmt->execute();
-  
+
         // get retrieved row
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
-  
+
         // set values to object properties
         $this->user_id = $row['user_id'];
         $this->oauth_token = $row['oauth_token'];
