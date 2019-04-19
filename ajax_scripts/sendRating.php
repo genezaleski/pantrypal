@@ -1,12 +1,12 @@
 <?php
-sendLike();
+sendRating();
 
-function sendLike(){
+function sendRating(){
     $url_post = 'http://52.91.254.222/api/RateRecipe/create.php';
     $newLike = json_encode(array(
             'recipe_id' => $_POST['rID'],
             'user_id' => $_POST['user'], 
-            'rating' => 'like'
+            'rating' => $_POST['rate']
     ));
 
 
