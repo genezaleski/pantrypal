@@ -7,7 +7,7 @@ CREATE TABLE `User`
   `user_name` varchar(255) not null unique,
   `first_name` varchar(255) not null,
   `last_name` varchar(255),
-  `picture_path` varchar(255) not null,
+  `picture_path` varchar(255) not null
 );
 
 CREATE TABLE `RateRecipe`

@@ -1,12 +1,12 @@
 use seniorproject;
 
-insert into User (oauth_uid,user_name,first_name,last_name,picture_path,modified)
-values ('QQQQQ','alexjenkins223','alex','jenkins',"http://www.google.com/alexjenkins223/avatar.jpg", '2019-3-11 13:23:44'),
-('BBBBB','johnabram234','john','abram', "http://www.google.com/johnabram234/avatar.jpg",'2018-9-17 13:23:44'),
-('ABCDE','user1','user','one', "http://www.google.com/user1/avatar.jpg",'2019-5-11 15:23:44'),
-('DDDCE','bobstewart22','bob','stewart', "http://www.google.com/bobstewart22/avatar.jpg",'2019-6-22 09:23:44'),
-('QQASD', 'testuser2','tester','tester', "http://www.google.com/testuser2/avatar.jpg",'2017-11-16 15:45:23'),
-('AWQED','samhelper23','sam','helper', "http://www.google.com/samhelper/avatar.jpg",'2018-7-11 11:22:23');
+insert into User (oauth_uid,user_name,first_name,last_name,picture_path)
+values ('QQQQQ','alexjenkins223','alex','jenkins',"http://www.google.com/alexjenkins223/avatar.jpg"),
+('BBBBB','johnabram234','john','abram', "http://www.google.com/johnabram234/avatar.jpg"),
+('ABCDE','user1','user','one', "http://www.google.com/user1/avatar.jpg"),
+('DDDCE','bobstewart22','bob','stewart', "http://www.google.com/bobstewart22/avatar.jpg"),
+('QQASD', 'testuser2','tester','tester', "http://www.google.com/testuser2/avatar.jpg"),
+('AWQED','samhelper23','sam','helper', "http://www.google.com/samhelper/avatar.jpg");
 
 
 insert into Recipe (api_name,api_recipe_id,title,author,recipe_link)
