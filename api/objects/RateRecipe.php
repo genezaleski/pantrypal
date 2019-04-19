@@ -124,7 +124,7 @@ class RateRecipe{
         $stmt->bindParam(2, $this->user_id);
 
         // execute query
-        if($stmt->execute() && $stmt->rowCount()>0){
+        if($stmt->execute() && $stmt->rowCount() > 0){
             return true;
         }
 
