@@ -92,5 +92,26 @@ class User{
         $this->oauth_token = $row['oauth_token'];
         $this->user_name = $row['user_name'];
       }
+
+      function delete(){
+
+        // delete query
+        $query = "DELETE FROM " . $this->table_name . "
+                  WHERE user_id = ?";
+
+        // prepare query
+        $stmt = $this->conn->prepare($query);
+
+        // bind id of record to delete
+        $stmt->bindParam(1, $this->user_id);
+
+        // execute query
+        if($stmt->execute() && $stmt->rowCount() > 0){
+            return true;
+        }
+
+        return false;
+
+    }
 }
 ?>
