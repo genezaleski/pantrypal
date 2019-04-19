@@ -8,7 +8,6 @@ CREATE TABLE `User`
   `first_name` varchar(255) not null,
   `last_name` varchar(255),
   `picture_path` varchar(255) not null,
-  `modified` datetime not null
 );
 
 CREATE TABLE `RateRecipe`
