@@ -25,8 +25,7 @@ if(!empty($data->user_name)&&
     !empty($data->oauth_token) &&
     !empty($data->first_name) &&
     !empty($data->last_name) &&
-    !empty($data->picture_path)
-){
+    !empty($data->picture_path)){
     // set user property values
     $user->user_name = $data->user_name;
     $user->oauth_token = $data->oauth_token;

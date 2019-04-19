@@ -43,7 +43,7 @@ class User{
                 SET
                     user_name=:user_name, oauth_token=:oauth_token,
                     first_name=:first_name, last_name=:last_name,
-                    picture_path";
+                    picture_path=:picture_path";
 
         // prepare query
         $stmt = $this->conn->prepare($query);
@@ -51,13 +51,16 @@ class User{
         // sanitize
         $this->user_name=htmlspecialchars(strip_tags($this->user_name));
         $this->oauth_token=htmlspecialchars(strip_tags($this->oauth_token));
+        $this->fist_name=htmlspecialchars(strip_tags($this->first_name));
+        $this->last_name=htmlspecialchars(strip_tags($this->last_name));
+        $this->picture_path=htmlspecialchars(strip_tags($this->picture_path));
 
         // bind values
         $stmt->bindParam(":user_name", $this->user_name);
         $stmt->bindParam(":oauth_token", $this->oauth_token);
-        $stmt->bindParam("first_name", $this->first_name);
-        $stmt->bindParam("last_name", $this->last_name);
-        $stmt->bindParam("picture_path", $this->$picture_path);
+        $stmt->bindParam(":first_name", $this->first_name);
+        $stmt->bindParam(":last_name", $this->last_name);
+        $stmt->bindParam(":picture_path", $this->picture_path);
 
         // execute query
         if($stmt->execute()){
@@ -92,5 +95,26 @@ class User{
         $this->oauth_token = $row['oauth_token'];
         $this->user_name = $row['user_name'];
       }
+
+      function delete(){
+
+        // delete query
+        $query = "DELETE FROM " . $this->table_name . "
+                  WHERE user_id = ?";
+
+        // prepare query
+        $stmt = $this->conn->prepare($query);
+
+        // bind id of record to delete
+        $stmt->bindParam(1, $this->user_id);
+
+        // execute query
+        if($stmt->execute() && $stmt->rowCount() > 0){
+            return true;
+        }
+
+        return false;
+
+    }
 }
 ?>
