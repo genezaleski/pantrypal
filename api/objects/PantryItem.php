@@ -35,6 +35,22 @@ class PantryItem{
         return $stmt;
     }
 
+    function delete(){
+      $query = "DELETE FROM " . $this->table_name . "
+                WHERE item_name = ? and user_id = ?";
+
+      $stmt = $this->conn->prepare($query);
+
+      $stmt->bindParam(1, $this->item_name);
+      $stmt->bindParam(2, $this->user_id);
+
+      if($stmt->execute() && $stmt->rowCount() > 0){
+        return true;
+      }
+
+      return false;
+    }
+
     function readOne(){
       $query = "SELECT
                   pantry_item_id, item_name

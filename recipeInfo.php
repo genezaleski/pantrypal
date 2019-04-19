@@ -11,6 +11,11 @@ $api_url = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/
 $cmd = "curl -H " . $my_api_key . " " . $api_url;
 $recipeInfo = json_decode(shell_exec($cmd), true);
 
+//Retrieve db recipe id
+$dbIdCmd = 'curl "http://52.91.254.222/api/Recipe/read_one.php?api_name=spoon&api_recipe_id='.$recipeID.'"';
+$decodedID = json_decode(shell_exec($dbIdCmd), true);
+$DB_ID = $decodedID['recipe_id'];
+
 //Retriving recipe instructions broken into steps
 //$analysed_url = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/".$recipeID."/analyzedInstructions?stepBreakdown=false";
 //$instrCmd = "curl -H " . $api_key . " " . $analysedRecipe;
@@ -140,11 +145,12 @@ if($rExists == false){
                     xmlhtml.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");                    
                     xmlhtml.send("user=3&rID=<?php echo $dbID;?>");
                 }
-                function postComment(phpComment){
+                function postComment(phpComment,dbID){
+                    //document.write(phpComment + dbID);
                     var xmlhtml = new XMLHttpRequest();
                     xmlhtml.open('POST','ajax_scripts/postComment.php',true);
                     xmlhtml.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-                    xmlhtml.send("comment="+phpComment);
+                    xmlhtml.send("comment="+phpComment+"&item="+dbID);
                 }
             </script>
 
@@ -176,7 +182,7 @@ if($rExists == false){
             <h2> User Comments </h2>
             <form action="recipeInfo.php?id=<?php echo $_GET['id']?>" method="post" id="usrform">
                     <textarea rows="4" cols="50" name="comment" form="usrform" placeholder="Write your comment down here"></textarea>
-                    <button type="submit" id="ajaxButton" name="commentClick" value="TRUE" onClick="postComment(this.form.comment.value)"> Submit </button>
+                    <button type="submit" id="ajaxButton" name="commentClick" value="TRUE" onClick="postComment(this.form.comment.value,<?php echo $DB_ID;?>)"> Submit </button>
             </form>
 
             <?php
@@ -184,10 +190,10 @@ if($rExists == false){
 
             //Loop that prints out all comments for current recipe
             for ($i = 0; $i < sizeOf($decodedComments['comments']); $i++) {
-                //if($decodedComments['comments'][$i]['recipe_id'] == $recipeID){
-                echo '' . $decodedComments['comments'][$i]['user_id'] . ' says: 
-                    ' . $decodedComments['comments'][$i]['comment_text'] . '<br>';
-                //}
+                if($decodedComments['comments'][$i]['recipe_id'] == $DB_ID){
+	            echo '<div class="comment-user-name">' . $decodedComments['comments'][$i]['user_id'] . ' says</div>
+                    <div class="vjs-comment-list">' . $decodedComments['comments'][$i]['comment_text'] . '</div><br>';
+                }
             }
             ?>
         </div>
