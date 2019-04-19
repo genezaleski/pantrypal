@@ -33,6 +33,11 @@ $decodedComments = json_decode(shell_exec($commentCmd), true);
 $recipeCmd = "curl http://52.91.254.222/api/Recipe/read.php";
 $rListDecode = json_decode(shell_exec($recipeCmd), true);
 
+//Retriving database recipe ID
+$dbIDCmd = "curl http://52.91.254.222/api/Recipe/read_one.php?api_recipe_id=". $recipeID . "&api_name=spoon";
+$dbInfo = json_decode(shell_exec($dbIDCmd), true);
+$dbID = $dbInfo['recipe_id'];
+
 $rExists = false;
 for ($r = 0; $r < sizeof($rListDecode['Recipes']); $r++) {
     if ($rListDecode['Recipes'][$r]['api_recipe_id'] == $recipeID) {
@@ -132,8 +137,8 @@ if($rExists == false){
                 function sendLike(){
                     var xmlhtml = new XMLHttpRequest();
                     xmlhtml.open('POST','ajax_scripts/sendLike.php',true);
-                    xmlhtml.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-                    xmlhtml.send("user="+3+"rID="+<?php echo $recipeID ?>);
+                    xmlhtml.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");                    
+                    xmlhtml.send("user=3&rID=<?php echo $dbID;?>");
                 }
                 function postComment(phpComment){
                     var xmlhtml = new XMLHttpRequest();
