@@ -75,6 +75,11 @@
   margin-right: 300px;
 }
 
+//all pages that load navbar can now use session variables
+<?php
+session_start();
+?>
+
 </style>
 <div class=navbox>
     <a href="index.php" target=""> Pantry Pal </a>
@@ -112,27 +117,33 @@
               console.log("ID Token: " + id_token);
               
               //truncates email to remove everything after the '@'
-              var name = profile.getEmail();
-              var emailLength = name.search("@");
-              name = name.substring(0,emailLength);
+              var email = profile.getEmail();
+              var emailLength = email.search("@");
+              email = email.substring(0,emailLength);
+              var name = profile.getName();
+              var profileImage = profile.getImageUrl();
+              var firstName = profile.getGivenName();
+              var lastName = profile.getFamilyName();
 
               //checks if user exists in the database and
               //creates them if they dont
-              sendProfile(name, id_token);
+              sendProfile(email, id_token, name, profileImage, firstName, lastName);
 
               //function to create the user
-              function sendProfile(name, token){
+              function sendProfile(email, token, name, profileImage, firstName, lastName){
                     var xmlhtml = new XMLHttpRequest();
-                    var encoded64 = window.btoa(token);
-                    var length = encoded64.length;
+                    var xmlhtml2 = new XMLHttpRequest();
+                    var length = token.length;
                     console.log(length);
-                    encoded64 = encoded64.substring(0,255);
+                    var encoded64 = window.btoa(token.substring(0,127));
                     console.log(encoded64);
                     xmlhtml.open('POST','ajax_scripts/createProfile.php',true);
                     xmlhtml.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-                    xmlhtml.send("user="+name+"&id="+encoded64);
+                    xmlhtml.send("user="+email+"&id="+encoded64);
+                    //xmlhtml.send("name="name+"&imageUrl="profileImage);
+                    //xmlhtml.send("firstName="firstName+"&lastName="lastName);
                 }//end sendprofile
-            }
+            }//end onSignIn
           </script>
         </body>
       </html>
@@ -141,6 +152,9 @@
             <script src="https://apis.google.com/js/platform.js" async defer></script>
             <meta name="google-signin-client_id" content="818469007806-1oi7h6015kjsggbd4m0i6j4ro9dq6vqt.apps.googleusercontent.com">
             <a href="#" onclick="signOut();">Sign out</a>
+            <?php
+            session_destroy();
+            ?>
               <script>
                 function signOut() {
                   var auth2 = gapi.auth2.getAuthInstance();
