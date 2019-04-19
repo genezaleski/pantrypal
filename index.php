@@ -83,6 +83,16 @@ include 'navbar.php';
 </div>
 
 <!-- Tab content -->
+  <h1><center>
+  <?php
+  $api_key = "'X-RapidAPI-Key : d466494462msh9686e88c15be8cfp108f2ejsnbc67ad6ec517'";
+  $api_url = "'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/food/jokes/random'";
+  $cmd = "curl " . $api_url . "  -H " . $api_key;
+  $output_arr = json_decode(shell_exec($cmd),true);
+  $results = $output_arr['text'];
+  echo $results;
+  ?>
+</center></h1>
 <div id="Recommended" class="tabcontent" style="display:block">
   <h3>Recommended</h3>
   <p>Recommended Recipes Go Here.</p>
