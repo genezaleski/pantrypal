@@ -6,7 +6,7 @@ function sendLike(){
     $newLike = json_encode(array(
             'recipe_id' => $_POST['rID'],
             'user_id' => $_POST['user'], 
-            'rating' => "like"
+            'rating' => 'like'
     ));
 
 
