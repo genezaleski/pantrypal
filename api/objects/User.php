@@ -11,7 +11,7 @@ class User{
     public $user_name;
     public $first_name;
     public $last_name;
-    public $picture_path
+    public $picture_path;
 
     // constructor with $db as database connection
     public function __construct($db){
@@ -57,7 +57,7 @@ class User{
         $stmt->bindParam(":oauth_token", $this->oauth_token);
         $stmt->bindParam("first_name", $this->first_name);
         $stmt->bindParam("last_name", $this->last_name);
-        $stmt->bindParam("picture_path", $this->$picture_path)
+        $stmt->bindParam("picture_path", $this->$picture_path);
 
         // execute query
         if($stmt->execute()){
