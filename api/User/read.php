@@ -37,7 +37,9 @@ if($num>0){
         $user_item=array(
             "user_id" => $user_id,
             "user_name" => $user_name,
-            "oauth_token" => $oauth_token,
+            "first_name" => $first_name,
+            "last_name" => $last_name,
+            "picture_path" => $picture_path
         );
 
         array_push($users_arr["users"], $user_item);

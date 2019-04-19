@@ -1,6 +1,6 @@
 use seniorproject;
 
-insert into User (oauth_uid,user_name,first_name,last_name,picture_path)
+insert into User (oauth_token,user_name,first_name,last_name,picture_path)
 values ('QQQQQ','alexjenkins223','alex','jenkins',"http://www.google.com/alexjenkins223/avatar.jpg"),
 ('BBBBB','johnabram234','john','abram', "http://www.google.com/johnabram234/avatar.jpg"),
 ('ABCDE','user1','user','one', "http://www.google.com/user1/avatar.jpg"),
