@@ -5,29 +5,34 @@ header("Content-Type: application/json; charset=UTF-8");
 header("Access-Control-Allow-Methods: POST");
 header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
- 
+
 // get database connection
 include_once '../config/database.php';
- 
+
 // instantiate user object
 include_once '../objects/User.php';
- 
+
 $database = new Database();
 $db = $database->getConnection();
- 
+
 $user = new User($db);
- 
+
 // get posted data
 $data = json_decode(file_get_contents("php://input"));
- 
+
 // make sure data is not empty
 if(!empty($data->user_name)&&
-    !empty($data->oauth_token)
+    !empty($data->oauth_token) &&
+    !empty($data->first_name) &&
+    !empty($data->last_name) &&
+    !empty($data->picture_path)
 ){
     // set user property values
     $user->user_name = $data->user_name;
     $user->oauth_token = $data->oauth_token;
-
+    $user->first_name = $data->first_name;
+    $user->last_name = $data->last_name;
+    $user->picture_path = $data->picture_path;
     // create the user
     if($user->create()){
 
