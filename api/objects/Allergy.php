@@ -82,17 +82,17 @@ class Allergy{
 
         // delete query
         $query = "DELETE FROM " . $this->table_name . "
-                  WHERE allergy_item_id = ? and user_id = ?";
+                  WHERE allergy_itemName = ? and user_id = ?";
 
         // prepare query
         $stmt = $this->conn->prepare($query);
 
         // bind id of record to delete
-        $stmt->bindParam(1, $this->allergy_item_id);
+        $stmt->bindParam(1, $this->allergy_itemName);
         $stmt->bindParam(2, $this->user_id);
 
         // execute query
-        if($stmt->execute()){
+        if($stmt->execute() && $stmt->rowCount() > 0){
             return true;
         }
 

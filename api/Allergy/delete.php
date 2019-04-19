@@ -17,9 +17,9 @@
   // prepare allergy object
   $Allergy = new Allergy($db);
 
-  // get allergy_item_id id
-  if(isset($_GET['allergy_item_id']) && isset($_GET['user_id']) ){
-    $Allergy->allergy_item_id = $_GET['allergy_item_id'];
+  // get allergy_itemName and user_id
+  if(isset($_GET['allergy_itemName']) && isset($_GET['user_id']) ){
+    $Allergy->allergy_itemName = $_GET['allergy_itemName'];
     $Allergy->user_id = $_GET['user_id'];
   }
   else{
