@@ -38,11 +38,6 @@ $decodedComments = json_decode(shell_exec($commentCmd), true);
 $recipeCmd = "curl http://52.91.254.222/api/Recipe/read.php";
 $rListDecode = json_decode(shell_exec($recipeCmd), true);
 
-//Retriving database recipe ID
-$dbIDCmd = "curl http://52.91.254.222/api/Recipe/read_one.php?api_recipe_id=". $recipeID . "&api_name=spoon";
-$dbInfo = json_decode(shell_exec($dbIDCmd), true);
-$dbID = $dbInfo['recipe_id'];
-
 $rExists = false;
 for ($r = 0; $r < sizeof($rListDecode['Recipes']); $r++) {
     if ($rListDecode['Recipes'][$r]['api_recipe_id'] == $recipeID) {
@@ -117,13 +112,15 @@ if($rExists == false){
                         //Checking if the disLiked button is checked and unchecking it
                         if (document.getElementById("disLikeBtn").src.includes('disLikedButton.png')) {
                             document.getElementById("disLikeBtn").src = "images/likeButton.png";
+                            deleteRating(<?php echo $DB_ID;?>);
                         }
                         document.getElementById("likeBtn").src = "images/likedButton.png";
                         //Set recipe to liked here
-                        sendLike();
+                        sendRating(<?php echo $DB_ID;?>, "like");
                     } else {
                         document.getElementById("likeBtn").src = "images/likeButton.png";
                         //Remove like value from database
+                        deleteRating(<?php echo $DB_ID;?>);
                     }
                 }
                 function changeDisLikeImage() {
@@ -131,22 +128,33 @@ if($rExists == false){
                         //Checking if the liked button is checked and unchecking it
                         if (document.getElementById("likeBtn").src.includes('likedButton.png')) {
                             document.getElementById("likeBtn").src = "images/likeButton.png";
+                            deleteRating(<?php echo $DB_ID;?>);
                         }
                         document.getElementById("disLikeBtn").src = "images/disLikedButton.png";
                         //Set recipe to disliked here
+                        sendRating(<?php echo $DB_ID;?>, "dislike");
                     } else {
                         document.getElementById("disLikeBtn").src = "images/likeButton.png";
                         //Remove disLike from database
+                        deleteRating(<?php echo $DB_ID;?>);
                     }
                 }
-                function sendLike(){
+                //Sends the like/dislike to database
+                function sendRating(dbID, rating){
                     var xmlhtml = new XMLHttpRequest();
-                    xmlhtml.open('POST','ajax_scripts/sendLike.php',true);
+                    xmlhtml.open('POST','ajax_scripts/sendRating.php',true);
                     xmlhtml.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");                    
-                    xmlhtml.send("user=3&rID=<?php echo $dbID;?>");
+                    xmlhtml.send("user=1&rID="+dbID+"&rate="+rating);
                 }
+                //Removes a rating from the database
+                function deleteRating(dbID){
+                    var xmlhtml = new XMLHttpRequest();
+                    xmlhtml.open('POST','ajax_scripts/deleteRating.php',true);
+                    xmlhtml.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");                    
+                    xmlhtml.send("user=1&rID="+dbID);
+                }
+                //Sends comments to the database
                 function postComment(phpComment,dbID){
-                    //document.write(phpComment + dbID);
                     var xmlhtml = new XMLHttpRequest();
                     xmlhtml.open('POST','ajax_scripts/postComment.php',true);
                     xmlhtml.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
