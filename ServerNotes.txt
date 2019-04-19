@@ -12,6 +12,8 @@ Database
 	adding users - INSERT INTO user (userName) VALUE ('user2');
 	removing users -  DELETE FROM user WHERE user_id = 2;
 	Status - Select user_id, userName from seniorproject.user;
+	**Running Scripts on the Database
+	mysql -u username -p password database_name < filename.sql
 
 Making a POST HTTP Request *Note: recipe_id and user_id must exist and not overrite a previous rating.
 curl -d '{"recipe_id" : "8", "user_id" : "9", "rating" : "like"}' -H "Content-Type: application/json" -X POST http://localhost:80/api/RateRecipe/create.php
