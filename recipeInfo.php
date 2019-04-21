@@ -12,7 +12,7 @@ $cmd = "curl -H " . $my_api_key . " " . $api_url;
 $recipeInfo = json_decode(shell_exec($cmd), true);
 
 //Retrieve db recipe id
-$dbIdCmd = 'curl "http://52.91.254.222/api/Recipe/read_one.php?api_name=spoon&api_recipe_id='.$recipeID.'"';
+$dbIdCmd = 'curl "http://52.91.254.222/api/Recipe/read_one.php?api_name=spoon&api_recipe_id=' . $recipeID . '"';
 $decodedID = json_decode(shell_exec($dbIdCmd), true);
 $DB_ID = $decodedID['recipe_id'];
 
@@ -34,6 +34,10 @@ $decodedLikeData = json_decode(shell_exec($likeDataCmd), true);
 $commentCmd = "curl http://52.91.254.222/api/CommentRecipe/read.php";
 $decodedComments = json_decode(shell_exec($commentCmd), true);
 
+//Retriving like data for a specific recipe
+$ratingCmd = 'curl "http://52.91.254.222/api/RateRecipe/likes.php?recipe_id=' . $DB_ID . '"';
+$decodedRatings = json_decode(shell_exec($ratingCmd), true);
+
 //Pulling in recipes to check if the current one exists
 $recipeCmd = "curl http://52.91.254.222/api/Recipe/read.php";
 $rListDecode = json_decode(shell_exec($recipeCmd), true);
@@ -44,7 +48,7 @@ for ($r = 0; $r < sizeof($rListDecode['Recipes']); $r++) {
         $rExists = true;
     }
 }
-if($rExists == false){
+if ($rExists == false) {
     $createRecipeUrl = 'http://52.91.254.222/api/Recipe/create.php';
     $recipeJSON = array(
         'api_name' => 'spoon',
@@ -84,81 +88,69 @@ if($rExists == false){
             <input type="image" alt="" src="images/likeButton.png" onClick="changeLikeImage()" name="likeBtn" class="likeBtn" id="likeBtn" />
             <input type="image" alt="" src="images/likeButton.png" onClick="changeDisLikeImage()" name="disLikeBtn" class="disLikeBtn" id="disLikeBtn" />
             <?php
-            $liked = 0;
-            $disliked = 0;
-            $likedPercent = 0;
-            for ($i = 0; $i < sizeOf($decodedLikeData['ratings']); $i++) {
-                if ($decodedLikeData['ratings'][$i]['recipe_id'] == $recipeID) {
-                    if ($decodedLikeData['ratings'][$i]['rating'] == "like") {
-                        $liked++;
-                    } elseif ($decodedLikeData['ratings'][$i]['rating'] == "dislike") {
-                        $disliked++;
-                    }
-                }
-            }
-            if (($liked + $disliked) != 0) {
-                $likedPercent = $liked / ($liked + $disliked);
-                echo '<h2>' . $likedPercent . ' % of people liked this recipe</h2>';
+            $totalRatings = $decodedRatings['likes'] + $decodedRatings['dislikes'];            
+            if (($totalRatings) != 0) {
+                $likePercent = ($decodedRatings['likes'] / $totalRatings) * 100;
+                echo '<h2>' . $likePercent . ' % of people liked this recipe</h2>';
             } else {
-                $likedPercent = 0;
                 echo '<h2> This recipe has not been rated yet </h2>';
             }
             ?>
 
             <script language="javascript">
-
                 function changeLikeImage() {
                     if (document.getElementById("likeBtn").src.includes('likeButton.png')) {
                         //Checking if the disLiked button is checked and unchecking it
                         if (document.getElementById("disLikeBtn").src.includes('disLikedButton.png')) {
                             document.getElementById("disLikeBtn").src = "images/likeButton.png";
-                            deleteRating(<?php echo $DB_ID;?>);
+                            deleteRating(<?php echo $DB_ID; ?>);
                         }
                         document.getElementById("likeBtn").src = "images/likedButton.png";
                         //Set recipe to liked here
-                        sendRating(<?php echo $DB_ID;?>, "like");
+                        sendRating(<?php echo $DB_ID; ?>, "like");
                     } else {
                         document.getElementById("likeBtn").src = "images/likeButton.png";
                         //Remove like value from database
-                        deleteRating(<?php echo $DB_ID;?>);
+                        deleteRating(<?php echo $DB_ID; ?>);
                     }
                 }
+
                 function changeDisLikeImage() {
                     if (document.getElementById("disLikeBtn").src.includes('likeButton.png')) {
                         //Checking if the liked button is checked and unchecking it
                         if (document.getElementById("likeBtn").src.includes('likedButton.png')) {
                             document.getElementById("likeBtn").src = "images/likeButton.png";
-                            deleteRating(<?php echo $DB_ID;?>);
+                            deleteRating(<?php echo $DB_ID; ?>);
                         }
                         document.getElementById("disLikeBtn").src = "images/disLikedButton.png";
                         //Set recipe to disliked here
-                        sendRating(<?php echo $DB_ID;?>, "dislike");
+                        sendRating(<?php echo $DB_ID; ?>, "dislike");
                     } else {
                         document.getElementById("disLikeBtn").src = "images/likeButton.png";
                         //Remove disLike from database
-                        deleteRating(<?php echo $DB_ID;?>);
+                        deleteRating(<?php echo $DB_ID; ?>);
                     }
                 }
                 //Sends the like/dislike to database
-                function sendRating(dbID, rating){
+                function sendRating(dbID, rating) {
                     var xmlhtml = new XMLHttpRequest();
-                    xmlhtml.open('POST','ajax_scripts/sendRating.php',true);
-                    xmlhtml.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");                    
-                    xmlhtml.send("user=1&rID="+dbID+"&rate="+rating);
+                    xmlhtml.open('POST', 'ajax_scripts/sendRating.php', true);
+                    xmlhtml.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                    xmlhtml.send("user=1&rID=" + dbID + "&rate=" + rating);
                 }
                 //Removes a rating from the database
-                function deleteRating(dbID){
+                function deleteRating(dbID) {
                     var xmlhtml = new XMLHttpRequest();
-                    xmlhtml.open('POST','ajax_scripts/deleteRating.php',true);
-                    xmlhtml.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");                    
-                    xmlhtml.send("user=1&rID="+dbID);
+                    xmlhtml.open('POST', 'ajax_scripts/deleteRating.php', true);
+                    xmlhtml.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                    xmlhtml.send("user=1&rID=" + dbID);
                 }
                 //Sends comments to the database
-                function postComment(phpComment,dbID){
+                function postComment(phpComment, dbID) {
                     var xmlhtml = new XMLHttpRequest();
-                    xmlhtml.open('POST','ajax_scripts/postComment.php',true);
+                    xmlhtml.open('POST', 'ajax_scripts/postComment.php', true);
                     xmlhtml.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-                    xmlhtml.send("comment="+phpComment+"&item="+dbID);
+                    xmlhtml.send("comment=" + phpComment + "&item=" + dbID);
                 }
             </script>
 
@@ -188,9 +180,9 @@ if($rExists == false){
             ?>
 
             <h2> User Comments </h2>
-            <form action="recipeInfo.php?id=<?php echo $_GET['id']?>" method="post" id="usrform">
-                    <textarea rows="4" cols="50" name="comment" form="usrform" placeholder="Write your comment down here"></textarea>
-                    <button type="submit" id="ajaxButton" name="commentClick" value="TRUE" onClick="postComment(this.form.comment.value,<?php echo $DB_ID;?>)"> Submit </button>
+            <form action="recipeInfo.php?id=<?php echo $_GET['id'] ?>" method="post" id="usrform">
+                <textarea rows="4" cols="50" name="comment" form="usrform" placeholder="Write your comment down here"></textarea>
+                <button type="submit" id="ajaxButton" name="commentClick" value="TRUE" onClick="postComment(this.form.comment.value,<?php echo $DB_ID; ?>)"> Submit </button>
             </form>
 
             <?php
@@ -198,8 +190,8 @@ if($rExists == false){
 
             //Loop that prints out all comments for current recipe
             for ($i = 0; $i < sizeOf($decodedComments['comments']); $i++) {
-                if($decodedComments['comments'][$i]['recipe_id'] == $DB_ID){
-	            echo '<div class="comment-user-name">' . $decodedComments['comments'][$i]['user_id'] . ' says</div>
+                if ($decodedComments['comments'][$i]['recipe_id'] == $DB_ID) {
+                    echo '<div class="comment-user-name">' . $decodedComments['comments'][$i]['user_id'] . ' says</div>
                     <div class="vjs-comment-list">' . $decodedComments['comments'][$i]['comment_text'] . '</div><br>';
                 }
             }
