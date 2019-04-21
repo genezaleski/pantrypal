@@ -91,7 +91,7 @@ if ($rExists == false) {
             $totalRatings = $decodedRatings['likes'] + $decodedRatings['dislikes'];            
             if (($totalRatings) != 0) {
                 $likePercent = ($decodedRatings['likes'] / $totalRatings) * 100;
-                echo '<h2>' . $likePercent . ' % of people liked this recipe</h2>';
+                echo '<h2>' . number_format($likePercent, 1) . ' % of people liked this recipe</h2>';
             } else {
                 echo '<h2> This recipe has not been rated yet </h2>';
             }
@@ -158,7 +158,7 @@ if ($rExists == false) {
             echo '<h2> Ingredients </h2>';
             //Loop that generates a list of the ingredients used
             for ($i = 0; $i < $recipeInfo['extendedIngredients'][$i]; $i++) {
-                $amount = $recipeInfo['extendedIngredients'][$i]['amount'];
+                $amount = number_format($recipeInfo['extendedIngredients'][$i]['amount'], 1);
                 $unit = $recipeInfo['extendedIngredients'][$i]['unit'];
                 $ingrName = $recipeInfo['extendedIngredients'][$i]['name'];
                 echo '<div class = "ingredients">' . $amount, " ",  $unit, " ",  $ingrName . ' </div>';
