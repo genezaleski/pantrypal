@@ -127,8 +127,11 @@ session_start();
 
               //checks if user exists in the database and
               //creates them if they dont
-              sendProfile(email, id_token, name, profileImage, firstName, lastName);
 
+              sendPart1(email, id_token);
+              sendPart2(name, profileImage);
+              sendPart3(firstName, lastName);
+              sendProfile(email, id_token, name, profileImage, firstName, lastName);
               //function to create the user
               function sendProfile(email, token, name, profileImage, firstName, lastName){
                     var xmlhtml = new XMLHttpRequest();
@@ -140,15 +143,42 @@ session_start();
                     xmlhtml.open('POST','ajax_scripts/createProfile.php',true);
                     xmlhtml.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
                     xmlhtml.send("user="+email+"&id="+encoded64);
+                }//end sendprofile
+
+                function sendPart1(email, token){
+                    var xmlhtml = new XMLHttpRequest();
+                    var length = token.length;
+                    console.log(length);
+                    var encoded64 = window.btoa(token.substring(0,127));
+                    console.log(encoded64);
+                    xmlhtml.open('POST','ajax_scripts/spaghetti1.php',true);
+                    xmlhtml.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                    xmlhtml.send("user="+email+"&id="+encoded64);
                     //xmlhtml.send("name="name+"&imageUrl="profileImage);
                     //xmlhtml.send("firstName="firstName+"&lastName="lastName);
-                }//end sendprofile
+                }//end sendPart1
+
+                function sendPart2(name, profileImage){
+                    var xmlhtml = new XMLHttpRequest();
+                    xmlhtml.open('POST','ajax_scripts/spaghetti2.php',true);
+                    xmlhtml.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                    xmlhtml.send("name="+name+"&imageUrl="+profileImage);
+                }//end sendPart2
+
+                function sendPart3(firstName, lastName){
+                    var xmlhtml = new XMLHttpRequest();
+                    xmlhtml.open('POST','ajax_scripts/spaghetti3.php',true);
+                    xmlhtml.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                    xmlhtml.send("firstName="+firstName+"&lastName="+lastName);
+                }//end sendPart3
+
             }//end onSignIn
           </script>
         </body>
       </html>
             <a href="profile.php"> My Profile</a>
             <a href="inventory.php"> Inventory </a>
+            <a href="devs.php">Developers</a>
             <script src="https://apis.google.com/js/platform.js" async defer></script>
             <meta name="google-signin-client_id" content="818469007806-1oi7h6015kjsggbd4m0i6j4ro9dq6vqt.apps.googleusercontent.com">
             <a href="#" onclick="signOut();">Sign out</a>
