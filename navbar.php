@@ -149,6 +149,7 @@ session_start();
       </html>
             <a href="profile.php"> My Profile</a>
             <a href="inventory.php"> Inventory </a>
+            <a href="devs.php">Developers</a>
             <script src="https://apis.google.com/js/platform.js" async defer></script>
             <meta name="google-signin-client_id" content="818469007806-1oi7h6015kjsggbd4m0i6j4ro9dq6vqt.apps.googleusercontent.com">
             <a href="#" onclick="signOut();">Sign out</a>
