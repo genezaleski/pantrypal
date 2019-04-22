@@ -89,47 +89,58 @@ $decodedRatings = json_decode(shell_exec($ratingCmd), true);
             <input type="image" alt="" src="images/likeButton.png" onClick="changeLikeImage()" name="likeBtn" class="likeBtn" id="likeBtn" />
             <input type="image" alt="" src="images/likeButton.png" onClick="changeDisLikeImage()" name="disLikeBtn" class="disLikeBtn" id="disLikeBtn" />
             <?php
-            $totalRatings = $decodedRatings['likes'] + $decodedRatings['dislikes'];            
+            $totalRatings = $decodedRatings['likes'] + $decodedRatings['dislikes'];
             if (($totalRatings) != 0) {
                 $likePercent = ($decodedRatings['likes'] / $totalRatings) * 100;
                 echo '<h2>' . number_format($likePercent, 1) . ' % of people liked this recipe</h2>';
             } else {
                 echo '<h2> This recipe has not been rated yet </h2>';
             }
+
+            echo $_SESSION['email'];
             ?>
 
             <script language="javascript">
+                var userName = "<?php echo $_SESSION['email']; ?>";
                 function changeLikeImage() {
-                    if (document.getElementById("likeBtn").src.includes('likeButton.png')) {
-                        //Checking if the disLiked button is checked and unchecking it
-                        if (document.getElementById("disLikeBtn").src.includes('disLikedButton.png')) {
-                            document.getElementById("disLikeBtn").src = "images/likeButton.png";
+                    if (userName != "") {
+                        if (document.getElementById("likeBtn").src.includes('likeButton.png')) {
+                            //Checking if the disLiked button is checked and unchecking it
+                            if (document.getElementById("disLikeBtn").src.includes('disLikedButton.png')) {
+                                document.getElementById("disLikeBtn").src = "images/likeButton.png";
+                            }
+                            document.getElementById("likeBtn").src = "images/likedButton.png";
+                            //Set recipe to liked here
+                            deleteRating(<?php echo $DB_ID; ?>);
+                            sendRating(<?php echo $DB_ID; ?>, "like");
+                        } else {
+                            document.getElementById("likeBtn").src = "images/likeButton.png";
+                            //Remove like value from database
                             deleteRating(<?php echo $DB_ID; ?>);
                         }
-                        document.getElementById("likeBtn").src = "images/likedButton.png";
-                        //Set recipe to liked here
-                        sendRating(<?php echo $DB_ID; ?>, "like");
                     } else {
-                        document.getElementById("likeBtn").src = "images/likeButton.png";
-                        //Remove like value from database
-                        deleteRating(<?php echo $DB_ID; ?>);
+                        alert("You must be signed in to rate a recipe");
                     }
                 }
 
                 function changeDisLikeImage() {
+                    if(userName != ""){
                     if (document.getElementById("disLikeBtn").src.includes('likeButton.png')) {
                         //Checking if the liked button is checked and unchecking it
                         if (document.getElementById("likeBtn").src.includes('likedButton.png')) {
                             document.getElementById("likeBtn").src = "images/likeButton.png";
-                            deleteRating(<?php echo $DB_ID; ?>);
                         }
                         document.getElementById("disLikeBtn").src = "images/disLikedButton.png";
                         //Set recipe to disliked here
+                        deleteRating(<?php echo $DB_ID; ?>);
                         sendRating(<?php echo $DB_ID; ?>, "dislike");
                     } else {
                         document.getElementById("disLikeBtn").src = "images/likeButton.png";
                         //Remove disLike from database
                         deleteRating(<?php echo $DB_ID; ?>);
+                    }
+                    }else{
+                        alert("You must be signed in to rate a recipe");
                     }
                 }
                 //Sends the like/dislike to database
