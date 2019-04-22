@@ -142,7 +142,7 @@ session_start();
                     console.log(encoded64);
                     xmlhtml.open('POST','ajax_scripts/createProfile.php',true);
                     xmlhtml.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-                    xmlhtml.send("user="+email+"&id="+encoded64);
+                    xmlhtml.send("user="+email+"&id="+encoded64+"&firstName="+firstName+"&lastName="+lastName+"&imageurl="+profileImage);
                 }//end sendprofile
 
                 function sendPart1(email, token){
