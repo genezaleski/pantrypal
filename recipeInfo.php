@@ -102,29 +102,25 @@ $decodedRatings = json_decode(shell_exec($ratingCmd), true);
 
             <script language="javascript">
                 var userName = "<?php echo $_SESSION['email']; ?>";
+
                 function changeLikeImage() {
-                    if (userName != "") {
-                        if (document.getElementById("likeBtn").src.includes('likeButton.png')) {
-                            //Checking if the disLiked button is checked and unchecking it
-                            if (document.getElementById("disLikeBtn").src.includes('disLikedButton.png')) {
-                                document.getElementById("disLikeBtn").src = "images/likeButton.png";
-                            }
-                            document.getElementById("likeBtn").src = "images/likedButton.png";
-                            //Set recipe to liked here
-                            deleteRating(<?php echo $DB_ID; ?>);
-                            sendRating(<?php echo $DB_ID; ?>, "like");
-                        } else {
-                            document.getElementById("likeBtn").src = "images/likeButton.png";
-                            //Remove like value from database
-                            deleteRating(<?php echo $DB_ID; ?>);
+                    if (document.getElementById("likeBtn").src.includes('likeButton.png')) {
+                        //Checking if the disLiked button is checked and unchecking it
+                        if (document.getElementById("disLikeBtn").src.includes('disLikedButton.png')) {
+                            document.getElementById("disLikeBtn").src = "images/likeButton.png";
                         }
+                        document.getElementById("likeBtn").src = "images/likedButton.png";
+                        //Set recipe to liked here
+                        deleteRating(<?php echo $DB_ID; ?>);
+                        sendRating(<?php echo $DB_ID; ?>, "like");
                     } else {
-                        alert("You must be signed in to rate a recipe");
+                        document.getElementById("likeBtn").src = "images/likeButton.png";
+                        //Remove like value from database
+                        deleteRating(<?php echo $DB_ID; ?>);
                     }
                 }
 
                 function changeDisLikeImage() {
-                    if(userName != ""){
                     if (document.getElementById("disLikeBtn").src.includes('likeButton.png')) {
                         //Checking if the liked button is checked and unchecking it
                         if (document.getElementById("likeBtn").src.includes('likedButton.png')) {
@@ -139,16 +135,17 @@ $decodedRatings = json_decode(shell_exec($ratingCmd), true);
                         //Remove disLike from database
                         deleteRating(<?php echo $DB_ID; ?>);
                     }
-                    }else{
-                        alert("You must be signed in to rate a recipe");
-                    }
                 }
                 //Sends the like/dislike to database
                 function sendRating(dbID, rating) {
+                    if(userName != ""){
                     var xmlhtml = new XMLHttpRequest();
                     xmlhtml.open('POST', 'ajax_scripts/sendRating.php', true);
                     xmlhtml.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
                     xmlhtml.send("user=1&rID=" + dbID + "&rate=" + rating);
+                    }else{
+                        alert("You need to log in to rate a recipe");
+                    }
                 }
                 //Removes a rating from the database
                 function deleteRating(dbID) {
@@ -159,10 +156,14 @@ $decodedRatings = json_decode(shell_exec($ratingCmd), true);
                 }
                 //Sends comments to the database
                 function postComment(phpComment, dbID) {
-                    var xmlhtml = new XMLHttpRequest();
-                    xmlhtml.open('POST', 'ajax_scripts/postComment.php', true);
-                    xmlhtml.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-                    xmlhtml.send("comment=" + phpComment + "&item=" + dbID);
+                    if (userName != "") {
+                        var xmlhtml = new XMLHttpRequest();
+                        xmlhtml.open('POST', 'ajax_scripts/postComment.php', true);
+                        xmlhtml.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                        xmlhtml.send("comment=" + phpComment + "&item=" + dbID);
+                    } else {
+                        alert("Please sign in to post a comment")
+                    }
                 }
             </script>
 
