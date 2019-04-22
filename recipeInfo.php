@@ -11,11 +11,6 @@ $api_url = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/
 $cmd = "curl -H " . $my_api_key . " " . $api_url;
 $recipeInfo = json_decode(shell_exec($cmd), true);
 
-//Retrieve db recipe id
-$dbIdCmd = 'curl "http://52.91.254.222/api/Recipe/read_one.php?api_name=spoon&api_recipe_id=' . $recipeID . '"';
-$decodedID = json_decode(shell_exec($dbIdCmd), true);
-$DB_ID = $decodedID['recipe_id'];
-
 //Retriving recipe instructions broken into steps
 //$analysed_url = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/".$recipeID."/analyzedInstructions?stepBreakdown=false";
 //$instrCmd = "curl -H " . $api_key . " " . $analysedRecipe;
@@ -33,10 +28,6 @@ $decodedLikeData = json_decode(shell_exec($likeDataCmd), true);
 //Pulling in comments
 $commentCmd = "curl http://52.91.254.222/api/CommentRecipe/read.php";
 $decodedComments = json_decode(shell_exec($commentCmd), true);
-
-//Retriving like data for a specific recipe
-$ratingCmd = 'curl "http://52.91.254.222/api/RateRecipe/likes.php?recipe_id=' . $DB_ID . '"';
-$decodedRatings = json_decode(shell_exec($ratingCmd), true);
 
 //Pulling in recipes to check if the current one exists
 $recipeCmd = "curl http://52.91.254.222/api/Recipe/read.php";
@@ -70,6 +61,16 @@ if ($rExists == false) {
     $result = file_get_contents($createRecipeUrl, false, $context);
     $response = json_decode($result);
 }
+
+//Retrieve db recipe id
+$dbIdCmd = 'curl "http://52.91.254.222/api/Recipe/read_one.php?api_name=spoon&api_recipe_id=' . $recipeID . '"';
+$decodedID = json_decode(shell_exec($dbIdCmd), true);
+$DB_ID = $decodedID['recipe_id'];
+
+//Retriving like data for a specific recipe
+$ratingCmd = 'curl "http://52.91.254.222/api/RateRecipe/likes.php?recipe_id=' . $DB_ID . '"';
+$decodedRatings = json_decode(shell_exec($ratingCmd), true);
+
 ?>
 
 <title><?php $recipeInfo['title']; ?></title>
