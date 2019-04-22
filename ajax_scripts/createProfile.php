@@ -1,5 +1,6 @@
 <?php
 session_start();
+/*
 //clears any previous session data
 unset($_SESSION['email']);
 unset($_SESSION['token']);
@@ -15,15 +16,16 @@ $_SESSION['name'] = $_POST['name'];
 $_SESSION['image'] = $_POST['imageUrl'];
 $_SESSION['firstName'] = $_POST['firstName'];
 $_SESSION['lastName'] = $_POST['lastName'];
+*/
 searchByName();
 function createProfile(){
             $url_post = 'http://52.91.254.222/api/User/create.php';
             $createUser = json_encode(array(
-                'oauth_token' => $_POST['id'],
-                'user_name' => $_POST['user'],
-                'first_name' => $_POST['firstName'],
-                'last_name' => $_POST['lastName'],
-                'picture_path' => $_POST['imageUrl']
+                'oauth_token' => $_SESSION['id'],
+                'user_name' => $_SESSION['email'],
+                'first_name' => $_SESSION['firstName'],
+                'last_name' => $_SESSION['lastName'],
+                'picture_path' => $_SESSION['image']
                 
             ));
             $options = array(
