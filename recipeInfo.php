@@ -182,6 +182,7 @@ $decodedRatings = json_decode(shell_exec($ratingCmd), true);
             echo "Fat: " . $nutritionalInfo['fat'] . "<br>";
             echo "Protein: " . $nutritionalInfo['protein'] . "<br>";
             echo "Sugar: " . $nutritionalInfo['bad'][4]['amount'] . "<br>";
+            echo "Sodium: " . $nutritionalInfo['bad'][6]['amount'] . "<br>";
             echo '<h2> Ingredients </h2>';
             //Loop that generates a list of the ingredients used
             for ($i = 0; $i < $recipeInfo['extendedIngredients'][$i]; $i++) {
@@ -215,8 +216,11 @@ $decodedRatings = json_decode(shell_exec($ratingCmd), true);
             <?php
             //Loop that prints out all comments for current recipe
             for ($i = 0; $i < sizeOf($decodedComments['comments']); $i++) {
+                $commentorID = $decodedComments['comments'][$i]['user_id'];
+                $commentorNameURL = 'curl "http://52.91.254.222/api/User/read_name.php?user_id='.$commentorID.'"';
+                $decodedCommentorName = json_decode(shell_exec($commentorNameURL), true);;
                 if ($decodedComments['comments'][$i]['recipe_id'] == $DB_ID) {
-                    echo '<div class="comment-user-name">' . $decodedComments['comments'][$i]['user_id'] . ' says</div>
+                    echo '<div class="comment-user-name">' . $decodedCommentorName['user_name']. ' says</div>
                     <div class="vjs-comment-list">' . $decodedComments['comments'][$i]['comment_text'] . '</div><br>';
                 }
             }
@@ -239,4 +243,5 @@ $decodedRatings = json_decode(shell_exec($ratingCmd), true);
 </body>
 
 </html>
+
 
