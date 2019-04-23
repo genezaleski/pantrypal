@@ -155,8 +155,8 @@ include 'navbar.php';
            $rId = $uLikeJSON[$i]['recipe_id'];
            $titleCmd = 'curl "http://52.91.254.222/api/Recipe/read_one.php?recipe_id=' . $rId . '"';
            $titleJSON = json_decode(shell_exec($titleCmd), true);
-           if($i = $randy){
-             $chosenID = $titleJSON['ap_recipe_id'];
+           if($i == $randy){
+             $chosenID = $titleJSON['api_recipe_id'];
            }
            echo '<div class = "likedRecipeLinks">
              <a href =recipeInfo.php?id='. $titleJSON['api_recipe_id'] .'>' . $titleJSON['title'] . '</a>
@@ -167,8 +167,7 @@ include 'navbar.php';
          $recCmd = "curl -H " . $api_key . " " . $recomended;
          $relatedRec = json_decode(shell_exec($recCmd), true);
          $randy2 = rand(0, sizeof($relatedRec));
-         echo $relatedRec[$randy2]['id'];
-         echo '<button href=recipeInfo.php?id=' . $relatedRec[$randy2]['id'] . '> Recomended </button>';
+         echo '<a href=recipeInfo.php?id=' . $relatedRec[$randy2]['id'] . '><button> Recomended </button></a>';
       ?>
     </div>
   </div>
