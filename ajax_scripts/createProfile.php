@@ -25,7 +25,7 @@ $image = $_POST['imageurl'];
 $firstName = $_POST['firstName'];
 $lastName = $_POST['lastName'];
 $random = rand(0, 99999999999999999999999);
-$randomString = base64_encode($random);
+$randomString = strval(base64_encode($random));
 
 //searchByName();
 createProfile();
