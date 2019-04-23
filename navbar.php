@@ -129,9 +129,9 @@ session_start();
               //checks if user exists in the database and
               //creates them if they dont
 
-              sendPart1(email, id_token);
-              sendPart2(name, profileImage);
-              sendPart3(firstName, lastName);
+              //sendPart1(email, id_token);
+              //sendPart2(name, profileImage);
+              //sendPart3(firstName, lastName);
               sendProfile(email, id_token, name, profileImage, firstName, lastName);
               getProfileID(email);
 
@@ -145,7 +145,6 @@ session_start();
                     xmlhtml.open('POST','ajax_scripts/createProfile.php',true);
                     xmlhtml.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
                     xmlhtml.send("user="+email+"&id="+encoded64+"&firstName="+firstName+"&lastName="+lastName+"&imageurl="+profileImage);
-                    
                 }//end sendprofile
 
                 function sendPart1(email, token){
@@ -211,3 +210,4 @@ session_start();
 <br>
 
 </html>
+

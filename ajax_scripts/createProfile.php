@@ -8,7 +8,6 @@ unset($_SESSION['name']);
 unset($_SESSION['image']);
 unset($_SESSION['firstName']);
 unset($_SESSION['lastName']);
-
 //fills session variable with useful profile information
 $_SESSION['email'] = $_POST['user'];
 $_SESSION['token'] = $_POST['id'];
@@ -17,19 +16,17 @@ $_SESSION['image'] = $_POST['imageUrl'];
 $_SESSION['firstName'] = $_POST['firstName'];
 $_SESSION['lastName'] = $_POST['lastName'];
 */
-
 $email = $_POST['user'];
 $token = $_POST['id'];
-$name = $_SESSION['name'];
+//$name = $_POST['uname'];
 $image = $_POST['imageurl'];
 $firstName = $_POST['firstName'];
 $lastName = $_POST['lastName'];
-$random = rand(0, 99999999999999999999999);
+$random = rand(0, 2147483646);
 $randomString = strval(base64_encode($random));
-
 //searchByName();
-createProfile();
-function createProfile(){
+createProfile($randomString);
+function createProfile($randomString){
             $url_post = "http://52.91.254.222/api/User/create.php";
             $createUser = json_encode(array(
                 'user_name' => $_POST['user'],
@@ -66,11 +63,9 @@ function searchByName(){
     $output_arr = json_decode(shell_exec($cmd),true);
     //this will be returned if the user exists
     $result = $output_arr['user_name'];
-
     if ($result !== $searchUser){
         //adds the user to the database
         createProfile();
     }//
-
 }//end searchByName*/
 ?>
