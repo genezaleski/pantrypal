@@ -112,7 +112,7 @@ include 'navbar.php';
     <div class="userContainerRight">
       <?php
       echo '<h2> Email: ' . $_SESSION['email'] . '</h2>';
-      echo '<h2> Inventory: </h2>';
+      echo '<a href=inventory.php> <h2> Inventory: </h2> </a>';
       
       $inventoryCmd = "curl http://52.91.254.222/api/PantryItem/read.php";
       $decodedInventory = json_decode(shell_exec($inventoryCmd), true);
@@ -130,7 +130,7 @@ include 'navbar.php';
         for($i = 0; $i < sizeof($decodedInventory['PantryItem']);$i++){
             if($decodedInventory['PantryItem'][$i]['user_id'] == $userID){
               $name =  $decodedInventory['PantryItem'][$i]['item_name'];
-              echo $name . " ";
+              echo $name . "<br>";
               if(($j % 5) == 0){
                 echo "<br>";
               }
@@ -162,12 +162,13 @@ include 'navbar.php';
              <a href =recipeInfo.php?id='. $titleJSON['api_recipe_id'] .'>' . $titleJSON['title'] . '</a>
              </div>';
          }
-         $api_key = '"X-RapidAPI-Key : a44d550177msh8aeb1867319b60bp1fbbc5jsn1d9edc60417a"';
+         $api_key = '"X-RapidAPI-Key : d466494462msh9686e88c15be8cfp108f2ejsnbc67ad6ec517"';
          $recomended = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/" . $chosenID . "/similar";
          $recCmd = "curl -H " . $api_key . " " . $recomended;
          $relatedRec = json_decode(shell_exec($recCmd), true);
          $randy2 = rand(0, sizeof($relatedRec));
-         echo '<a href=recipeInfo.php?id=' . $relatedRec[$randy2]['id'] . '><button> Recomended </button></a>';
+         //echo $relatedRec[$randy2]['id'];
+         echo '<a href=recipeInfo.php?id=' . $relatedRec[$randy2]['id'] . '> <button>Recommended </button></a>';
       ?>
     </div>
   </div>
