@@ -65,7 +65,7 @@ include 'navbar.php';
   $output_arr = json_decode(shell_exec($cmd),true);
   $users = $output_arr['users'];
   //still needs a session variable to store the oauth token
-  $session_token = "QQQQQ";
+  $session_token = $_SESSION['token'];
   for($i = 0; $i < sizeof($users); $i++){
     $info_array = $users[$i];
     if ($info_array['oauth_token'] == $session_token){
@@ -73,17 +73,22 @@ include 'navbar.php';
     }//end if
   }//end for
 
-  echo '<h1>' . $info_array['user_name'] . "'s Profile" . '</h1>';
+  echo '<h1>' . $_SESSION['email'] . "'s Profile" . '</h1>';
   //still need user inventory to be stored
+
+  echo '<h1>' . $_SESSION['name'] . '</h1>';
+  print_r($_SESSION);
   ?>
 </div>
 
 <div class="row">
   <div class="column left">
     <div class="userContainerLeft">
-      <h2>User's name</h2>
-      <h2>User's email</h2>
-      <h2>User's inventory</h2>
+    <?php
+      echo '<h2> Name: ' . $_SESSION['name'] . '</h2>';
+      echo '<h2> Email: ' . $_SESSION['email'] . '</h2>';
+      echo '<h2> View Inventory </h2>';
+    ?>
     </div>
   </div>
   <div class="column right">
