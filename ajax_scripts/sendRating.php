@@ -16,7 +16,7 @@ function sendRating()
         $newLike = json_encode(array(
             'recipe_id' => $recID,
             'user_id' => $uID,
-            'rating' => $_POST['rate']
+            'rating' => $rating
         ));
     
     

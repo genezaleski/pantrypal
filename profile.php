@@ -98,12 +98,12 @@ include 'navbar.php';
       <?php 
       //Retriving user comments
       $commentCmd= 'curl "http://52.91.254.222/api/CommentRecipe/profile_page.php?user_id=' . $_SESSION['user_id'] .'"';
-      $uComJSON = json_decode(shell_exec($commentCmd));
-      $comments = null;
+      $uComJSON = json_decode(shell_exec($commentCmd), true);
+
       for($i = 0; $i < sizeof($uComJSON); $i++){
         $rId = $uComJSON[$i]['recipe_id'];
         $com = $uComJSON[$i]['comment_text'];
-        echo "You commented " . $com . " on recipe number " . $rId;
+        echo "You commented " . $com . " on recipe number " . $rId . "<br>";
       }
 
       ?>
