@@ -129,9 +129,9 @@ session_start();
               //checks if user exists in the database and
               //creates them if they dont
 
-              //sendPart1(email, id_token);
-              //sendPart2(name, profileImage);
-              //sendPart3(firstName, lastName);
+              sendPart1(email, id_token);
+              sendPart2(name, profileImage);
+              sendPart3(firstName, lastName);
               sendProfile(email, id_token, name, profileImage, firstName, lastName);
               getProfileID(email);
 
