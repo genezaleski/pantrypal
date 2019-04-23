@@ -109,9 +109,12 @@ $decodedRatings = json_decode(shell_exec($ratingCmd), true);
                         }
                         document.getElementById("likeBtn").src = "images/likedButton.png";
                         //Set recipe to liked here
+                        deleteRating(<?php echo $DB_ID; ?>);
                         sendRating(<?php echo $DB_ID; ?>, "like");
                     } else {
                         document.getElementById("likeBtn").src = "images/likeButton.png";
+                        //Remove like value from database
+                        deleteRating(<?php echo $DB_ID; ?>);
                     }
                 }
 
@@ -123,18 +126,22 @@ $decodedRatings = json_decode(shell_exec($ratingCmd), true);
                         }
                         document.getElementById("disLikeBtn").src = "images/disLikedButton.png";
                         //Set recipe to disliked here
+                        deleteRating(<?php echo $DB_ID; ?>);
                         sendRating(<?php echo $DB_ID; ?>, "dislike");
                     } else {
                         document.getElementById("disLikeBtn").src = "images/likeButton.png";
+                        //Remove disLike from database
+                        deleteRating(<?php echo $DB_ID; ?>);
                     }
                 }
                 //Sends the like/dislike to database
                 function sendRating(dbID, rating) {
                     if(userName != ""){
                     var xmlhtml = new XMLHttpRequest();
+                    var userID = <?php echo $_SESSION['user_id'];?>;
                     xmlhtml.open('POST', 'ajax_scripts/sendRating.php', true);
                     xmlhtml.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-                    xmlhtml.send("user=1&rID=" + dbID + "&rate=" + rating);
+                    xmlhtml.send("user=" + userID + "&rID=" + dbID + "&rate=" + rating);
                     }else{
                         alert("Your rating will not be counted unless you are logged in");
                     }
@@ -142,17 +149,20 @@ $decodedRatings = json_decode(shell_exec($ratingCmd), true);
                 //Removes a rating from the database
                 function deleteRating(dbID) {
                     var xmlhtml = new XMLHttpRequest();
+                    var userID = <?php echo $_SESSION['user_id'];?>;
                     xmlhtml.open('POST', 'ajax_scripts/deleteRating.php', true);
                     xmlhtml.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-                    xmlhtml.send("user=1&rID=" + dbID);
+                    xmlhtml.send("user=" + userID + "&rID=" + dbID);
                 }
                 //Sends comments to the database
                 function postComment(phpComment, dbID) {
                     if (userName != "") {
+                        var userID = <?php echo $_SESSION['user_id'];?>;
+                        //document.write(userID);
                         var xmlhtml = new XMLHttpRequest();
                         xmlhtml.open('POST', 'ajax_scripts/postComment.php', true);
                         xmlhtml.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-                        xmlhtml.send("comment=" + phpComment + "&item=" + dbID);
+                        xmlhtml.send("comment=" + phpComment + "&item=" + dbID + "&UID=" + userID);
                     } else {
                         alert("Please sign in to post a comment")
                     }
