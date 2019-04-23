@@ -153,5 +153,31 @@ class RateRecipe{
       }
       return false;
     }
+
+    //returns a recipe with a given api_name and api_recipe_id
+    function readOne(){
+      $query = "SELECT
+                *
+            FROM
+                " . $this->table_name . "
+            WHERE
+                recipe_id=? AND user_id=?";
+
+
+      $stmt = $this->conn->prepare( $query );
+
+      $stmt->bindParam(1, $this->recipe_id);
+      $stmt->bindParam(2, $this->user_id);
+
+      $stmt->execute();
+
+      $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+      $this->ratedRecipe_id = $row['ratedRecipe_id'];
+      $this->recipe_id = $row['recipe_id'];
+      $this->user_id = $row['user_id'];
+      $this->rating = $row['rating'];
+
+    }
 }
 ?>
