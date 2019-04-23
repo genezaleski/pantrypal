@@ -86,7 +86,7 @@ if(!empty($search)){
         //$api_url = '"https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/findByIngredients?number=60&ingredients=' . urlencode($search) .'"';
         $api_url = '"https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/searchComplex?'.$isveggie.'includeIngredients="'.urlencode($search).$allergies.'"&'.$course.'ranking=2&limitLicense=true&offset=0&number=60"';
 
-        $cmd = "curl " . $api_url . "  -H " . $api_key;
+        $cmd = "curl -H " . $api_key . " " . $api_url;
         //$cmd2 = "curl " . $api_url1 . "  -H " . $api_key;
 
         $output_arr = json_decode(shell_exec($cmd),true);
