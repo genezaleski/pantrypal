@@ -57,7 +57,7 @@ if(isset($_POST['Vegetarian'])){
 if(isset($_SESSION)){
     $getAllergies = 'curl "http://52.91.254.222/api/Allergy/userAllergy.php?user_id='.$_SESSION['user_id'].'"';
     $decodedAllergies = json_decode(shell_exec($getAllergies), true);
-    if(!($decodedAllergies['message'] == 'No allergies exist.')){
+    if(!(array_key_exists('message',$decodedAllergies))){
         $allergies = $allergies . "&excludeIngredients=";
         for($i = 0; $i < sizeof($decodedAllergies); $i++){
             $allergies = $allergies . $decodedAllergies['Allergy'][$i]['allergy_itemName'] .",";
@@ -210,5 +210,6 @@ echo '<div class="row">
     </div>';
 
 ?> <!--End PHP-->
+
 
 
