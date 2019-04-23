@@ -110,7 +110,7 @@ include 'navbar.php';
       <?php 
       //Retriving user comments
       $likesCmd= 'curl "http://52.91.254.222/api/RateRecipe/liked.php?user_id=' . $_SESSION['user_id'] .'"';
-      $uLikeJSON = json_decode(shell_exec($commentCmd), true);
+      $uLikeJSON = json_decode(shell_exec($likesCmd), true);
 
       for($i = 0; $i < sizeof($uLikeJSON); $i++){
         $rId = $uLikeJSON[$i]['recipe_id'];
