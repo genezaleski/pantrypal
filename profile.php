@@ -116,7 +116,8 @@ include 'navbar.php';
         $rId = $uLikeJSON[$i]['recipe_id'];
         $titleCmd = 'curl "http://52.91.254.222/api/Recipe/read_one.php?recipe_id=' . $rId . '"';
         $titleJSON = json_decode(shell_exec($titleCmd), true);
-        echo '<h3 href = "recipeInfo.php?id='. $titleJSON['api_recipe_id'] .'">' . $titleJSON['title'] . '</h3>';
+        echo '<div class = "likedRecipeLinks">
+          <a href =recipeInfo.php?id='. $titleJSON['api_recipe_id'] .'>' . $titleJSON['title'] . '</a>';
       }
       ?>
     </div>
