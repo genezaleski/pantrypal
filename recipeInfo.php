@@ -5,6 +5,7 @@ include 'navbar.php';
 $recipeID = $_GET['id'];
 $my_api_key = '"X-RapidAPI-Key :322dc0a550msh6970a9bebfd18b2p1010fcjsnaed4930a9684"';
 $other_api_key = '"X-RapidAPI-Key : 4af690163bmshda5b867e43cbc70p155394jsnc38cedc3355a"';
+$third_api_key = '"X-RapidAPI-Key : a44d550177msh8aeb1867319b60bp1fbbc5jsn1d9edc60417a"';
 
 //Retrieving recipe info
 $api_url = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/" . $recipeID . "/information";
@@ -20,6 +21,11 @@ $recipeInfo = json_decode(shell_exec($cmd), true);
 $related_url = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/" . $recipeID . "/similar";
 $relatedCmd = "curl -H " . $other_api_key . " " . $related_url;
 $relatedLinks = json_decode(shell_exec($relatedCmd), true);
+
+//Get nutritional information for recipes
+$nutrition_url = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/".$recipeID."/nutritionWidget.json";
+$nutrition_cmd = "curl -H " . $third_api_key . " " . $nutrition_url;
+$nutritionalInfo = json_decode(shell_exec($nutrition_cmd), true);
 
 //Pulling in likes and dislikes to be used 
 $likeDataCmd = "curl http://52.91.254.222/api/RateRecipe/read.php";
@@ -170,6 +176,12 @@ $decodedRatings = json_decode(shell_exec($ratingCmd), true);
             </script>
 
             <?php
+            echo '<h2> Nutrition Facts </h2>';
+            echo "Calories: " . $nutritionalInfo['calories'] . "<br>";
+            echo "Carbohydrates: " . $nutritionalInfo['carbs'] . "<br>";
+            echo "Fat: " . $nutritionalInfo['fat'] . "<br>";
+            echo "Protein: " . $nutritionalInfo['protein'] . "<br>";
+            echo "Sugar: " . $nutritionalInfo['bad'][4]['amount'] . "<br>";
             echo '<h2> Ingredients </h2>';
             //Loop that generates a list of the ingredients used
             for ($i = 0; $i < $recipeInfo['extendedIngredients'][$i]; $i++) {
@@ -201,8 +213,6 @@ $decodedRatings = json_decode(shell_exec($ratingCmd), true);
             </form>
 
             <?php
-            $url_post = 'http://52.91.254.222/api/CommentRecipe/create.php';
-
             //Loop that prints out all comments for current recipe
             for ($i = 0; $i < sizeOf($decodedComments['comments']); $i++) {
                 if ($decodedComments['comments'][$i]['recipe_id'] == $DB_ID) {
@@ -229,3 +239,4 @@ $decodedRatings = json_decode(shell_exec($ratingCmd), true);
 </body>
 
 </html>
+

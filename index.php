@@ -51,13 +51,13 @@ include 'navbar.php';
     <form class="indexSearch" name="inventorySearch" method="post" action="reciperesults.php">
         <input style="display: none;" type="text" name="searchBar" value="Breakfast">
         <input type="image" src="images/breakfast.jpg" name="image" width=300px height=200px>
-        <div class="centered">Breakfast</div>
+        <div class="centered" style="pointer-events:none;">Breakfast</div>
     </form>
 
     <form class="indexSearch" name="inventorySearch" method="post" action="reciperesults.php">
         <input style="display: none;" type="text" name="searchBar" value="Entree">
         <input type="image" src="images/dinner.jpg" name="image" width=300px height=200px>
-        <div class="centered">Dinner</div>
+        <div class="centered" style="pointer-events:none;">Dinner</div>
     </form>
   </div>
 
@@ -65,15 +65,16 @@ include 'navbar.php';
     <form class="indexSearch" name="inventorySearch" method="post" action="reciperesults.php">
         <input style="display: none;" type="text" name="searchBar" value="Lunch">
         <input type="image" src="images/Lunch.jpg" name="image" width=300px height=200px>
-        <div class="centered">Lunch</div>
+        <div class="centered" style="pointer-events:none;">Lunch</div>
     </form>
 
     <form class="indexSearch" name="inventorySearch" method="post" action="reciperesults.php">
         <input style="display: none;" type="text" name="searchBar" value="Vegan">
         <input type="image" src="images/vegan.jpg" name="image" width=300px height=200px>
-        <div class="centered">Vegan</div>
+        <div class="centered" style="pointer-events:none;">Vegan</div>
     </form>
   </div>
 </div>
 
 </div>
+
