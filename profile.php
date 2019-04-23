@@ -60,14 +60,28 @@ include 'navbar.php';
       $likesCmd= 'curl "http://52.91.254.222/api/RateRecipe/liked.php?user_id=' . $_SESSION['user_id'] .'"';
       $uLikeJSON = json_decode(shell_exec($likesCmd), true);
 
+      //Generating a random number under number of likes
+      $randy = rand(0, sizeof($uLikeJSON));
+      $chosenID;
       for($i = 0; $i < sizeof($uLikeJSON); $i++){
         $rId = $uLikeJSON[$i]['recipe_id'];
         $titleCmd = 'curl "http://52.91.254.222/api/Recipe/read_one.php?recipe_id=' . $rId . '"';
         $titleJSON = json_decode(shell_exec($titleCmd), true);
+        if($i = $randy){
+          $chosenID = $titleJSON['ap_recipe_id'];
+        }
         echo '<div class = "likedRecipeLinks">
           <a href =recipeInfo.php?id='. $titleJSON['api_recipe_id'] .'>' . $titleJSON['title'] . '</a>
           </div>';
       }
+
+      $api_key = '"X-RapidAPI-Key : a44d550177msh8aeb1867319b60bp1fbbc5jsn1d9edc60417a"';
+
+      $recomended = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/" . $chosenID . "/similar";
+      $recCmd = "curl -H " . $api_key . " " . $recomended;
+      $relatedRec = json_decode(shell_exec($recCmd), true);
+      $randy2 = rand(0, sizeof($relatedRec));
+      echo '<button href=recipeInfo.php?id=' . $relatedRec[$randy2]['id'] . '>';
       ?>
     </div>
   </div>
