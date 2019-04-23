@@ -96,8 +96,6 @@ $decodedRatings = json_decode(shell_exec($ratingCmd), true);
             } else {
                 echo '<h2> This recipe has not been rated yet </h2>';
             }
-
-            echo $_SESSION['email'];
             ?>
 
             <script language="javascript">
@@ -140,27 +138,31 @@ $decodedRatings = json_decode(shell_exec($ratingCmd), true);
                 function sendRating(dbID, rating) {
                     if(userName != ""){
                     var xmlhtml = new XMLHttpRequest();
+                    var userID = <?php echo $_SESSION['user_id'];?>;
                     xmlhtml.open('POST', 'ajax_scripts/sendRating.php', true);
                     xmlhtml.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-                    xmlhtml.send("user=1&rID=" + dbID + "&rate=" + rating);
+                    xmlhtml.send("user=" + userID + "&rID=" + dbID + "&rate=" + rating);
                     }else{
-                        alert("You need to log in to rate a recipe");
+                        alert("Your rating will not be counted unless you are logged in");
                     }
                 }
                 //Removes a rating from the database
                 function deleteRating(dbID) {
                     var xmlhtml = new XMLHttpRequest();
+                    var userID = <?php echo $_SESSION['user_id'];?>;
                     xmlhtml.open('POST', 'ajax_scripts/deleteRating.php', true);
                     xmlhtml.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-                    xmlhtml.send("user=1&rID=" + dbID);
+                    xmlhtml.send("user=" + userID + "&rID=" + dbID);
                 }
                 //Sends comments to the database
                 function postComment(phpComment, dbID) {
                     if (userName != "") {
+                        var userID = <?php echo $_SESSION['user_id'];?>;
+                        //document.write(userID);
                         var xmlhtml = new XMLHttpRequest();
                         xmlhtml.open('POST', 'ajax_scripts/postComment.php', true);
                         xmlhtml.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-                        xmlhtml.send("comment=" + phpComment + "&item=" + dbID);
+                        xmlhtml.send("comment=" + phpComment + "&item=" + dbID + "&UID=" + userID);
                     } else {
                         alert("Please sign in to post a comment")
                     }

@@ -18,20 +18,22 @@ $_SESSION['firstName'] = $_POST['firstName'];
 $_SESSION['lastName'] = $_POST['lastName'];
 */
 
-$email = $_SESSION['email'];
-$token = $_SESSION['token'];
+$email = $_POST['user'];
+$token = $_POST['id'];
 $name = $_SESSION['name'];
-$image = $_SESSION['image'];
-$firstName = $_SESSION['firstName'];
-$lastName = $_SESSION['lastName'];
+$image = $_POST['imageurl'];
+$firstName = $_POST['firstName'];
+$lastName = $_POST['lastName'];
+$random = rand(0, 99999999999999999999999);
+$randomString = base64_encode($random);
 
 //searchByName();
-createprofile();
+createProfile();
 function createProfile(){
-            $url_post = 'http://52.91.254.222/api/User/create.php';
+            $url_post = "http://52.91.254.222/api/User/create.php";
             $createUser = json_encode(array(
-                'oauth_token' => $_POST['id'],
                 'user_name' => $_POST['user'],
+                'oauth_token' => $randomString,
                 'first_name' => $_POST['firstName'],
                 'last_name' => $_POST['lastName'],
                 'picture_path' => $_POST['imageurl']
@@ -44,9 +46,16 @@ function createProfile(){
                     'header' => "Content-Type: application/json\r\n"."Accept: application/json\r\n"
                 )
             );
-            $stream = stream_context_create($options);
-            $result = file_get_contents($url_post,false,$stream);
-            $response = json_decode($result);
+            
+            //$stream = stream_context_create($options);
+            //$result = file_get_contents($url_post,false,$stream);
+            //$response = json_decode($result);
+                        //$url_post = 'http://52.91.254.222/api/CommentRecipe/create.php';
+                        $ch = curl_init($url_post);
+                        curl_setopt($ch,CURLOPT_POST,1);
+                        curl_setopt($ch,CURLOPT_POSTFIELDS,$createUser);
+                        curl_setopt($ch,CURLOPT_HTTPHEADER,array('Content-Type: application/json'));
+                        $curl_result = curl_exec($ch);
 }//end createProfile
 /*
 //checks to see if username already exists in the database

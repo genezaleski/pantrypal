@@ -74,13 +74,14 @@
 .navSearch{
   margin-right: 300px;
 }
+</style>
 
-//all pages that load navbar can now use session variables
 <?php
+//all pages that load navbar can now use session variables
 session_start();
 ?>
 
-</style>
+
 <div class=navbox>
     <a href="index.php" target=""> Pantry Pal </a>
     <form class="navSearch" name="recipeSearch" method="post" action="reciperesults.php">
@@ -137,21 +138,21 @@ session_start();
               //function to create the user
               function sendProfile(email, token, name, profileImage, firstName, lastName){
                     var xmlhtml = new XMLHttpRequest();
-                    var xmlhtml2 = new XMLHttpRequest();
                     var length = token.length;
                     console.log(length);
-                    var encoded64 = window.btoa(token.substring(0,127));
+                    var encoded64 = window.btoa(token.substring(0,63));
                     console.log(encoded64);
                     xmlhtml.open('POST','ajax_scripts/createProfile.php',true);
                     xmlhtml.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
                     xmlhtml.send("user="+email+"&id="+encoded64+"&firstName="+firstName+"&lastName="+lastName+"&imageurl="+profileImage);
+                    
                 }//end sendprofile
 
                 function sendPart1(email, token){
                     var xmlhtml = new XMLHttpRequest();
                     var length = token.length;
                     console.log(length);
-                    var encoded64 = window.btoa(token.substring(0,127));
+                    var encoded64 = window.btoa(token.substring(0,63));
                     console.log(encoded64);
                     xmlhtml.open('POST','ajax_scripts/spaghetti1.php',true);
                     xmlhtml.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");

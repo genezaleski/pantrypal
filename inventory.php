@@ -25,16 +25,17 @@
 <?php
 include 'navbar.php';
 
+$userID = $_SESSION['user_id'];
+$userName = $_SESSION['email'];
+
 //Access list of registered users
-$accountCmd = "curl http://52.91.254.222/api/User/read.php";
+$accountCmd = 'curl "http://52.91.254.222/api/User/read_one.php?user_name=' . $userName.'"';
 $decodedAccounts = json_decode(shell_exec($accountCmd), true);
 
-
-echo '<p class="dispUsername"> Hello, '. $decodedAccounts['users'][0]['user_name'] .'</p>';
+echo '<p class="dispUsername"> Hello, '. $decodedAccounts['user_name'] .'</p>';
 echo '<p class="urInventory"> Your Inventory: </p>';
 
 //Get user id for retrieving + posting inventory items
-$userID = $decodedAccounts['users'][0]['user_id'];
 ?>
     <form action="inventory.php" method="post" id="usrform" class="newItemBox">
         <input class="inventoryAddBox" type="text" name="inventoryAdd" placeholder="Input new item...">
@@ -94,5 +95,6 @@ echo '<br>';
     <input style="display: none;" type="text" name="searchBar" value="<?php echo $ingredientsPost;?>">
     <input class="inventoryAddButton2" type="submit" name="Submit" value="Find recipes from my Pantry">
 </form>
+
 
 

@@ -4,8 +4,8 @@
     session_start();
 
     //removes existing fields
-    unset($_SESSION['firstName']);
-    unset($_SESSION['lastName']);
+    //unset($_SESSION['firstName']);
+    //unset($_SESSION['lastName']);
 
     //fills session variable with useful profile information
     $_SESSION['firstName'] = $_POST['firstName'];
