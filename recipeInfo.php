@@ -109,12 +109,9 @@ $decodedRatings = json_decode(shell_exec($ratingCmd), true);
                         }
                         document.getElementById("likeBtn").src = "images/likedButton.png";
                         //Set recipe to liked here
-                        deleteRating(<?php echo $DB_ID; ?>);
                         sendRating(<?php echo $DB_ID; ?>, "like");
                     } else {
                         document.getElementById("likeBtn").src = "images/likeButton.png";
-                        //Remove like value from database
-                        deleteRating(<?php echo $DB_ID; ?>);
                     }
                 }
 
@@ -126,12 +123,9 @@ $decodedRatings = json_decode(shell_exec($ratingCmd), true);
                         }
                         document.getElementById("disLikeBtn").src = "images/disLikedButton.png";
                         //Set recipe to disliked here
-                        deleteRating(<?php echo $DB_ID; ?>);
                         sendRating(<?php echo $DB_ID; ?>, "dislike");
                     } else {
                         document.getElementById("disLikeBtn").src = "images/likeButton.png";
-                        //Remove disLike from database
-                        deleteRating(<?php echo $DB_ID; ?>);
                     }
                 }
                 //Sends the like/dislike to database
