@@ -28,7 +28,7 @@ $lastName = $_POST['lastName'];
 //searchByName();
 createProfile();
 function createProfile(){
-            $url_post = 'http://52.91.254.222/api/User/create.php';
+            $url_post = "http://52.91.254.222/api/User/create.php";
             $createUser = json_encode(array(
                 'user_name' => $_POST['user'],
                 'oauth_token' => $_POST['id'],
