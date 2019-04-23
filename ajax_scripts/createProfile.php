@@ -17,15 +17,24 @@ $_SESSION['image'] = $_POST['imageUrl'];
 $_SESSION['firstName'] = $_POST['firstName'];
 $_SESSION['lastName'] = $_POST['lastName'];
 */
-searchByName();
+
+$email = $_SESSION['email'];
+$token = $_SESSION['token'];
+$name = $_SESSION['name'];
+$image = $_SESSION['image'];
+$firstName = $_SESSION['firstName'];
+$lastName = $_SESSION['lastName'];
+
+//searchByName();
+createprofile();
 function createProfile(){
             $url_post = 'http://52.91.254.222/api/User/create.php';
             $createUser = json_encode(array(
-                'oauth_token' => $_SESSION['id'],
-                'user_name' => $_SESSION['email'],
-                'first_name' => $_SESSION['firstName'],
-                'last_name' => $_SESSION['lastName'],
-                'picture_path' => $_SESSION['image']
+                'oauth_token' => $_POST['id'],
+                'user_name' => $_POST['user'],
+                'first_name' => $_POST['firstName'],
+                'last_name' => $_POST['lastName'],
+                'picture_path' => $_POST['imageurl']
                 
             ));
             $options = array(
@@ -39,7 +48,7 @@ function createProfile(){
             $result = file_get_contents($url_post,false,$stream);
             $response = json_decode($result);
 }//end createProfile
-
+/*
 //checks to see if username already exists in the database
 function searchByName(){
     $searchUser = $_POST['user'];
@@ -54,5 +63,5 @@ function searchByName(){
         createProfile();
     }//
 
-}//end searchByName
+}//end searchByName*/
 ?>
