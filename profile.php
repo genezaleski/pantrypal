@@ -114,7 +114,9 @@ include 'navbar.php';
 
       for($i = 0; $i < sizeof($uLikeJSON); $i++){
         $rId = $uLikeJSON[$i]['recipe_id'];
-        echo "You liked recipe number " . $rId . "<br>";
+        $titleCmd = 'curl "http://52.91.254.222/api/Recipe/read_one.php?recipe_id=' . $rId . '"';
+        $titleJSON = json_decode(shell_exec($titleCmd), true);
+        echo "<h3>" . $titleJSON['title'] . "<h3>";
       }
       ?>
     </div>
