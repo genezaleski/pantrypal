@@ -18,20 +18,20 @@ $_SESSION['firstName'] = $_POST['firstName'];
 $_SESSION['lastName'] = $_POST['lastName'];
 */
 
-$email = $_SESSION['email'];
-$token = $_SESSION['token'];
+$email = $_POST['user'];
+$token = $_POST['id'];
 $name = $_SESSION['name'];
-$image = $_SESSION['image'];
-$firstName = $_SESSION['firstName'];
-$lastName = $_SESSION['lastName'];
+$image = $_POST['imageurl'];
+$firstName = $_POST['firstName'];
+$lastName = $_POST['lastName'];
 
 //searchByName();
-createprofile();
+createProfile();
 function createProfile(){
             $url_post = 'http://52.91.254.222/api/User/create.php';
             $createUser = json_encode(array(
-                'oauth_token' => $_POST['id'],
                 'user_name' => $_POST['user'],
+                'oauth_token' => $_POST['id'],
                 'first_name' => $_POST['firstName'],
                 'last_name' => $_POST['lastName'],
                 'picture_path' => $_POST['imageurl']
