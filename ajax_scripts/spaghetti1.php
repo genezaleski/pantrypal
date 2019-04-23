@@ -4,8 +4,8 @@
     session_start();
 
     //removes existing fields
-    unset($_SESSION['email']);
-    unset($_SESSION['token']);
+    //unset($_SESSION['email']);
+    //unset($_SESSION['token']);
 
     //fills session variable with useful profile information
     $_SESSION['email'] = $_POST['user'];
