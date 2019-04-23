@@ -96,8 +96,6 @@ $decodedRatings = json_decode(shell_exec($ratingCmd), true);
             } else {
                 echo '<h2> This recipe has not been rated yet </h2>';
             }
-
-            echo $_SESSION['email'];
             ?>
 
             <script language="javascript">
@@ -144,7 +142,7 @@ $decodedRatings = json_decode(shell_exec($ratingCmd), true);
                     xmlhtml.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
                     xmlhtml.send("user=1&rID=" + dbID + "&rate=" + rating);
                     }else{
-                        alert("You need to log in to rate a recipe");
+                        alert("Your rating will not be counted unless you are logged in");
                     }
                 }
                 //Removes a rating from the database
