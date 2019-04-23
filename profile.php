@@ -100,14 +100,23 @@ include 'navbar.php';
       $commentCmd= 'curl "http://52.91.254.222/api/CommentRecipe/profile_page.php?user_id=' . $_SESSION['user_id'] .'"';
       $uComJSON = json_decode(shell_exec($commentCmd), true);
 
-      for($i = 0; $i < sizeof($uComJSON); $i++){
-        $rId = $uComJSON[$i]['recipe_id'];
-        $com = $uComJSON[$i]['comment_text'];
+      for($i = 0; $i < sizeof($uComJSON['comments']); $i++){
+        $rId = $uComJSON['comments'][$i]['recipe_id'];
+        $com = $uComJSON['comments'][$i]['comment_text'];
         echo "You commented " . $com . " on recipe number " . $rId . "<br>";
       }
-
       ?>
       <h2> User's liked recipes:  </h2>
+      <?php 
+      //Retriving user comments
+      $likesCmd= 'curl "http://52.91.254.222/api/RateRecipe/liked.php?user_id=' . $_SESSION['user_id'] .'"';
+      $uLikeJSON = json_decode(shell_exec($commentCmd), true);
+
+      for($i = 0; $i < sizeof($uLikeJSON); $i++){
+        $rId = $uLikeJSON[$i]['recipe_id'];
+        echo "You liked recipe number " . $rId . "<br>";
+      }
+      ?>
     </div>
   </div>
 </div>
