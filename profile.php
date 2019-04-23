@@ -1,62 +1,10 @@
 <html>
+<link rel="stylesheet" type="text/css" href="stylesheets/profileStyle.css">
 
 <title>User profile</title>
 <?php
 include 'navbar.php';
 ?>
-<style>
-
-  body{
-      background-image: url(images/carrots-food-fresh-616404.jpg);
-      background-size: 100%;
-  }
-
-  .headerText{
-    margin-top: 50px;
-    text-align: center;
-    align: center;
-  }
-
-  .userContainerLeft{
-    width: 100%;
-    text-align: center;
-    align: center;
-  }
-
-  .userContainerRight{
-    width: 100%;
-    text-align: left;
-    align: center;
-  }
-
-  * {
-  box-sizing: border-box;
-  }
-
-  /* Create two unequal columns that floats next to each other */
-  .column {
-    float: left;
-    padding: 10px;
-    align: center;
-  }
-
-  .left {
-    width: 35%;
-    margin-left: 150px;
-  }
-
-  .right {
-    width: 35%;
-  }
-
-  /* Clear floats after the columns */
-  .row:after {
-    content: "";
-    display: table;
-    clear: both;
-  }
-
-</style>
 
 <div class="headerText">
   <?php
