@@ -1,4 +1,3 @@
-<link rel="stylesheet" type="text/css" href="stylesheets/resultspagestyle.css">
 <head>
 <meta   name="google-site-verification"
         content="W0LpZ8p6M13ICggYTyUZqikpTXnPCnY-0d_U6uQC5p0" />
@@ -8,6 +7,20 @@
 body{
     background-image: url(images/carrots-food-fresh-616404.jpg);
     background-size: 100%;
+}
+
+.row {
+  display: flex;
+}
+
+.columnLeft {
+  flex: 50%;
+  margin-left: 200px;
+}
+
+.columnRight {
+  flex: 50%;
+  margin-right: 200px;
 }
 
 .indexSearch {
@@ -34,7 +47,7 @@ include 'navbar.php';
 ?>
 
 <div class="row">
-  <div class="column">
+  <div class="columnLeft">
     <form class="indexSearch" name="inventorySearch" method="post" action="reciperesults.php">
         <input style="display: none;" type="text" name="searchBar" value="Breakfast">
         <input type="image" src="images/breakfast.jpg" name="image" width=300px height=200px>
@@ -48,7 +61,7 @@ include 'navbar.php';
     </form>
   </div>
 
-  <div class="column">
+  <div class="columnRight">
     <form class="indexSearch" name="inventorySearch" method="post" action="reciperesults.php">
         <input style="display: none;" type="text" name="searchBar" value="Lunch">
         <input type="image" src="images/Lunch.jpg" name="image" width=300px height=200px>

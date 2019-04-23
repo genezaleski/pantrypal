@@ -4,7 +4,7 @@ postComment();
 function postComment(){
             $url_post = 'http://52.91.254.222/api/CommentRecipe/create.php';
             $newComment = json_encode(array(
-                'user_id' => 4,
+                'user_id' => $_POST['UID'],
                 'recipe_id' => $_POST['item'],
                 'comment_text' => $_POST['comment']
             ));
@@ -31,4 +31,5 @@ function postComment(){
             //$curl_result = curl_exec($ch);
 }
 ?>
+
 
