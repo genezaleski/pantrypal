@@ -49,12 +49,21 @@ $search = $_POST['searchBar'];
 
 $isveggie ='';
 $course='';
+$allergies='';
 
 if(isset($_POST['Vegetarian'])){
     $isveggie = $isveggie . "diet=vegetarian&";
 }
-if(isset($_POST['Allergies'])){
-    //echo "Allergies is set to: " . $_POST['Allergies'];
+if(isset($_SESSION)){
+    $getAllergies = 'curl "http://52.91.254.222/api/Allergy/userAllergy.php?user_id='.$_SESSION['user_id'].'"';
+    $decodedAllergies = json_decode(shell_exec($getAllergies), true);
+    if(!($decodedAllergies['message'] == 'No allergies exist.')){
+        $allergies = $allergies . "&excludeIngredients=";
+        for($i = 0; $i < sizeof($decodedAllergies); $i++){
+            $allergies = $allergies . $decodedAllergies['Allergy'][$i]['allergy_itemName'] .",";
+        }
+    }
+    urlencode($allergies);
 }
 if(isset($_POST['mainCourse'])){
     $course = $course . "type=main+course&";
@@ -75,7 +84,7 @@ if(!empty($search)){
     $is_ingredients = strpos($search, ',');
     if($is_ingredients !== false ) { //If commas are in search string, search by ingredients
         //$api_url = '"https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/findByIngredients?number=60&ingredients=' . urlencode($search) .'"';
-        $api_url = '"https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/searchComplex?'.$isveggie.'includeIngredients="'.urlencode($search).'"&'.$course.'ranking=2&limitLicense=true&offset=0&number=60"';
+        $api_url = '"https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/searchComplex?'.$isveggie.'includeIngredients="'.urlencode($search).$allergies.'"&'.$course.'ranking=2&limitLicense=true&offset=0&number=60"';
 
         $cmd = "curl " . $api_url . "  -H " . $api_key;
         //$cmd2 = "curl " . $api_url1 . "  -H " . $api_key;
@@ -106,7 +115,7 @@ if(!empty($search)){
         }
     }
     else{                                 //If no commas, search by recipe name
-    $api_url = '"https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/search?'.$isveggie.'number=60&'.$course.'query=' . urlencode($search) .'"';
+    $api_url = '"https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/search?'.$isveggie.$allergies.'number=60&'.$course.'query=' . urlencode($search) .'"';
     //$api_url = '"https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/searchComplex?query="'.urlencode($search).'"&'.$isveggie.$course.'ranking=2&limitLicense=true&offset=0&number=60"';
 
         $cmd = "curl " . $api_url . "  -H " . $api_key;
@@ -201,4 +210,5 @@ echo '<div class="row">
     </div>';
 
 ?> <!--End PHP-->
+
 
