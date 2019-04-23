@@ -1,5 +1,5 @@
 <html>
-<link rel="stylesheet" type="text/css" href="stylesheets/inventoryStyle.css">
+<link rel="stylesheet" type="text/css" href="stylesheets/profileStyle.css">
 
 <script language="javascript">//scripts to add and remove allergies
     function postAllergy(addAllergy,userID){
@@ -27,67 +27,13 @@
 <?php
 include 'navbar.php';
 ?>
-<style>
 
-  body{
-      background-image: url(images/carrots-food-fresh-616404.jpg);
-      background-size: 100%;
-  }
-
-  .headerText{
-    margin-top: 50px;
-    text-align: center;
-    align: center;
-  }
-
-  .userContainerLeft{
-    width: 100%;
-    text-align: center;
-    align: center;
-  }
-
-  .userContainerRight{
-    width: 100%;
-    text-align: left;
-    align: center;
-  }
-
-  * {
-  box-sizing: border-box;
-  }
-
-  /* Create two unequal columns that floats next to each other */
-  .column {
-    float: left;
-    padding: 10px;
-    align: center;
-  }
-
-  .left {
-    width: 35%;
-    margin-left: 150px;
-  }
-
-  .right {
-    width: 35%;
-  }
-
-  /* Clear floats after the columns */
-  .row:after {
-    content: "";
-    display: table;
-    clear: both;
-  }
-
-</style>
 
 <div class="headerText">
   <?php
 
   echo '<h1>' . $_SESSION['email'] . "'s Profile" . '</h1>';
-  //still need user inventory to be stored
 
-  echo '<h1>' . $_SESSION['name'] . '</h1>';
   //print_r($_SESSION);
 
 ?>
@@ -98,13 +44,7 @@ include 'navbar.php';
     <div class="userContainerLeft">
     <?php
       echo '<h2> Name: ' . $_SESSION['name'] . '</h2>';
-      echo '<h2> Email: ' . $_SESSION['email'] . '</h2>';
-      echo '<h2> View Inventory </h2>';
-    ?>
-    </div>
-  </div>
-  <div class="column right">
-    <div class="userContainerRight">
+      ?>
       <h2> Allergies: </h2>
         
       <form action="profile.php" method="post" id="usrform" class="newAllergyBox">
@@ -136,7 +76,7 @@ include 'navbar.php';
     for($i = 0; $i < sizeof($allergies['Allergy']);$i++){
       if($allergies['Allergy'][$i]['user_id'] == $userID){
         $name =  $allergies['Allergy'][$i]['allergy_itemName'];
-        echo "<p class='info'>" . $name . "</p>";
+        echo $name . "  ";
         echo "     ";
         if(($j % 5) == 0){
           echo "<br>";
@@ -148,7 +88,7 @@ include 'navbar.php';
   }
 ?>
 
-      <h2> This user commented on: </h2>
+<h2> Your Comments: </h2>
       <?php 
       //Retriving user comments
       $commentCmd= 'curl "http://52.91.254.222/api/CommentRecipe/profile_page.php?user_id=' . $_SESSION['user_id'] .'"';
@@ -163,22 +103,55 @@ include 'navbar.php';
       }
 
       ?>
-      <h2> User's liked recipes:  </h2>
+
+
+      
+    </div>
+  </div>
+  <div class="column right">
+    <div class="userContainerRight">
+      <?php
+      echo '<h2> Email: ' . $_SESSION['email'] . '</h2>';
+      echo '<h2> Inventory: </h2>';
+      
+      $inventoryCmd = "curl http://52.91.254.222/api/PantryItem/read.php";
+      $decodedInventory = json_decode(shell_exec($inventoryCmd), true);
+      $j = 1;
+      $ingredientsPost = '';
+
+      //This loop both displays the inventory of the user
+      //and populates the ingredientsPost variable to be 
+      //used for a search by ingredients based off the user's
+      //inventory.
+      if(!(isset($decodedInventory['PantryItem']))){
+        echo '<p class="urInventory"> Your pantry is empty. </p>';
+      }
+      else{
+        for($i = 0; $i < sizeof($decodedInventory['PantryItem']);$i++){
+            if($decodedInventory['PantryItem'][$i]['user_id'] == $userID){
+              $name =  $decodedInventory['PantryItem'][$i]['item_name'];
+              echo $name . " ";
+              if(($j % 5) == 0){
+                echo "<br>";
+              }
+              $j++;
+            }
+          }
+        }
+      ?>
+      
+
+      
+      <h2> Your liked recipes:  </h2>
       <?php 
       //Retriving user comments
       $likesCmd= 'curl "http://52.91.254.222/api/RateRecipe/liked.php?user_id=' . $_SESSION['user_id'] .'"';
       $uLikeJSON = json_decode(shell_exec($likesCmd), true);
 
-      //Generating a random number under number of likes
-      $randy = rand(0, sizeof($uLikeJSON));
-      $chosenID;
       for($i = 0; $i < sizeof($uLikeJSON); $i++){
         $rId = $uLikeJSON[$i]['recipe_id'];
         $titleCmd = 'curl "http://52.91.254.222/api/Recipe/read_one.php?recipe_id=' . $rId . '"';
         $titleJSON = json_decode(shell_exec($titleCmd), true);
-        if($i = $randy){
-          $chosenID = $titleJSON['ap_recipe_id'];
-        }
         echo '<div class = "likedRecipeLinks">
           <a href =recipeInfo.php?id='. $titleJSON['api_recipe_id'] .'>' . $titleJSON['title'] . '</a>
           </div>';
