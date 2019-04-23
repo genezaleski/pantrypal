@@ -95,7 +95,19 @@ include 'navbar.php';
     <div class="userContainerRight">
       <h2> Allergies: </h2>
       <h2> This user commented on: </h2>
-      <h2> User's liked reipes:  </h2>
+      <?php 
+      //Retriving user comments
+      $commentCmd= 'curl "http://52.91.254.222/api/CommentRecipe/profile_page.php?user_id=' . $_SESSION['user_id'] .'"';
+      $uComJSON = json_decode(shell_exec($commentCmd));
+      $comments = null;
+      for($i = 0; $i < sizeof($uComJSON); $i++){
+        $rId = $uComJSON[$i]['recipe_id'];
+        $com = $uComJSON[$i]['comment_text'];
+        echo "You commented " . $com . " on recipe number " . $rId;
+      }
+
+      ?>
+      <h2> User's liked recipes:  </h2>
     </div>
   </div>
 </div>
