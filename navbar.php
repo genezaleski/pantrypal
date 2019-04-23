@@ -132,6 +132,8 @@ session_start();
               sendPart2(name, profileImage);
               sendPart3(firstName, lastName);
               sendProfile(email, id_token, name, profileImage, firstName, lastName);
+              getProfileID(email);
+
               //function to create the user
               function sendProfile(email, token, name, profileImage, firstName, lastName){
                     var xmlhtml = new XMLHttpRequest();
@@ -172,24 +174,33 @@ session_start();
                     xmlhtml.send("firstName="+firstName+"&lastName="+lastName);
                 }//end sendPart3
 
+                //uses an ajax script to send input to the databases read_one function
+                //and store the user id in the $session array
+                function getProfileID(email){
+                  var xmlhtml = new XMLHttpRequest();
+                  xmlhtml.open('POST','ajax_scripts/spaghetti4.php',true);
+                  xmlhtml.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                  xmlhtml.send("email="+email);
+                }//end getProfileID
             }//end onSignIn
           </script>
         </body>
-      </html>
             <a href="profile.php"> My Profile</a>
             <a href="inventory.php"> Inventory </a>
             <a href="devs.php">Developers</a>
             <script src="https://apis.google.com/js/platform.js" async defer></script>
             <meta name="google-signin-client_id" content="818469007806-1oi7h6015kjsggbd4m0i6j4ro9dq6vqt.apps.googleusercontent.com">
             <a href="#" onclick="signOut();">Sign out</a>
-            <?php
-            session_destroy();
-            ?>
+            
               <script>
                 function signOut() {
                   var auth2 = gapi.auth2.getAuthInstance();
                   auth2.signOut().then(function () {
                     console.log('User signed out.');
+                    <?php
+            session_destroy();
+            ?>
+                    window.location.reload();
                 });
                 }
                 </script>
@@ -197,3 +208,5 @@ session_start();
     </div>
 </div>
 <br>
+
+</html>
