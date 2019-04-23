@@ -190,7 +190,7 @@ include 'navbar.php';
       $recCmd = "curl -H " . $api_key . " " . $recomended;
       $relatedRec = json_decode(shell_exec($recCmd), true);
       $randy2 = rand(0, sizeof($relatedRec));
-      echo '<button href=recipeInfo.php?id=' . $relatedRec[$randy2]['id'] . '>';
+      echo '<button href=recipeInfo.php?id=' . $relatedRec[$randy2]['id'] . '> Recomended </button>';
       ?>
     </div>
   </div>
