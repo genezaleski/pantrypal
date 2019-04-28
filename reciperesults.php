@@ -115,7 +115,7 @@ if(!empty($search)){
         }
     }
     else{                                 //If no commas, search by recipe name
-    $api_url = '"https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/search?'.$isveggie.$allergies.'number=60&'.$course.'query=' . urlencode($search) .'"';
+    $api_url = '"https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/search?'.$isveggie.$allergies.'&number=60&'.$course.'query=' . urlencode($search) .'"';
     //$api_url = '"https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/searchComplex?query="'.urlencode($search).'"&'.$isveggie.$course.'ranking=2&limitLicense=true&offset=0&number=60"';
 
         $cmd = "curl " . $api_url . "  -H " . $api_key;
