@@ -1,49 +1,65 @@
-body{
+body {
     background-image: url(../images/carrots-food-fresh-616404.jpg);
     background-size: 100%;
 }
 
-.headerText{
-  margin-top: 50px;
-  text-align: center;
-  align: center;
+.headerText {
+    margin-top: 50px;
+    text-align: center;
+    align: center;
 }
 
-.userContainerLeft{
-  width: 100%;
-  text-align: left;
-  align: center;
+.userContainerLeft {
+    width: 100%;
+    text-align: left;
+    align: center;
 }
 
-.userContainerRight{
-  width: 100%;
-  text-align: left;
-  align: center;
+.userContainerRight {
+    width: 100%;
+    text-align: left;
+    align: center;
 }
 
 * {
-box-sizing: border-box;
+    box-sizing: border-box;
 }
 
+
 /* Create two unequal columns that floats next to each other */
+
 .column {
-  float: left;
-  padding: 10px;
-  align: center;
+    float: left;
+    padding: 10px;
+    align: center;
 }
 
 .left {
-  width: 35%;
-  margin-left: 150px;
+    width: 35%;
+    margin-left: 150px;
 }
 
 .right {
-  width: 35%;
+    width: 35%;
 }
 
+
 /* Clear floats after the columns */
+
 .row:after {
-  content: "";
-  display: table;
-  clear: both;
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.suggestedButton {
+    background-color: #008CBA;
+    /* Green */
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
 }

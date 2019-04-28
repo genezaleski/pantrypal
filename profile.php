@@ -98,7 +98,7 @@ include 'navbar.php';
         //echo $uComJSON['comments'][$i];
         $rId = $uComJSON['comments'][$i]['recipe_id'];
         $com = $uComJSON['comments'][$i]['comment_text'];
-        echo "You commented " . $com . " on recipe number " . $rId;
+        echo "You wrote : " . $com . " on recipe number " . $rId ;
         echo '<br>';
       }
 
@@ -144,7 +144,7 @@ include 'navbar.php';
       
       <h2> Your liked recipes:  </h2>
       <?php 
-      //Retriving user comments
+      //Retrieving user comments
       $likesCmd= 'curl "http://52.91.254.222/api/RateRecipe/liked.php?user_id=' . $_SESSION['user_id'] .'"';
       $uLikeJSON = json_decode(shell_exec($likesCmd), true);
 
@@ -167,8 +167,8 @@ include 'navbar.php';
          $recCmd = "curl -H " . $api_key . " " . $recomended;
          $relatedRec = json_decode(shell_exec($recCmd), true);
          $randy2 = rand(0, sizeof($relatedRec));
-         //echo $relatedRec[$randy2]['id'];
-         echo '<a href=recipeInfo.php?id=' . $relatedRec[$randy2]['id'] . '> <button>Recommended </button></a>';
+         echo '<br>';
+         echo '<a href=recipeInfo.php?id=' . $relatedRec[$randy2]['id'] . ' class="suggestedButton"> Recommended Recipe </a>';
       ?>
     </div>
   </div>
