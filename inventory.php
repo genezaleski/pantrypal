@@ -1,3 +1,16 @@
+<?php
+session_start();
+if (!isset($_SESSION['email'])){
+  alert("You must be signed in to use this feature.");
+  echo '<script type="text/javascript">
+           window.location = "index.php"
+      </script>';
+}
+function alert($msg) {
+  echo "<script type='text/javascript'>alert('$msg');</script>";
+}
+?>
+
 <link rel="stylesheet" type="text/css" href="stylesheets/inventoryStyle.css">
 <script language="javascript">
     function postInventory(newItem,userID){
