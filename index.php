@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <head>
 <meta   name="google-site-verification"
         content="W0LpZ8p6M13ICggYTyUZqikpTXnPCnY-0d_U6uQC5p0" />
