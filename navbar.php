@@ -1,3 +1,7 @@
+<?php
+//all pages that load navbar can now use session variables
+session_start();
+?>
 
 <style>
 .navbox{
@@ -76,10 +80,7 @@
 }
 </style>
 
-<?php
-//all pages that load navbar can now use session variables
-session_start();
-?>
+
 
 
 <div class=navbox>
