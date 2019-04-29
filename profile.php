@@ -1,3 +1,15 @@
+<?php
+session_start();
+if (!isset($_SESSION['email'])){
+  alert("You must be signed in to use this feature.");
+  echo '<script type="text/javascript">
+           window.location = "index.php"
+      </script>';
+}
+function alert($msg) {
+  echo "<script type='text/javascript'>alert('$msg');</script>";
+}
+?>
 <html>
 <link rel="stylesheet" type="text/css" href="stylesheets/profileStyle.css">
 
