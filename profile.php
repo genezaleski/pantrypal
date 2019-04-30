@@ -113,7 +113,7 @@ include 'navbar.php';
         $com = $uComJSON['comments'][$i]['comment_text'];
 	echo "<div class='comment-user-name'>You wrote : </div><br>";
         echo "<div class='vjs-comment-list'>". $com . "</div>";
-        echo "<div class='comment-id'> on recipe number " . $rId ."</div>";
+        echo "<div class='comment-id'> on " . $rName['title'] ."</div>";
         echo '<br>';
       }
 
