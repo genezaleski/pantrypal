@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <link rel="stylesheet" type="text/css" href="stylesheets/devsStyle.css">
 <?php
 include 'navbar.php';
