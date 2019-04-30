@@ -206,7 +206,7 @@ session_start();
                     <?php
                       session_destroy();
                     ?>
-                    window.location="https://mail.google.com/mail/u/0/?logout&h1=en";
+                    window.open("https://mail.google.com/mail/u/0/?logout&h1=en");
                     window.location.reload();
                 });
                 }
