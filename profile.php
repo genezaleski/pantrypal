@@ -44,6 +44,7 @@ include 'navbar.php';
 <div class="headerText">
   <?php
 
+  echo '<img src=' . $_SESSION['image'] . '<br>';
   echo '<h1>' . $_SESSION['email'] . "'s Profile" . '</h1>';
 
   //print_r($_SESSION);
