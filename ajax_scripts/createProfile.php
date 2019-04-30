@@ -1,21 +1,6 @@
 <?php
 session_start();
-/*
-//clears any previous session data
-unset($_SESSION['email']);
-unset($_SESSION['token']);
-unset($_SESSION['name']);
-unset($_SESSION['image']);
-unset($_SESSION['firstName']);
-unset($_SESSION['lastName']);
-//fills session variable with useful profile information
-$_SESSION['email'] = $_POST['user'];
-$_SESSION['token'] = $_POST['id'];
-$_SESSION['name'] = $_POST['name'];
-$_SESSION['image'] = $_POST['imageUrl'];
-$_SESSION['firstName'] = $_POST['firstName'];
-$_SESSION['lastName'] = $_POST['lastName'];
-*/
+
 $email = $_POST['user'];
 $token = $_POST['id'];
 //$name = $_POST['uname'];
@@ -51,7 +36,7 @@ function createProfile($randomString){
                         $ch = curl_init($url_post);
                         curl_setopt($ch,CURLOPT_POST,1);
                         curl_setopt($ch,CURLOPT_POSTFIELDS,$createUser);
-                        curl_setopt($ch,CURLOPT_HTTPHEADER,array('Content-Type: application/json'));
+                        curl_setopt($ch,CURLOPT_HTTPHEADER,$options);
                         $curl_result = curl_exec($ch);
 }//end createProfile
 /*
