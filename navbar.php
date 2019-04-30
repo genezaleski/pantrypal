@@ -204,8 +204,9 @@ session_start();
                   auth2.signOut().then(function () {
                     console.log('User signed out.');
                     <?php
-            session_destroy();
-            ?>
+                      session_destroy();
+                    ?>
+                    window.location="https://mail.google.com/mail/u/0/?logout&h1=en";
                     window.location.reload();
                 });
                 }
