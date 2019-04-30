@@ -162,7 +162,7 @@ include 'navbar.php';
       $uLikeJSON = json_decode(shell_exec($likesCmd), true);
 
          //Generating a random number under number of likes
-         $randy = rand(0, sizeof($uLikeJSON));
+         $randy = rand(0, sizeof($uLikeJSON) - 1);
          $chosenID;
          for($i = 0; $i < sizeof($uLikeJSON); $i++){
            $rId = $uLikeJSON[$i]['recipe_id'];
@@ -179,7 +179,7 @@ include 'navbar.php';
          $recomended = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/" . $chosenID . "/similar";
          $recCmd = "curl -H " . $api_key . " " . $recomended;
          $relatedRec = json_decode(shell_exec($recCmd), true);
-         $randy2 = rand(0, sizeof($relatedRec));
+         $randy2 = rand(0, sizeof($relatedRec) - 1);
          echo '<br>';
          echo '<a href=recipeInfo.php?id=' . $relatedRec[$randy2]['id'] . ' class="suggestedButton"> Recommended Recipe </a>';
       ?>
