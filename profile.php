@@ -109,8 +109,9 @@ include 'navbar.php';
       for($i = 0; $i < sizeof($uComJSON['comments']); $i++){
         //echo $uComJSON['comments'][$i];
         $rId = $uComJSON['comments'][$i]['recipe_id'];
+        $rName = json_decode(shell_exec('curl "http://52.91.254.222/api/Recipe/read_one.php?recipe_id='. $rId .'"'), true);
         $com = $uComJSON['comments'][$i]['comment_text'];
-        echo "You wrote : " . $com . " on recipe number " . $rId ;
+        echo "You wrote : \"" . $com . "\" on recipe " . $rName['title'] ;
         echo '<br>';
       }
 
