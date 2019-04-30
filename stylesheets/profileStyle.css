@@ -63,3 +63,35 @@ body {
     display: inline-block;
     font-size: 16px;
 }
+
+.vjs-comment-list {
+    list-style-type: none;
+    position: relative;
+    background: #fff;
+    font-size: 24px;
+    position: relative;
+    max-width: 500px;
+    -moz-user-select: text !important;
+    margin-bottom: 10px;
+    font-family: "Times New Roman", Times, Arial, sans-serif !important;
+    border-right:  solid 5px #118C4E;
+}
+
+.comment-user-name{
+
+  top:0;
+  left:80px;
+  font-size: 18px;
+  font-family: "Times New Roman", Times, Arial, sans-serif !important;
+  font-weight: bold;
+
+}
+
+.comment-id {
+    top: 0;
+    left: 100px;
+    font-size: 18px;
+    color: red;
+    font-family: "Times New Roman", Times, Arial, sans-serif !important;
+}
+

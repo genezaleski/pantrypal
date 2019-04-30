@@ -111,7 +111,9 @@ include 'navbar.php';
         $rId = $uComJSON['comments'][$i]['recipe_id'];
         $rName = json_decode(shell_exec('curl "http://52.91.254.222/api/Recipe/read_one.php?recipe_id='. $rId .'"'), true);
         $com = $uComJSON['comments'][$i]['comment_text'];
-        echo "You wrote : \"" . $com . "\" on recipe " . $rName['title'] ;
+	echo "<div class='comment-user-name'>You wrote : </div><br>";
+        echo "<div class='vjs-comment-list'>". $com . "</div>";
+        echo "<div class='comment-id'> on recipe number " . $rId ."</div>";
         echo '<br>';
       }
 
