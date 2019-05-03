@@ -42,6 +42,10 @@ $decodedComments = json_decode(shell_exec($commentCmd), true);
 $recipeCmd = "curl http://52.91.254.222/api/Recipe/read.php";
 $rListDecode = json_decode(shell_exec($recipeCmd), true);
 
+//Checking for if a user had previously liked/disliked a recipe
+$checkRatingCmd = "curl http://52.91.254.222/api/RateRecipe/checkRating.php";
+$checkRating = json_decode(shell_exec($checkRatingCmd), true);
+
 $rExists = false;
 for ($r = 0; $r < sizeof($rListDecode['Recipes']); $r++) {
     if ($rListDecode['Recipes'][$r]['api_recipe_id'] == $recipeID) {
@@ -93,11 +97,23 @@ $decodedRatings = json_decode(shell_exec($ratingCmd), true);
             //Title and image of recipe
             echo    '<h1>' . $recipeInfo['title'] . '</h1>
             <div class="mainImage"><img src="' . $recipeInfo['image'] . '"> </div>';
+
+            //If user has previously rated the recipe and setting to the correct image
+            if($checkRating['rating'] == "like"){
+                $initLikeImg = "images/likedButton.png";
+            }elseif($checkRating['rating'] == "dislike"){
+                $initDislikeImg = "images/disLikedButton.png";
+            }else{
+                $initLikeImg = "images/likeButton.png";
+                $initDislikeImg = "images/likeButton.png";
+            }
+
             ?>
             <!-- Like/Dislike Buttons -->
-            <input type="image" alt="" src="images/likeButton.png" onClick="changeLikeImage()" name="likeBtn" class="likeBtn" id="likeBtn" />
-            <input type="image" alt="" src="images/likeButton.png" onClick="changeDisLikeImage()" name="disLikeBtn" class="disLikeBtn" id="disLikeBtn" />
+            <input type="image" alt="" src=<?php echo $initLikeImg; ?> onClick="changeLikeImage()" name="likeBtn" class="likeBtn" id="likeBtn" />
+            <input type="image" alt="" src=<?php echo $initDislikeImg; ?> onClick="changeDisLikeImage()" name="disLikeBtn" class="disLikeBtn" id="disLikeBtn" />
             <?php
+            
             $totalRatings = $decodedRatings['likes'] + $decodedRatings['dislikes'];
             if (($totalRatings) != 0) {
                 $likePercent = ($decodedRatings['likes'] / $totalRatings) * 100;
