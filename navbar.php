@@ -198,6 +198,8 @@ session_start();
             <meta name="google-signin-client_id" content="818469007806-1oi7h6015kjsggbd4m0i6j4ro9dq6vqt.apps.googleusercontent.com">
             <a href="#" onclick="signOut();">Sign out</a>
             
+            <?php 
+            if (isset($_SESSION['email'])){
               <script>
                 function signOut() {
                   var auth2 = gapi.auth2.getAuthInstance();
@@ -211,6 +213,7 @@ session_start();
                 });
                 }
                 </script>
+            ?>
         </div>
     </div>
 </div>
