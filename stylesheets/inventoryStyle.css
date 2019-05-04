@@ -17,6 +17,7 @@ body{
     text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black;
     font-weight: bold;
     text-align: center;
+    margin-top: 0px;
 }
 
 .urInventory{
@@ -28,10 +29,9 @@ body{
 }
 
 .info{
-    text-align: center;
     display: inline-block;
     font-family: 'results_font';
-    font-size: 36px;
+    font-size: 30px;
     color: black;
     border-left: 8px solid orange;
     border-right: 8px solid orange;
@@ -43,21 +43,22 @@ body{
 
 .newItemBox{
     position: absolute;
-    margin-left: 250px;
+    margin-left: 125px;
     margin-top: -35px;
 }
 
 .removeItemBox{
     position: absolute;
-    margin-left: 500px;
+    margin-left: 625px;
     margin-top: -35px;
 }
 
 .inventoryAddBox{
     padding:5px; 
-    border:2px solid #ccc; 
+    border:2px solid black; 
     -webkit-border-radius: 5px;
     border-radius: 5px;
+    margin-left: 150px;
 }
 
 .inventoryAddBox:focus {
@@ -66,8 +67,8 @@ body{
 
 .inventoryAddButton {
     padding:5px 15px; 
-    background:#ccc; 
-    border:0 none;
+    background:orange; 
+    border:2px solid black;
     cursor:pointer;
     -webkit-border-radius: 5px;
     border-radius: 5px; 
@@ -77,30 +78,34 @@ body{
     padding:5px 15px; 
     background:black; 
     color: white;
-    border:0 none;
+    border: 2px solid orange;
     cursor:pointer;
     -webkit-border-radius: 5px;
     border-radius: 5px; 
 }
 
 .inventoryAddButton2{
-    padding:10px 30px; 
-    background:#ccc; 
-    border:0 none;
+    padding:10px 30px 10px 30px; 
+    background:orange; 
+    border:2px solid black;
     cursor:pointer;
     -webkit-border-radius: 10px;
-    border-radius: 10px; 
-    margin-left: 150px;
+    border-radius: 10px;
+    font-weight: bold;
+    display: block;
+    margin: 0 525;
 }
 
 .inventoryAddButton2:hover{
-    padding:10px 30px; 
+    padding:10px 30px 10px 30px; 
     background:black; 
     color: white;
-    border:0 none;
+    border:2px solid orange;
     cursor:pointer;
     -webkit-border-radius: 10px;
-    border-radius: 10px; 
-    margin-left: 150px;
+    border-radius: 10px;
+    font-weight: bold;
+    display: block;
+    margin: 0 525;
 }
 

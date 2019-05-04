@@ -51,12 +51,12 @@ echo '<p class="urInventory"> Your Inventory: </p>';
 //Get user id for retrieving + posting inventory items
 ?>
     <form action="inventory.php" method="post" id="usrform" class="newItemBox">
-        <input class="inventoryAddBox" type="text" name="inventoryAdd" placeholder="Input new item...">
+        <input class="inventoryAddBox" type="text" size=24 name="inventoryAdd" placeholder="Input new item...">
         <button class="inventoryAddButton" type="submit" id="ajaxButton" name="commentClick" value="TRUE" onClick="postInventory(this.form.inventoryAdd.value,<?php echo $userID;?>)"> Add </button>
     </form>
 
     <form action="inventory.php" method="post" id="usrform" class="removeItemBox">
-        <input class="inventoryAddBox" type="text" name="inventoryRemove" placeholder="Input item to be removed...">
+        <input class="inventoryAddBox" type="text" size=24 name="inventoryRemove" placeholder="Input item to be removed...">
         <button class="inventoryAddButton" type="submit" id="ajaxButton2" name="commentClick2" value="TRUE" onClick="removeInventory(this.form.inventoryRemove.value,<?php echo $userID;?>)"> Remove </button>
     </form>
 
