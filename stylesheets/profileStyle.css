@@ -6,19 +6,18 @@ body {
 .headerText {
     margin-top: 50px;
     text-align: center;
-    align: center;
 }
 
 .userContainerLeft {
     width: 100%;
     text-align: left;
-    align: center;
+    margin-left: 150px;
 }
 
 .userContainerRight {
     width: 100%;
     text-align: left;
-    align: center;
+    margin-left: 100px;
 }
 
 * {
@@ -31,7 +30,6 @@ body {
 .column {
     float: left;
     padding: 10px;
-    align: center;
 }
 
 .left {
