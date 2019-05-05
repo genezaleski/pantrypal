@@ -28,10 +28,6 @@ elseif(isset($_GET['api_name']) && isset($_GET['api_recipe_id'])){
   $Recipe->api_recipe_id = $_GET['api_recipe_id'];
   $Recipe->readOneAPI();
 }
-//$Recipe->api_recipe_id = isset($_GET['recipe_id']) ? $_GET['recipe_id'] : die();
-
-// read the details of recipe to be edited
-//$Recipe->readOne();
 
 if($Recipe->recipe_id != null){
     // create array

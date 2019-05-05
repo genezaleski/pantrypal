@@ -18,7 +18,6 @@ $db = $database->getConnection();
 $PantryItem = new PantryItem($db);
 
 // set ID property of recipe to read
-
 if(isset($_GET['user_id'])){
   $PantryItem->user_id = $_GET['user_id'];
   $stmt = $PantryItem->readOne();
@@ -26,9 +25,9 @@ if(isset($_GET['user_id'])){
   $PantryItem_arr=array();
   $PantryItem_arr["Pantry"]=array();
 
+  //if there is another row, add it to the PantryItem array
   while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-    extract($row);
-
+      extract($row);
       // create array
       $PantryItem_item = array(
           "pantry_item_id" =>  $pantry_item_id,

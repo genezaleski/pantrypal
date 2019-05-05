@@ -10,61 +10,12 @@ class PantryItem{
     public $item_name;
     public $user_id;
 
-
-
     // constructor with $db as database connection
     public function __construct($db){
         $this->conn = $db;
     }
 
-    // read
-    function read(){
-
-        // select all query
-        $query = "SELECT
-                    pantry_item_id, item_name, user_id
-                FROM
-                    " . $this->table_name . ";";
-
-        // prepare query statement
-        $stmt = $this->conn->prepare($query);
-
-        // execute query
-        $stmt->execute();
-
-        return $stmt;
-    }
-
-    function delete(){
-      $query = "DELETE FROM " . $this->table_name . "
-                WHERE item_name = ? and user_id = ?";
-
-      $stmt = $this->conn->prepare($query);
-
-      $stmt->bindParam(1, $this->item_name);
-      $stmt->bindParam(2, $this->user_id);
-
-      if($stmt->execute() && $stmt->rowCount() > 0){
-        return true;
-      }
-
-      return false;
-    }
-
-    function readOne(){
-      $query = "SELECT
-                  pantry_item_id, item_name
-                FROM
-                    " . $this->table_name . "
-                    WHERE user_id = ?";
-
-      $stmt = $this->conn->prepare($query);
-      $stmt->bindParam(1, $this->user_id);
-      $stmt->execute();
-      return $stmt;
-    }
-
-    // create
+    // create a new PantryItem with given item_name and user_id
     function create(){
         $query = "INSERT INTO
                     " . $this->table_name . "
@@ -88,6 +39,53 @@ class PantryItem{
         }
 
         return false;
+    }
+
+    // deletes a PantryItem with given item_name and user_id
+    function delete(){
+      $query = "DELETE FROM " . $this->table_name . "
+                WHERE item_name = ? and user_id = ?";
+
+      $stmt = $this->conn->prepare($query);
+
+      $stmt->bindParam(1, $this->item_name);
+      $stmt->bindParam(2, $this->user_id);
+
+      if($stmt->execute() && $stmt->rowCount() > 0){
+        return true;
+      }
+
+      return false;
+    }
+
+    // return all PantryItems in database
+    function read(){
+        $query = "SELECT
+                    pantry_item_id, item_name, user_id
+                FROM
+                    " . $this->table_name . ";";
+
+        // prepare query statement
+        $stmt = $this->conn->prepare($query);
+
+        // execute query
+        $stmt->execute();
+
+        return $stmt;
+    }
+
+    // returns all PantryItems for a user, given user_id
+    function readOne(){
+      $query = "SELECT
+                  pantry_item_id, item_name
+                FROM
+                    " . $this->table_name . "
+                    WHERE user_id = ?";
+
+      $stmt = $this->conn->prepare($query);
+      $stmt->bindParam(1, $this->user_id);
+      $stmt->execute();
+      return $stmt;
     }
 }
 ?>

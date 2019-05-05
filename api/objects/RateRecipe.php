@@ -11,8 +11,8 @@ class RateRecipe{
     public $user_id;
     public $rating;
 
-    public $likes; //used to hold count
-    public $dislikes; //used to hold count
+    public $likes; //used to hold count of likes
+    public $dislikes; //used to hold count of dislikes
 
     // constructor with $db as database connection
     public function __construct($db){
@@ -141,7 +141,7 @@ class RateRecipe{
     // return a recipe_id that a user liked given user_id
     function getLikesUser(){
       $query = "SELECT recipe_id
-                from RateRecipe
+                from ". $this->table_name ."
                 where rating = 'like' and user_id = ?";
 
       // prepare query
@@ -154,6 +154,24 @@ class RateRecipe{
       $stmt->execute();
 
       return $stmt;
+    }
+
+    // return a rating for a user given user_id and recipe_id
+    function getRatingUser(){
+      $query = "SELECT rating
+                FROM ". $this->table_name ."
+                where user_id = ? and recipe_id = ?";
+
+      $stmt = $this->conn->prepare($query);
+
+      $stmt->bindParam(1,$this->user_id);
+      $stmt->bindParam(2,$this->recipe_id);
+
+      $stmt->execute();
+
+      $row = $stmt->fetch(PDO::FETCH_ASSOC);
+      $this->rating = $row['rating'];
+
     }
 
     // returns the number of likes and dislikes given a recipe_id

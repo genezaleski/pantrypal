@@ -21,20 +21,21 @@ $user = new User($db);
 $data = json_decode(file_get_contents("php://input"));
 
 // make sure data is not empty
-if(!empty($data->user_name)&&
+if( !empty($data->user_name)   &&
     !empty($data->oauth_token) &&
-    !empty($data->first_name) &&
-    !empty($data->last_name) &&
+    !empty($data->first_name)  &&
+    !empty($data->last_name)   &&
     !empty($data->picture_path)){
+
     // set user property values
     $user->user_name = $data->user_name;
     $user->oauth_token = $data->oauth_token;
     $user->first_name = $data->first_name;
     $user->last_name = $data->last_name;
     $user->picture_path = $data->picture_path;
+
     // create the user
     if($user->create()){
-
         // set response code - 201 created
         http_response_code(201);
 
@@ -44,7 +45,6 @@ if(!empty($data->user_name)&&
 
     // if unable to create the user, tell the guest
     else{
-
         // set response code - 503 service unavailable
         http_response_code(503);
 
@@ -55,7 +55,6 @@ if(!empty($data->user_name)&&
 
 // tell the guest data is incomplete
 else{
-
     // set response code - 400 bad request
     http_response_code(400);
 

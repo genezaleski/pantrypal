@@ -17,8 +17,7 @@
   // prepare allergy object
   $PantryItem = new PantryItem($db);
 
-  // get allergy_item_id id
-
+  // get item_name and user_id
   if (isset($_GET['item_name']) && isset($_GET['user_id'])) {
     $PantryItem->item_name = $_GET['item_name'];
     $PantryItem->user_id = $_GET['user_id'];
@@ -28,7 +27,7 @@
     echo json_encode(array("message" => "Data is incomplete..."));
   }
 
-  // delete the product
+  // delete the allergy
   if($PantryItem->delete()){
       //200 ok
       http_response_code(200);

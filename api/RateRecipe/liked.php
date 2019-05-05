@@ -8,7 +8,7 @@
   include_once '../config/database.php';
   include_once '../objects/RateRecipe.php';
 
-  //setup database conn
+  //setup database connection
   $database = new Database();
   $db = $database->getConnection();
 

@@ -18,25 +18,7 @@ class User{
         $this->conn = $db;
     }
 
-    // read
-    function read(){
-
-        // select all query
-        $query = "SELECT
-                    user_id, user_name, first_name, last_name, picture_path
-                FROM
-                    " . $this->table_name . ";";
-
-        // prepare query statement
-        $stmt = $this->conn->prepare($query);
-
-        // execute query
-        $stmt->execute();
-
-        return $stmt;
-    }
-
-    // create user
+    // create user with given user_name, oauth_token, first_name, last_name, picture_path
     function create(){
         $query = "INSERT INTO
                     " . $this->table_name . "
@@ -70,8 +52,50 @@ class User{
         return false;
     }
 
+    // delete a user with given user_id
+    function delete(){
+
+      // delete query
+      $query = "DELETE FROM " . $this->table_name . "
+                WHERE user_id = ?";
+
+      // prepare query
+      $stmt = $this->conn->prepare($query);
+
+      // bind id of record to delete
+      $stmt->bindParam(1, $this->user_id);
+
+      // execute query
+      if($stmt->execute() && $stmt->rowCount() > 0){
+          return true;
+      }
+
+    // return all Users in database
+    function read(){
+
+        // select all query
+        $query = "SELECT
+                    user_id, user_name, first_name, last_name, picture_path
+                FROM
+                    " . $this->table_name . ";";
+
+        // prepare query statement
+        $stmt = $this->conn->prepare($query);
+
+        // execute query
+        $stmt->execute();
+
+        return $stmt;
+    }
+
+
+
+        return false;
+
+    }
+
+    // return a User with given user_name
     function readOne(){
-        // query to read single record
         $query = "SELECT *
             FROM
                 " . $this->table_name . "
@@ -96,26 +120,7 @@ class User{
         $this->user_name = $row['user_name'];
       }
 
-      function delete(){
-
-        // delete query
-        $query = "DELETE FROM " . $this->table_name . "
-                  WHERE user_id = ?";
-
-        // prepare query
-        $stmt = $this->conn->prepare($query);
-
-        // bind id of record to delete
-        $stmt->bindParam(1, $this->user_id);
-
-        // execute query
-        if($stmt->execute() && $stmt->rowCount() > 0){
-            return true;
-        }
-
-        return false;
-
-    }
+      // returns a user with given user_id
     function readTwo(){
         // query to read single record
         $query = "SELECT *

@@ -7,21 +7,21 @@ header("Content-Type: application/json; charset=UTF-8");
 include_once '../config/database.php';
 include_once '../objects/Recipe.php';
 
-// instantiate database and user object
+// instantiate database
 $database = new Database();
 $db = $database->getConnection();
 
 // initialize object
 $Recipe = new Recipe($db);
 
-// query users
+// query recipe
 $stmt = $Recipe->read();
 $num = $stmt->rowCount();
 
 // check if more than 0 record found
 if($num>0){
 
-    // users array
+    //recipe array
     $Recipe_arr=array();
     $Recipe_arr["Recipes"]=array();
 
