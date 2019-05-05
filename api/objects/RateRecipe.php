@@ -11,78 +11,16 @@ class RateRecipe{
     public $user_id;
     public $rating;
 
-    public $likes; //count
-    public $dislikes; //count
+    public $likes; //used to hold count
+    public $dislikes; //used to hold count
 
     // constructor with $db as database connection
     public function __construct($db){
       $this->conn = $db;
     }
 
-    // read
-    function read(){
-
-      // select all query
-      $query = "SELECT
-                ratedRecipe_id, recipe_id, user_id, rating
-                FROM
-                " . $this->table_name . ";";
-
-      // prepare query statement
-      $stmt = $this->conn->prepare($query);
-
-      // execute query
-      $stmt->execute();
-
-      return $stmt;
-    }
-
-    function getLikesUser(){
-      $query = "SELECT recipe_id
-                from RateRecipe
-                where rating = 'like' and user_id = ?";
-
-      $stmt = $this->conn->prepare($query);
-      $stmt->bindParam(1, $this->user_id);
-      $stmt->execute();
-
-      return $stmt;
-    }
-
-    function getLikes(){
-      //join two values into a table
-      $query = "SELECT * FROM
-                (SELECT recipe_id, count(ratedRecipe_id) as likes
-                FROM ". $this->table_name ."
-                WHERE rating = 'like' and recipe_id=?) A
-                CROSS JOIN
-                (SELECT count(ratedRecipe_id) as dislikes
-                FROM ". $this->table_name ."
-                WHERE rating = 'dislike' and recipe_id=?) B";
-
-
-
-
-      $stmt = $this->conn->prepare($query);
-
-      $stmt->bindParam(1, $this->recipe_id);
-      $stmt->bindParam(2, $this->recipe_id);
-
-
-      // execute query
-      $stmt->execute();
-
-      // get retrieved row
-      $row = $stmt->fetch(PDO::FETCH_ASSOC);
-
-      $this->recipe_id = $row['recipe_id'];
-      $this->likes = $row['likes'];
-      $this->dislikes = $row['dislikes'];
-    }
-
-    // create
+    // create a rating given recipe_id, user_id, rating
     function create(){
-
         // query to insert record
         $query = "INSERT INTO
                   " . $this->table_name . "
@@ -110,8 +48,8 @@ class RateRecipe{
         return false;
     }
 
+    // delete a rating, given recipe_id and user_id
     function delete(){
-
         // delete query
         $query = "DELETE FROM " . $this->table_name . "
                   WHERE recipe_id = ? and user_id = ?";
@@ -132,17 +70,18 @@ class RateRecipe{
 
     }
 
+    // change a rating, given user_id, recipe_id, rating
     function updateLikes(){
-
       //query to update likes
       $query = "UPDATE " . $this->table_name ."
                 SET
                   rating = ?
                 WHERE user_id = ? AND recipe_id = ?";
 
+      // prepare query
       $stmt = $this->conn->prepare($query);
 
-
+      // bind values
       $stmt->bindParam(1, $this->rating);
       $stmt->bindParam(2, $this->user_id);
       $stmt->bindParam(3, $this->recipe_id);
@@ -154,6 +93,23 @@ class RateRecipe{
       return false;
     }
 
+    // return all rows from Rating table
+    function read(){
+      // select all query
+      $query = "SELECT
+                ratedRecipe_id, recipe_id, user_id, rating
+                FROM
+                " . $this->table_name . ";";
+
+      // prepare query statement
+      $stmt = $this->conn->prepare($query);
+
+      // execute query
+      $stmt->execute();
+
+      return $stmt;
+    }
+
     //returns a recipe with a given api_name and api_recipe_id
     function readOne(){
       $query = "SELECT
@@ -163,21 +119,72 @@ class RateRecipe{
             WHERE
                 recipe_id=? AND user_id=?";
 
-
+      // prepare query
       $stmt = $this->conn->prepare( $query );
 
+      // bind values
       $stmt->bindParam(1, $this->recipe_id);
       $stmt->bindParam(2, $this->user_id);
 
+      // execute query
       $stmt->execute();
 
       $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
+      // set object properties
       $this->ratedRecipe_id = $row['ratedRecipe_id'];
       $this->recipe_id = $row['recipe_id'];
       $this->user_id = $row['user_id'];
       $this->rating = $row['rating'];
+    }
 
+    // return a recipe_id that a user liked given user_id
+    function getLikesUser(){
+      $query = "SELECT recipe_id
+                from RateRecipe
+                where rating = 'like' and user_id = ?";
+
+      // prepare query
+      $stmt = $this->conn->prepare($query);
+
+      //bind value
+      $stmt->bindParam(1, $this->user_id);
+
+      //execute query
+      $stmt->execute();
+
+      return $stmt;
+    }
+
+    // returns the number of likes and dislikes given a recipe_id
+    function getLikes(){
+      //join two values into a table
+      $query = "SELECT * FROM
+                (SELECT recipe_id, count(ratedRecipe_id) as likes
+                FROM ". $this->table_name ."
+                WHERE rating = 'like' and recipe_id=?) A
+                CROSS JOIN
+                (SELECT count(ratedRecipe_id) as dislikes
+                FROM ". $this->table_name ."
+                WHERE rating = 'dislike' and recipe_id=?) B";
+
+      // prepare query
+      $stmt = $this->conn->prepare($query);
+
+      // bind values
+      $stmt->bindParam(1, $this->recipe_id);
+      $stmt->bindParam(2, $this->recipe_id);
+
+      // execute query
+      $stmt->execute();
+
+      // get retrieved row
+      $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+      // set object properties
+      $this->recipe_id = $row['recipe_id'];
+      $this->likes = $row['likes'];
+      $this->dislikes = $row['dislikes'];
     }
 }
 ?>
