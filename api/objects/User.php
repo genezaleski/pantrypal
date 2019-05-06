@@ -89,12 +89,6 @@ class User{
         return $stmt;
     }
 
-
-
-        return false;
-
-    }
-
     // return a User with given user_name
     function readOne(){
         $query = "SELECT *
