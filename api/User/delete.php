@@ -14,10 +14,10 @@
   $database = new Database();
   $db = $database->getConnection();
 
-  // prepare allergy object
+  // prepare user object
   $User = new User($db);
 
-  // get allergy_item_id id
+  // get user_id
   if(isset($_GET['user_id']) ){
     $User->user_id = $_GET['user_id'];
   }
@@ -26,7 +26,7 @@
     echo json_encode(array("message" => "Data is incomplete..."));
   }
 
-  // delete the product
+  // delete the User
   if($User->delete()){
       //200 ok
       http_response_code(200);

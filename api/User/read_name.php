@@ -18,7 +18,6 @@ $db = $database->getConnection();
 $user = new User($db);
 
 // set ID property of User to read
-
 if(isset($_GET['user_id'])){
   $user->user_id = $_GET['user_id'];
   $user->readTwo();

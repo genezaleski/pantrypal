@@ -18,17 +18,13 @@ $db = $database->getConnection();
 $RateRecipe = new RateRecipe($db);
 
 // set ID property of rating to read
-
 if(isset($_GET['recipe_id']) && isset($_GET['user_id'])){
   $RateRecipe->recipe_id = $_GET['recipe_id'];
   $RateRecipe->user_id = $_GET['user_id'];
   $RateRecipe->readOne();
 }
-//$Recipe->api_recipe_id = isset($_GET['recipe_id']) ? $_GET['recipe_id'] : die();
 
 // read the details of recipe to be edited
-//$Recipe->readOne();
-
 if($RateRecipe->recipe_id != null){
     // create array
     $Recipe_arr = array(

@@ -15,7 +15,7 @@ class Allergy{
         $this->conn = $db;
     }
 
-    // read
+    // return all Allergies in database
     function read(){
 
         // select all query
@@ -51,7 +51,7 @@ class Allergy{
       return $stmt;
     }
 
-    // create
+    // create an allergy with an allergy_itemName and user_id
     function create(){
         $query = "INSERT INTO
                     " . $this->table_name . "
@@ -77,7 +77,7 @@ class Allergy{
         return false;
     }
 
-    // delete the product
+    // delete the allergy, requires allergy_itemName and user_id
     function delete(){
 
         // delete query
