@@ -69,6 +69,7 @@ class User{
       if($stmt->execute() && $stmt->rowCount() > 0){
           return true;
       }
+    }
 
     // return all Users in database
     function read(){
