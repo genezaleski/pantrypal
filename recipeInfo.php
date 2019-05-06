@@ -6,6 +6,18 @@ session_start();
 <?php
 include 'navbar.php';
 $recipeID = $_GET['id'];
+
+//Redirect to home if there is no recipe ID
+if ($recipeID == ""){
+    alert("This recipe is not working correctly, redirecting to home");
+    echo '<script type="text/javascript">
+             window.location = "index.php"
+        </script>';
+  }
+  function alert($msg) {
+    echo "<script type='text/javascript'>alert('$msg');</script>";
+  }
+
 $my_api_key = '"X-RapidAPI-Key :322dc0a550msh6970a9bebfd18b2p1010fcjsnaed4930a9684"';
 $other_api_key = '"X-RapidAPI-Key : 4af690163bmshda5b867e43cbc70p155394jsnc38cedc3355a"';
 $third_api_key = '"X-RapidAPI-Key : a44d550177msh8aeb1867319b60bp1fbbc5jsn1d9edc60417a"';
