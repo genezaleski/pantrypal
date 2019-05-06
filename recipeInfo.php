@@ -15,11 +15,6 @@ $api_url = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/
 $cmd = "curl -H " . $my_api_key . " " . $api_url;
 $recipeInfo = json_decode(shell_exec($cmd), true);
 
-//Retriving recipe instructions broken into steps
-//$analysed_url = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/".$recipeID."/analyzedInstructions?stepBreakdown=false";
-//$instrCmd = "curl -H " . $api_key . " " . $analysedRecipe;
-//$recipeInstr = json_decode(shell_exec($instrCmd),true);
-
 //Retriving similar recipies to add as links
 $related_url = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/" . $recipeID . "/similar";
 $relatedCmd = "curl -H " . $other_api_key . " " . $related_url;
@@ -41,10 +36,6 @@ $decodedComments = json_decode(shell_exec($commentCmd), true);
 //Pulling in recipes to check if the current one exists
 $recipeCmd = "curl http://52.91.254.222/api/Recipe/read.php";
 $rListDecode = json_decode(shell_exec($recipeCmd), true);
-
-//Checking for if a user had previously liked/disliked a recipe
-$checkRatingCmd = "curl http://52.91.254.222/api/RateRecipe/checkRating.php";
-$checkRating = json_decode(shell_exec($checkRatingCmd), true);
 
 $rExists = false;
 for ($r = 0; $r < sizeof($rListDecode['Recipes']); $r++) {
@@ -80,6 +71,10 @@ $dbIdCmd = 'curl "http://52.91.254.222/api/Recipe/read_one.php?api_name=spoon&ap
 $decodedID = json_decode(shell_exec($dbIdCmd), true);
 $DB_ID = $decodedID['recipe_id'];
 
+//Checking for if a user had previously liked/disliked a recipe
+$checkRatingCmd = 'curl "http://52.91.254.222/api/RateRecipe/checkRating.php?user_id=' . $_SESSION['user_id'] . '&recipe_id=' . $DB_ID .'"';
+$checkRating = json_decode(shell_exec($checkRatingCmd), true);
+
 //Retriving like data for a specific recipe
 $ratingCmd = 'curl "http://52.91.254.222/api/RateRecipe/likes.php?recipe_id=' . $DB_ID . '"';
 $decodedRatings = json_decode(shell_exec($ratingCmd), true);
@@ -99,13 +94,12 @@ $decodedRatings = json_decode(shell_exec($ratingCmd), true);
             <div class="mainImage"><img src="' . $recipeInfo['image'] . '"> </div>';
 
             //If user has previously rated the recipe and setting to the correct image
+            $initLikeImg = "images/likeButton.png";
+            $initDislikeImg = "images/likeButton.png";
             if($checkRating['rating'] == "like"){
                 $initLikeImg = "images/likedButton.png";
-            }elseif($checkRating['rating'] == "dislike"){
+            }else if($checkRating['rating'] == "dislike"){
                 $initDislikeImg = "images/disLikedButton.png";
-            }else{
-                $initLikeImg = "images/likeButton.png";
-                $initDislikeImg = "images/likeButton.png";
             }
 
             ?>
@@ -217,13 +211,6 @@ $decodedRatings = json_decode(shell_exec($ratingCmd), true);
             }
             echo '<br><h2> Insructions </h2> 
             <div class="recipe">' . $instructions . '</div><br>';
-            //Unfinished, but will hopefully print a better list of instructions than just a dense paragraph
-            //for($j = 0; $j < sizeOf($recipeInstr); $j++){
-            //    echo '<h3>' .$recipeInstr[$j]['name'].'</h3>';
-            //    for($n = 0; $n < $recipeInstr[$j]['steps']; $n++){
-            //        echo '<div class="instruction">'. $n , " " , $recipeInstr[$j]['steps'][$n]['step'] . '<div>';
-            //    }
-            //}
             ?>
 
             <h2> User Comments </h2>
