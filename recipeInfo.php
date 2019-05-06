@@ -93,9 +93,10 @@ $decodedRatings = json_decode(shell_exec($ratingCmd), true);
             echo    '<h1>' . $recipeInfo['title'] . '</h1>
             <div class="mainImage"><img src="' . $recipeInfo['image'] . '"> </div>';
 
-            //If user has previously rated the recipe and setting to the correct image
+            //Initializing like images
             $initLikeImg = "images/likeButton.png";
             $initDislikeImg = "images/likeButton.png";
+            //If user has previously rated the recipe and setting to the correct image
             if($checkRating['rating'] == "like"){
                 $initLikeImg = "images/likedButton.png";
             }else if($checkRating['rating'] == "dislike"){
@@ -189,6 +190,7 @@ $decodedRatings = json_decode(shell_exec($ratingCmd), true);
             </script>
 
             <?php
+            //printing nutritional info
             echo '<h2> Nutrition Facts </h2>';
             echo "Calories: " . $nutritionalInfo['calories'] . "<br>";
             echo "Carbohydrates: " . $nutritionalInfo['carbs'] . "<br>";
