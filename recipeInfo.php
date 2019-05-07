@@ -124,7 +124,7 @@ $decodedRatings = json_decode(shell_exec($ratingCmd), true);
             $totalRatings = $decodedRatings['likes'] + $decodedRatings['dislikes'];
             if (($totalRatings) != 0) {
                 $likePercent = ($decodedRatings['likes'] / $totalRatings) * 100;
-                echo '<h2>' . number_format($likePercent, 1) . ' % of people liked this recipe</h2>';
+                echo '<h2>' . $likePercent . ' % of people liked this recipe</h2>';
             } else {
                 echo '<h2> This recipe has not been rated yet </h2>';
             }
