@@ -11,6 +11,8 @@ function alert($msg) {
 }
 ?>
 
+<!--These functions call seperate php functions using ajax
+so we can post data to db on the click of a button.-->
 <link rel="stylesheet" type="text/css" href="stylesheets/inventoryStyle.css">
 <script language="javascript">
     function postInventory(newItem,userID){
@@ -49,6 +51,7 @@ echo '<p class="dispUsername"> Hello, '. $decodedAccounts['user_name'] .'</p>';
 echo '<p class="urInventory"> Your Inventory: </p>';
 
 //Get user id for retrieving + posting inventory items
+//Below is code for add box and remove box
 ?>
     <form action="inventory.php" method="post" id="usrform" class="newItemBox">
         <input class="inventoryAddBox" type="text" size=24 name="inventoryAdd" placeholder="Input new item...">
@@ -103,6 +106,8 @@ echo '<br>';
 
 
 ?>
+
+<!-- Below is code for searching using your inventory items-->
 
 <form class="navSearch" name="inventorySearch" method="post" action="reciperesults.php">
     <input style="display: none;" type="text" name="searchBar" value="<?php echo $ingredientsPost;?>">

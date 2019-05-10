@@ -48,6 +48,8 @@ include 'navbar.php';
 
 <?php
 
+//Here we set variables which determine what filters to apply to search
+
 $search = $_POST['searchBar'];
 
 $isveggie ='';
@@ -81,6 +83,7 @@ $id_list = array();
 $title = null;
 $title_list = array();
 
+//Search functionality if query was entered, otherwise gets random recipes
 if(!empty($search)){
     $api_key = '"X-RapidAPI-Key : 87c88962ddmsh12cc4705c3707b2p13794cjsnf4b26acb6bc4"';
     $api_url = null;
@@ -101,6 +104,7 @@ if(!empty($search)){
             $num = $output_arr['number'];
         }
 
+	//pushes results into array so they can be printed in proper results page format
         for($i = 0; $i < $output_arr['number']; $i++){
             $image = $output_arr['results'][$i]['image'];
             $id = $output_arr['results'][$i]['id'];
@@ -200,6 +204,7 @@ for($i = 0; $i < sizeof($image_results); $i++){
     }
 }
 
+//places images into columns to be properly styled.
 echo '<div class="row">
         <div class="column">
         ' . $one . '
