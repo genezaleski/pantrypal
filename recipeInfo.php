@@ -6,6 +6,18 @@ session_start();
 <?php
 include 'navbar.php';
 $recipeID = $_GET['id'];
+
+//Redirect to home if there is no recipe ID
+if ($recipeID == ""){
+    alert("This recipe is not working correctly, redirecting to home");
+    echo '<script type="text/javascript">
+             window.location = "index.php"
+        </script>';
+  }
+  function alert($msg) {
+    echo "<script type='text/javascript'>alert('$msg');</script>";
+  }
+
 $my_api_key = '"X-RapidAPI-Key :322dc0a550msh6970a9bebfd18b2p1010fcjsnaed4930a9684"';
 $other_api_key = '"X-RapidAPI-Key : 4af690163bmshda5b867e43cbc70p155394jsnc38cedc3355a"';
 $third_api_key = '"X-RapidAPI-Key : a44d550177msh8aeb1867319b60bp1fbbc5jsn1d9edc60417a"';
@@ -14,11 +26,6 @@ $third_api_key = '"X-RapidAPI-Key : a44d550177msh8aeb1867319b60bp1fbbc5jsn1d9edc
 $api_url = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/" . $recipeID . "/information";
 $cmd = "curl -H " . $my_api_key . " " . $api_url;
 $recipeInfo = json_decode(shell_exec($cmd), true);
-
-//Retriving recipe instructions broken into steps
-//$analysed_url = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/".$recipeID."/analyzedInstructions?stepBreakdown=false";
-//$instrCmd = "curl -H " . $api_key . " " . $analysedRecipe;
-//$recipeInstr = json_decode(shell_exec($instrCmd),true);
 
 //Retriving similar recipies to add as links
 $related_url = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/" . $recipeID . "/similar";
@@ -76,6 +83,10 @@ $dbIdCmd = 'curl "http://52.91.254.222/api/Recipe/read_one.php?api_name=spoon&ap
 $decodedID = json_decode(shell_exec($dbIdCmd), true);
 $DB_ID = $decodedID['recipe_id'];
 
+//Checking for if a user had previously liked/disliked a recipe
+$checkRatingCmd = 'curl "http://52.91.254.222/api/RateRecipe/checkRating.php?user_id=' . $_SESSION['user_id'] . '&recipe_id=' . $DB_ID .'"';
+$checkRating = json_decode(shell_exec($checkRatingCmd), true);
+
 //Retriving like data for a specific recipe
 $ratingCmd = 'curl "http://52.91.254.222/api/RateRecipe/likes.php?recipe_id=' . $DB_ID . '"';
 $decodedRatings = json_decode(shell_exec($ratingCmd), true);
@@ -93,15 +104,27 @@ $decodedRatings = json_decode(shell_exec($ratingCmd), true);
             //Title and image of recipe
             echo    '<h1>' . $recipeInfo['title'] . '</h1>
             <div class="mainImage"><img src="' . $recipeInfo['image'] . '"> </div>';
+
+            //Initializing like images
+            $initLikeImg = "images/likeButton.png";
+            $initDislikeImg = "images/likeButton.png";
+            //If user has previously rated the recipe and setting to the correct image
+            if($checkRating['rating'] == "like"){
+                $initLikeImg = "images/likedButton.png";
+            }else if($checkRating['rating'] == "dislike"){
+                $initDislikeImg = "images/disLikedButton.png";
+            }
+
             ?>
             <!-- Like/Dislike Buttons -->
-            <input type="image" alt="" src="images/likeButton.png" onClick="changeLikeImage()" name="likeBtn" class="likeBtn" id="likeBtn" />
-            <input type="image" alt="" src="images/likeButton.png" onClick="changeDisLikeImage()" name="disLikeBtn" class="disLikeBtn" id="disLikeBtn" />
+            <input type="image" alt="" src=<?php echo $initLikeImg; ?> onClick="changeLikeImage()" name="likeBtn" class="likeBtn" id="likeBtn" />
+            <input type="image" alt="" src=<?php echo $initDislikeImg; ?> onClick="changeDisLikeImage()" name="disLikeBtn" class="disLikeBtn" id="disLikeBtn" />
             <?php
+            
             $totalRatings = $decodedRatings['likes'] + $decodedRatings['dislikes'];
             if (($totalRatings) != 0) {
                 $likePercent = ($decodedRatings['likes'] / $totalRatings) * 100;
-                echo '<h2>' . number_format($likePercent, 1) . ' % of people liked this recipe</h2>';
+                echo '<h2>' . $likePercent . ' % of people liked this recipe</h2>';
             } else {
                 echo '<h2> This recipe has not been rated yet </h2>';
             }
@@ -179,6 +202,7 @@ $decodedRatings = json_decode(shell_exec($ratingCmd), true);
             </script>
 
             <?php
+            //printing nutritional info
             echo '<h2> Nutrition Facts </h2>';
             echo "Calories: " . $nutritionalInfo['calories'] . "<br>";
             echo "Carbohydrates: " . $nutritionalInfo['carbs'] . "<br>";
@@ -201,13 +225,6 @@ $decodedRatings = json_decode(shell_exec($ratingCmd), true);
             }
             echo '<br><h2> Insructions </h2> 
             <div class="recipe">' . $instructions . '</div><br>';
-            //Unfinished, but will hopefully print a better list of instructions than just a dense paragraph
-            //for($j = 0; $j < sizeOf($recipeInstr); $j++){
-            //    echo '<h3>' .$recipeInstr[$j]['name'].'</h3>';
-            //    for($n = 0; $n < $recipeInstr[$j]['steps']; $n++){
-            //        echo '<div class="instruction">'. $n , " " , $recipeInstr[$j]['steps'][$n]['step'] . '<div>';
-            //    }
-            //}
             ?>
 
             <h2> User Comments </h2>

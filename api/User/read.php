@@ -25,13 +25,7 @@ if($num>0){
     $users_arr=array();
     $users_arr["users"]=array();
 
-    // retrieve our table contents
-    // fetch() is faster than fetchAll()
-    // http://stackover:flow.com/questions/2770630/pdofetchall-vs-pdofetch-in-a-loop
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-        // extract row
-        // this will make $row['name'] to
-        // just $name only
         extract($row);
 
         $user_item=array(
@@ -44,7 +38,6 @@ if($num>0){
 
         array_push($users_arr["users"], $user_item);
     }
-
     // set response code - 200 OK
     http_response_code(200);
 
@@ -52,7 +45,6 @@ if($num>0){
     echo json_encode($users_arr, JSON_PRETTY_PRINT);
 
 }else{
-
     // set response code - 404 Not found
     http_response_code(404);
 

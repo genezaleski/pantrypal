@@ -19,12 +19,6 @@
       $RateRecipe->recipe_id = $_GET['recipe_id'];
       $RateRecipe->getLikes();
     }
-    // elseif(isset($_GET["user_id"])){
-    //   $RateRecipe->user_id = $_GET["user_id"];
-    //   $RateRecipe->getLikesUser();
-    // }
-
-
 
     if($RateRecipe->recipe_id != null){
 
@@ -33,10 +27,6 @@
           'likes' => $RateRecipe->likes,
           'dislikes' => $RateRecipe->dislikes
         );
-
-
-
-
       echo json_encode($Rating_arr, JSON_PRETTY_PRINT);
     }
     else{
@@ -44,6 +34,4 @@
 
       echo json_encode(array("message"=> "Recipe does not exist"));
     }
-
-
 ?>

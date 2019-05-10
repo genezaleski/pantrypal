@@ -20,6 +20,7 @@ $Allergy = new Allergy($db);
 //get user_id
 $Allergy->user_id = isset($_GET['user_id']) ? $_GET['user_id'] : die();
 
+//check if there are any Allergies present
 $stmt = $Allergy->readUser();
 $num = $stmt->rowCount();
 
@@ -28,6 +29,7 @@ $Allergy_arr["Allergy"]=array();
 
 
 if($num > 0){
+  // if there is another row, add it to the Allergy array
   while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
       extract($row);
 

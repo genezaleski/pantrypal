@@ -36,7 +36,6 @@ if(!empty($data->api_name)
 
     // create the recipe
     if($Recipe->create()){
-
         // set response code - 201 created
         http_response_code(201);
 
@@ -46,7 +45,6 @@ if(!empty($data->api_name)
 
     // if unable to create the recipe, tell the guest
     else{
-
         // set response code - 503 service unavailable
         http_response_code(503);
 
@@ -57,7 +55,6 @@ if(!empty($data->api_name)
 
 // tell the guest data is incomplete
 else{
-
     // set response code - 400 bad request
     http_response_code(400);
 

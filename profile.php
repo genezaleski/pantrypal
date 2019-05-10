@@ -44,6 +44,7 @@ include 'navbar.php';
 <div class="headerText">
   <?php
 
+  echo '<img src=' . $_SESSION['image'] . '<br>';
   echo '<h1>' . $_SESSION['email'] . "'s Profile" . '</h1>';
 
   //print_r($_SESSION);
@@ -60,12 +61,12 @@ include 'navbar.php';
       <h2> Allergies: </h2>
         
       <form action="profile.php" method="post" id="usrform" class="newAllergyBox">
-        <input class="AllergyAddBox" type="text" name="AllergyAdd" placeholder="Input new item...">
+        <input class="AllergyAddBox" type="text" size=24 name="AllergyAdd" placeholder="Input new item...">
         <button class="AllergyAddButton" type="submit" id="ajaxButton" name="commentClick" value="TRUE" onClick="postAllergy(this.form.AllergyAdd.value,<?php echo $_SESSION['user_id'];?>)"> Add </button>
     </form>
 
     <form action="profile.php" method="post" id="usrform" class="removeAllergyBox">
-        <input class="AllergyRemoveBox" type="text" name="AllergyRemove" placeholder="Input item to be removed...">
+        <input class="AllergyRemoveBox" type="text" size=24 name="AllergyRemove" placeholder="Input item to be removed...">
         <button class="AllergyRemoveButton" type="submit" id="ajaxButton2" name="commentClick2" value="TRUE" onClick="removeAllergy(this.form.AllergyRemove.value,<?php echo $_SESSION['user_id'];?>)"> Remove </button>
     </form>
 
@@ -88,13 +89,16 @@ include 'navbar.php';
     for($i = 0; $i < sizeof($allergies['Allergy']);$i++){
       if($allergies['Allergy'][$i]['user_id'] == $userID){
         $name =  $allergies['Allergy'][$i]['allergy_itemName'];
-        echo $name . "  ";
+        if(sizeof($allergies['Allergy']) != $i+1){
+          echo $name . ", ";
+        } else {
+          echo $name . "";
+        }
         echo "     ";
         if(($j % 5) == 0){
           echo "<br>";
         }
         $j++;
-        
       }
     }
   }
@@ -107,13 +111,14 @@ include 'navbar.php';
       $uComJSON = json_decode(shell_exec($commentCmd), true);
       //print_r($uComJSON);
       for($i = 0; $i < sizeof($uComJSON['comments']); $i++){
-        //echo $uComJSON['comments'][$i];
+        //echo $uComJSON['comments'][$i]; 
         $rId = $uComJSON['comments'][$i]['recipe_id'];
         $rName = json_decode(shell_exec('curl "http://52.91.254.222/api/Recipe/read_one.php?recipe_id='. $rId .'"'), true);
+        $apiId = $rName['api_recipe_id'];
         $com = $uComJSON['comments'][$i]['comment_text'];
-	echo "<div class='comment-user-name'>You wrote : </div><br>";
+      	//echo "<div class='comment-user-name'>You wrote : </div><br>";
         echo "<div class='vjs-comment-list'>". $com . "</div>";
-        echo "<div class='comment-id'> on " . $rName['title'] ."</div>";
+        echo "<div class='comment-id'> on <a href='recipeInfo.php?id=".$apiId."'>". $rName['title'] . "</a></div>";
         echo '<br>';
       }
 
@@ -143,16 +148,20 @@ include 'navbar.php';
       }
       else{
         for($i = 0; $i < sizeof($decodedInventory['PantryItem']);$i++){
-            if($decodedInventory['PantryItem'][$i]['user_id'] == $userID){
-              $name =  $decodedInventory['PantryItem'][$i]['item_name'];
-              echo $name . "<br>";
-              if(($j % 5) == 0){
-                echo "<br>";
-              }
-              $j++;
+          if($decodedInventory['PantryItem'][$i]['user_id'] == $userID){
+            $name =  $decodedInventory['PantryItem'][$i]['item_name'];
+            if(sizeof($decodedInventory['PantryItem']) != $i+1){
+              echo $name . ", ";
+            } else {
+              echo $name . "";
             }
+            if(($j % 5) == 0){
+              echo "<br>";
+            }
+            $j++;
           }
         }
+      }
       ?>
       
 

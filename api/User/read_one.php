@@ -18,7 +18,6 @@ $db = $database->getConnection();
 $user = new User($db);
 
 // set ID property of User to read
-
 if(isset($_GET['user_name'])){
   $user->user_name = $_GET['user_name'];
   $user->readOne();

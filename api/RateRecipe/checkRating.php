@@ -15,29 +15,24 @@
   // prepare RateRecipe object
   $RateRecipe = new RateRecipe($db);
 
-  if(isset($_GET["user_id"])){
-    $RateRecipe->user_id = $_GET["user_id"];
-    $stmt = $RateRecipe->getLikesUser();
+  if(isset($_GET['user_id']) && isset($_GET['recipe_id'])){
+    $RateRecipe->user_id = $_GET['user_id'];
+    $RateRecipe->recipe_id = $_GET['recipe_id'];
+    $RateRecipe->getRatingUser();
+  }
 
-    $LikedRecipe_arr=array();
-    $LikedRecipe_arr["Liked Recipes"]=array();
-
-    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-
-      extract($row);
-
-      $LikedRecipe_item=array(
-        "recipe_id" => $recipe_id
-      );
-
-      array_push($LikedRecipe_arr["Liked Recipes"], $LikedRecipe_item);
-    }
+  if($RateRecipe->rating != null){
+    $Rating_arr = array(
+      // 'user_id' => $RateRecipe->user_id,
+      // 'recipe_id' => $RateRecipe->recipe_id,
+      'rating' => $RateRecipe->rating
+    );
 
     http_response_code(200);
-    echo json_encode($LikedRecipe_arr["Liked Recipes"], JSON_PRETTY_PRINT);
+    echo json_encode($Rating_arr, JSON_PRETTY_PRINT);
   }
   else{
     http_response_code(404);
-    echo json_encode(array("message"=> "User does not exist"));
+    echo json_encode(array("message"=> "Rating does not exist"));
   }
 ?>
