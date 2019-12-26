@@ -186,7 +186,7 @@ include 'navbar.php';
              <a href =recipeInfo.php?id='. $titleJSON['api_recipe_id'] .'>' . $titleJSON['title'] . '</a>
              </div>';
          }
-         $api_key = '"X-RapidAPI-Key : d466494462msh9686e88c15be8cfp108f2ejsnbc67ad6ec517"';
+         $api_key = 'redacted';
          $recomended = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/" . $chosenID . "/similar";
          $recCmd = "curl -H " . $api_key . " " . $recomended;
          $relatedRec = json_decode(shell_exec($recCmd), true);
