@@ -18,9 +18,9 @@ if ($recipeID == ""){
     echo "<script type='text/javascript'>alert('$msg');</script>";
   }
 
-$my_api_key = '"X-RapidAPI-Key :322dc0a550msh6970a9bebfd18b2p1010fcjsnaed4930a9684"';
-$other_api_key = '"X-RapidAPI-Key : 4af690163bmshda5b867e43cbc70p155394jsnc38cedc3355a"';
-$third_api_key = '"X-RapidAPI-Key : a44d550177msh8aeb1867319b60bp1fbbc5jsn1d9edc60417a"';
+$my_api_key = 'redacted';
+$other_api_key = 'redacted';
+$third_api_key = 'redacted';
 
 //Retrieving recipe info
 $api_url = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/" . $recipeID . "/information";
