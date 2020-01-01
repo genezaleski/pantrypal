@@ -159,7 +159,7 @@ if(!empty($search)){
 }
 else{//search field is empty. Returns a random recipe
 
-$api_key = "'X-RapidAPI-Key : 87c88962ddmsh12cc4705c3707b2p13794cjsnf4b26acb6bc4'";
+$api_key = "redacted";
 $api_url = "'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/random?number=60'";
 $api_host = "'X-RapidAPI-Host: spoonacular-recipe-food-nutrition-v1.p.rapidapi.com'";
 $cmd = "curl " . $api_url . "  -H " . $api_key;
