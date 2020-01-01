@@ -85,7 +85,7 @@ $title_list = array();
 
 //Search functionality if query was entered, otherwise gets random recipes
 if(!empty($search)){
-    $api_key = '"X-RapidAPI-Key : 87c88962ddmsh12cc4705c3707b2p13794cjsnf4b26acb6bc4"';
+    $api_key = 'redacted';
     $api_url = null;
     $is_ingredients = strpos($search, ',');
     if($is_ingredients !== false ) { //If commas are in search string, search by ingredients
