@@ -6,19 +6,15 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/genezaleski/pantrypal">
-    <img src="images/logo.png" alt="Logo" width="80" height="80">
-  </a>
-
 <h3 align="center">PantryPal</h3>
 
   <p align="center">
     Recipe Recommendation Web App
     <br />
-    <a href="https://github.com/genezaleski/pantrypal"><strong>Explore the docs »</strong></a>
+    <a href="https://github.com/genezaleski/pantrypal/blob/master/Design%20Document.pdf"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/genezaleski/pantrypal">View Demo</a>
+    <a href="https://github.com/genezaleski/pantrypal/blob/master/demo.mp4">View Demo</a>
   </p>
 </div>
 
@@ -132,7 +128,9 @@ Installation instructions for Postman can be found <a href="https://www.postman.
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-Please refer to the Design Document(PDF) at the top level of the repository for usage screenshots, general app outlines and flow diagrams. 
+Please refer to the Design Document(PDF) at the top level of this repository for usage screenshots, general app outlines and flow diagrams. 
+
+Additionally, please view the demo video at the top level of this repository to see a navigation and feature overview.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
